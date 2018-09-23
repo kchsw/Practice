@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		ul,li{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		#ct li{
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-top: 10px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		#load-more{
+			display: block;
+			margin: 10px auto;
+			text-align: center;
+			cursor: pointer;
+			height: 40px;
+			line-height: 40px;
+			width: 80px;
+			border: 1px solid #e27272;
+			border-radius: 3px;
+			text-decoration: none;
+			color: #e27272;
+			font-size: 0;
+		}
+		#load-more:after{
+			content: "";
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+		#load-more img{
+			vertical-align: middle;
+		}
+		#load-more span{
+			font-size: 16px;
+		}
+		#ct li:hover{
+			background-color: green;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<ul id="ct">
+		<li>Tset</li>
+	</ul>
+	<a href="" id="load-more"><span>加载更多</span></a>
+	<script>
+		var ct = document.querySelector('#ct');
+		var btn = document.querySelector('#load-more');
+		var curIndex = 0;
+		var len = 5;
+		var isLoading = false;//状态锁
+		//btn.innerHTML = '<img src="loading.gif" >'
+		btn.addEventListener('click',function(e){
+			e.preventDefault();
+
+			if(isLoading){
+				return;
+			}
+
+			isLoading = true;
+
+            btn.innerHTML = '<img src="loading.gif" >';
+
+            setTimeout(function(){ajax('/loadMore',{
+				idx:curIndex,
+				len:len
+			},function(data){
+				console.log(data);
+				appendData(data);
+				isLoading = false;//解除状态锁
+				curIndex +=len;
+                btn.innerHTML = '<span>加载更多</span>';
+			})},1000)
+ 
+			/*ajax('/loadMore',{
+				idx:curIndex,
+				len:len
+			},function(data){
+				console.log(data);
+				appendData(data);
+				isLoading = false;//解除状态锁
+				curIndex +=len;
+                btn.innerHTML = '<span>加载更多</span>';
+			})*/
+
+
+		})
+		function ajax(url,json,onSuccess,onError){
+			var xhr = new XMLHttpRequest();
+			var arr = [];
+			for (key in json){
+				arr.push(key + '=' + json[key])
+			}
+			url += '?' + arr.join('&');
+			xhr.open('GET',url);
+			xhr.send();
+
+			xhr.onload = function(){
+				if((xhr.status >=200 && xhr.status <= 300) || xhr.status == 304){
+					console.log(JSON.parse(xhr.responseText))
+					console.log(onSuccess)
+					onSuccess(JSON.parse(xhr.responseText))
+				}else{
+					onError && onError();
+				}
+			}
+		}
+
+		function appendData(data){
+			for (var i = 0;i<data.length;i++){
+				var child = document.createElement('li');
+				child.innerText = data[i];
+				ct.appendChild(child);
+			}
+		}
+	</script>
+</body>
+</html>

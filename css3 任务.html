@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		h1{
+			border: 1px solid red;
+			width: 130px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			text-shadow: 5px 5px 5px #ccc;
+		}
+
+		@keyframes rainbow{
+			from {
+			}
+			25%{
+				background: orange;
+			}
+			50%{
+				background: pink;
+				box-shadow: 20px 20px #ccc;
+				transform:scale(1.05,1.05);
+			}
+			75%{
+				background: orange;
+			}
+			to{
+				
+			}
+		}
+		.anima{
+			width: 200px;
+			height: 200px;
+			
+			
+			
+		}
+        
+        .anima:hover{
+        	animation: 5s rainbow infinite;
+        }
+		.linner{
+			height: 100px;
+			border: 2px solid #ccc;
+			margin-top: 30px;
+			 background-image:linear-gradient(to left,#10a5c714,#c7103959);
+		}
+
+		.container{
+			width: 200px;
+			height: 200px;
+			border: 1px solid #ccc;
+			margin: 20px auto;
+			perspective: 600px;
+		}
+
+		.box{
+			background: red;
+			height: 100%;
+			width: 100%;
+			font-size: 100px;
+			font-weight: 200;
+			line-height: 200px;
+			text-align: center;
+			transform: rotateX(-720deg) translateZ( -98px );
+		}
+
+		.ct{
+			width: 200px;
+			height: 200px;
+			position: relative;
+			margin: 40px auto;
+			border: 1px solid #ccc;
+			perspective: 1200px;
+		}
+		#cube{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			transform: translateZ( -100px) rotateX( 0deg) rotateY( 0deg) rotateZ(0deg);
+			animation: rotate 4s infinite linear;
+		}
+		#cube figure{
+			position: absolute;
+			width: 196px;
+			height: 196px;
+			border: 2px solid #000;
+			margin: 0;
+			font-size: 120px;
+			line-height: 196px;
+			font-weight: bold;
+			text-align: center;
+		}
+		#cube .front{
+			transform: translateZ(100px);
+			background: red;
+		}
+		#cube .back{
+			transform: rotateY(-180deg) translateZ(100px);
+		}
+		#cube .left{
+			transform: rotateY(-90deg) translateZ(100px);
+		}
+		#cube .right{
+			transform: rotateY(90deg) translateZ(100px);
+		}
+		#cube .top{
+			transform: rotateX(90deg) translateZ(100px);
+		}
+		#cube .bottom{
+			transform: rotateX(-90deg) translateZ(100px);
+		}
+		@keyframes rotate{
+			from{
+				transform: translateZ( -100px) rotateX( 0deg) rotateY( 0deg) rotateZ(0deg);
+			}
+			to{
+				transform: translateZ( -100px) rotateX( 360deg) rotateY( 360deg) rotateZ(0deg);
+			}
+		}
+
+		.ct2{
+			width: 210px;
+			height: 140px;
+			position: relative;
+			perspective: 1000px;
+		    margin:40px auto;
+		}
+		#carousel{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			transform-style: preserve-3d;
+			animation: turn 36s infinite linear;
+		}
+		#carousel figure{
+			position: absolute;
+			width: 186px;
+			height: 116px;
+			left: 10px;
+			top: 10px;
+			border: 2px solid #000;
+			margin: 0;
+			font-size: 70px;
+			line-height: 116px;
+			font-weight: bold;
+			text-align: center;
+		}
+		#carousel figure:nth-child(1) { transform: rotateY(   0deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(2) { transform: rotateY(  40deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(3) { transform: rotateY(  80deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(4) { transform: rotateY( 120deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(5) { transform: rotateY( 160deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(6) { transform: rotateY( 200deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(7) { transform: rotateY( 240deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(8) { transform: rotateY( 280deg ) translateZ( 288px ); }
+		#carousel figure:nth-child(9) { transform: rotateY( 320deg ) translateZ( 288px ); }
+
+		@keyframes turn{
+			form{
+				transform: rotateY(0deg);
+			}
+			to{
+				transform: rotateY(-360deg);
+			}
+		}
+        
+        .loading{
+        	padding: 100px;
+        	background: rgb(13, 206, 203);
+        }
+		.load{
+			margin: auto;
+			width: 100px;
+			height: 100px;
+			border-radius: 50% 50%;
+			border: 15px solid rgba(255,255,255,0.2);
+			border-left: 15px solid #fff !important;
+			animation: load 2s infinite linear;
+		}
+		@keyframes load{
+			from{
+				transform: rotateZ(0deg);
+			}
+			to{
+				transform: rotateZ(360deg);
+			}
+		}
+
+		.loading1{
+			padding: 100px;
+        	background: rgb(13, 124, 203);
+		}
+
+
+		
+		.load1:before,
+		.load1:after{
+			content: '';
+			top: 0;
+			position: absolute;
+		}
+		.load1:before,
+		.load1:after,
+		.load1{
+			animation: load1 1.35s infinite ease-in-out;
+		}
+		.load1{
+			width: 10px;
+			height: 40px;
+			background: #fff;
+			margin: auto;
+			position: relative;
+			animation-delay: 0.2s;
+		}
+		.load1:before{
+			width: 10px;
+			height: 40px;
+			background: #fff;
+			left: -15px;
+
+		}
+		.load1:after{
+			width: 10px;
+			height: 40px;
+			background: #fff;
+			left: 15px;
+			animation-delay: 0.4s;
+		}
+		
+		@keyframes load1{
+			from,
+			to{
+				box-shadow: 0 0px #fff,0 0px #fff;
+			}
+			50%{
+				box-shadow: 0 -20px #fff,0 20px #fff;
+			}
+		}
+
+
+		.demo{
+			position: relative;
+			display: block;
+			margin: 0 auto;
+			background-image: url(http://h.hiphotos.baidu.com/image/pic/item/267f9e2f07082838304837cfb499a9014d08f1a0.jpg);
+			background-position: center;
+			
+		}
+		.demo,.mask,.border{
+			width: 300px;
+			height: 300px;
+			border-radius: 50%
+		}
+		.mask{
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: rgba(255,255,255,0);
+			transition: all .5s ease-in-out;
+			text-align: center;
+		}
+		.info{
+			margin-top: 50%;
+			transform: translateY(-50%);
+		}
+		.border{
+			position: absolute;
+			top: 0;
+			left: 0;
+			box-sizing: border-box;
+			border: 10px solid rgb(13, 124, 203);
+			border-left-color: rgb(13, 206, 203);
+			border-top-color: rgb(13, 206, 203);
+			transition: all .5s ease-in-out;
+		}
+		.demo:hover .mask{
+			background-color: rgba(0,0,0,.5);
+			color: rgba(255,255,255,1);
+		}
+        .demo:hover .border{
+        	transform: rotate(180deg);
+        }
+		.effect{
+			padding: 100px 0;
+			background: rgb(180, 220, 208);
+		}
+	</style>
+</head>
+<body>
+	<h1>这是一个标题</h1>
+
+	<section class="anima"></section>
+
+	<section class="linner"></section>
+
+	<section class="container">
+		<div class="box">1</div>
+	</section>
+
+	<section class="ct">
+	  <div id="cube">
+	    <figure class="front">1</figure>
+	    <figure class="back">2</figure>
+	    <figure class="right">3</figure>
+	    <figure class="left">4</figure>
+	    <figure class="top">5</figure>
+	    <figure class="bottom">6</figure>
+	  </div>
+	</section>
+    
+    <section class="ct2">
+    	<div id="carousel">
+		    <figure>1</figure>
+		    <figure>2</figure>
+		    <figure>3</figure>
+		    <figure>4</figure>
+		    <figure>5</figure>
+		    <figure>6</figure>
+		    <figure>7</figure>
+		    <figure>8</figure>
+		    <figure>9</figure>
+		  </div>
+    </section>
+	
+	<section class="loading">
+		<div class="load"></div>
+	</section>
+
+	<section class="loading1">
+		<div class="load1"></div>
+	</section>
+
+
+	<section class="effect">
+		<a href="" class="demo">
+			<div class="mask">
+				<div class="info">
+					<h3>BEATIFUL DAY</h3>
+					<p>Description goes here</p>
+				</div>
+			</div>
+			<div class="border"></div>
+		</a>
+	</section>
+	
+
+</body>
+</html>

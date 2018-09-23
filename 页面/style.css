@@ -1,0 +1,263 @@
+.da{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    float: left;
+}
+.db{
+    height: 100px;
+    background-color: blue;
+    margin-left: 100px;
+}
+.dc{
+    height: 100px;
+    background-color: yellow;
+    clear: both;
+}
+.d2{
+    margin-top: 50px;
+    position: relative;
+}
+.dd{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: absolute;
+}
+.de{
+    height: 100px;
+    background-color: blue;
+    margin-left: 100px;
+}
+.df{
+    
+    height: 100px;
+    background-color: yellow;
+}
+.d3{
+    margin-top: 50px;
+    background-color: pink;
+}
+.dg{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    float: left;
+    margin: 10px auto;
+}
+.dh{
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    float: left;
+    margin: auto;
+}
+.dj{
+    clear: both;
+}
+.img1{
+    width: 200px;
+    height: 200px;
+    background-image: url(ytras.jpg);
+    background-repeat: no-repeat;
+    margin:10px auto;
+    background-position:50% 50%;
+    border:1px solid #bebebe;
+}
+.div1{
+    border:1px solid #bebebe;
+    width:200px;
+    height: 200px;
+    position: relative;
+    margin: 10px auto;
+    overflow: hidden;
+}
+.div1 img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -112px; 
+    margin-left: -200px;
+}
+
+.content {
+        display: table-cell;
+        padding: 10px;
+        border: 2px solid #999;
+    }
+    
+    .content div {
+        display: inline-block;
+        vertical-align: middle;
+    }
+.circle {
+    width:100px;
+    height:100px;
+    margin: 10px auto;
+    border:1px solid #bebebe;
+    overflow: hidden;
+    border-radius:50%
+}   
+.inner_circle{
+    background-color: #cc0000;
+    height: 24px;
+    width: 24px;
+    border: 6px solid #cc9999;
+    border-radius: 18px;
+    margin: 10px auto;
+}
+.triangle-down { 
+    width: 0; 
+    height: 0; 
+    border-left: 50px solid transparent; 
+    border-right: 50px solid transparent; 
+    border-top: 100px solid red;
+    margin: 10px auto;
+} 
+.triangle { 
+    width: 0; 
+    height: 0; 
+    border-left: 100px solid #cc9999; 
+    border-right: 100px solid #cc9999; 
+    border-top: 50px solid #cc9999;
+    border-bottom: 50px solid transparent; 
+    margin: 10px auto;
+} 
+.navigation{
+}
+.navigation ul{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+.navigation li{
+    float:left;
+}
+.navigation li a{
+    display:block;
+    width:7em;
+    text-align:center;
+    text-decoration:none;
+    color:white;
+    background-color:purple;
+    padding:0.2em 0.6em;
+    border-right:1px solid white;
+}
+.navigation li a:hover{
+    background-color:#ff3300}
+.navigation_1{
+    clear: both;
+    text-align:center;
+}
+.navigation_1 ul{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+    display:inline-block;
+}
+.navigation_1 li{
+    float:left;
+}
+.navigation_1 li a{
+    display:block;
+    width:7em;
+    text-align:center;
+    text-decoration:none;
+    color:white;
+    background-color:pink;
+    padding:0.2em 0.6em;
+    border-right:1px solid white;
+}
+.navigation_1 li a:hover{
+    background-color:#ff3300}
+
+.navigation_2{
+    padding: 10px;
+    margin: 10px auto;
+    border:2px solid #999;
+}
+.navigation_2 ul{
+    display: table;
+    margin: 10px auto;
+    width: 100%;
+    padding: 0;
+}
+.navigation_2 li{
+    display: table-cell;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.picture{
+    border:1px solid #bebebe;
+}
+.picture-img{
+    float: left;
+    margin: 10px;
+}
+.picture-img img{
+    width: 150px;   
+    height: 150px;
+    border:5px solid #bebebe;
+    border-radius: 50%
+}
+.picture-text{
+    text-align: right;
+    width: 400px;
+    float: left;
+}
+.clr{
+    clear: both;
+}
+.img-list{
+    text-align:center
+}
+.img-ku{
+    display: inline-block;
+    height:250px;
+    width:220px;
+    margin:3px;
+    border:1px solid #bebebe;
+}
+.img-ku img{
+    width: 160px;   
+    height: 160px;
+    margin:3px;
+}
+div.desc{
+    text-align:center;
+    font-weight:normal;
+    font-size:12px;
+    margin:5px;
+}
+.img-ku img:hover{
+    opacity:0.4;
+    filter:alpha(opacity=40); 
+}
+
+.pic_box{
+    width:300px; 
+    height:300px; 
+    background-color:#beceeb; 
+    font-size:0; 
+    *font-size:200px; 
+    text-align:center;
+}
+.pic_box img{
+    vertical-align:middle;
+}
+.pic_box:after{
+    display:inline-block; 
+    width:0; 
+    height:100%; 
+    content:"center"; 
+    vertical-align:middle; 
+    overflow:hidden;
+}
+.pic-bg{
+    width: 500px;
+    height: 500px;
+
+    margin: 0 auto;
+}

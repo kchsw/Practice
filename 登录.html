@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://shenzekun.cn/MyUi/login.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <style>
+        @font-face {
+            font-family: 'iconfont';
+            src: url('//at.alicdn.com/t/font_1463147324_946932.eot');
+            /* IE9*/
+            src: url('//at.alicdn.com/t/font_1463147324_946932.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('http://at.alicdn.com/t/font_1463147324_946932.woff') format('woff'), /* chrome、firefox */
+            url('http://at.alicdn.com/t/font_1463147324_946932.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('//at.alicdn.com/t/font_1463147324_946932.svg#iconfont') format('svg');
+            /* iOS 4.1- */
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .wrap {
+            text-align: center;
+            height: 100%;
+            background-color: #dad3cd;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+        }
+
+        #header {
+            font-size: 25px;
+            text-align: center;
+            color: rgb(98, 94, 91);
+        }
+
+        #header span {
+            font-size: 30px;
+            font-family: "Brush Script Std";
+        }
+
+        #content span.yonghu {
+            font-family: iconfont;
+            position: absolute;
+            top: 12px;
+            left: 10px;
+        }
+
+        #content span.mima {
+            font-family: iconfont;
+            position: absolute;
+            top: 12px;
+            left: 10px;
+        }
+
+        #content form {
+            width: 260px;
+            height: 260px;
+            margin: 35px auto;
+            padding: 30px;
+            box-shadow: 0px 1px 2px 1px #aaaaaa, inset 0px 1px 1px rgba(255, 255, 255, 0.7);
+            border-radius: 3px;
+            background-color: #e4e0dc;
+        }
+
+        #content form ul {
+            background-color: #e4e0dc;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+        }
+
+        #content form>ul>li {
+            list-style: none;
+        }
+
+        #content ul>li>div {
+            width: 260px;
+            height: 40px;
+            background: #e1dcd8;
+            color: rgb(98, 94, 91);
+            box-shadow: inset 0px 2px 5px #aaaaaa;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #content ul>li>div>input {
+            height: 40px;
+            width: 190px;
+            padding: 0 35px;
+            background-color: #e1dcd8;
+            color: rgb(98, 94, 91);
+            box-shadow: 0 1px 1px rgba(255, 255, 255, .7), inset 0 2px 5px #aaaaaa;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #content ul li.remember {
+            position: relative;
+            font-size: 14px;
+            font-family: 微软雅黑;
+            font-weight: bold;
+            color: rgb(88, 94, 91);
+        }
+
+        #content ul li a {
+            font-size: 14px;
+            font-family: 黑体;
+            color: rgb(152, 142, 135);
+            text-decoration: none;
+        }
+
+        #content ul .remember input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            visibility: hidden;
+            vertical-align: super;
+        }
+
+        #content ul li div input:focus {
+            outline: none;
+            background: #f5f2ef;
+        }
+
+        #content ul .remember label {
+            cursor: pointer;
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            top: 7px;
+            left: 0;
+            background: #eee;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        #content ul .remember label::after {
+            opacity: .4;
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 5px;
+            background: transparent;
+            top: 6px;
+            left: 4px;
+            border: 3px solid #74884a;
+            border-top: none;
+            border-right: none;
+            transform: rotate(-45deg);
+        }
+
+        #content ul .remember input[type="checkbox"]:checked+label::after {
+            opacity: 1;
+            color: #74884a;
+        }
+
+        #content input[type*="button"] {
+            width: 100%;
+            height: 40px;
+            font-size: 18px;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            border-radius: 5px;
+            border: 1px solid #7d8862;
+            box-shadow: 0px 1px 0px rgba(170, 170, 170, 1), inset 0px 1px 1px rgba(255, 255, 255, 0.7);
+            text-shadow: 0px -1px 0px rgba(000, 000, 000, 0.3), 0px 0px 0px rgba(255, 255, 255, 0);
+            background: -webkit-linear-gradient(top, #94aa64, #607738);
+        }
+
+        #content input[type*="button"]:hover {
+            opacity: .8;
+        }
+
+        #content input[type*="button"]:active {
+            width: 100%;
+            height: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            color: #ffffff;
+            background: -moz-linear-gradient( top, #607738 0%, #7a924a 50%, #94aa64);
+            background: -webkit-gradient( linear, left top, left bottom, from(#607738), color-stop(0.50, #7a924a), to(#94aa64));
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #7d8862;
+            -moz-box-shadow: 0px -1px 0px rgba(170, 170, 170, 1), inset 0px -1px 1px rgba(255, 255, 255, 0.7);
+            -webkit-box-shadow: 0px -1px 0px rgba(170, 170, 170, 1), inset 0px -1px 1px rgba(255, 255, 255, 0.7);
+            box-shadow: 0px -1px 0px rgba(170, 170, 170, 1), inset 0px -1px 1px rgba(255, 255, 255, 0.7);
+            text-shadow: 0px 1px 0px rgba(000, 000, 000, 0.3), 0px 0px 0px rgba(255, 255, 255, 0);
+            outline: none;
+        }
+
+        #content input[type*="button"]:focus {
+            outline: none;
+        }
+
+        #footer {
+            font-size: 12px;
+            font-family: 黑体;
+            color: rgb(98, 94, 91);
+        }
+
+        #footer a {
+            color: rgb(152, 142, 135);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="header">
+            Login to <span>love.ly</span>
+        </div>
+        <div id="content">
+            <form action="http://shenzekun.cn/MyUi/login.html" method="post">
+                <ul>
+                    <li>
+                        <div class="text">
+                            <span class="yonghu"></span>
+                            <input type="text" name="" value="" placeholder="iconDeposit">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="password">
+                            <span class="mima"></span>
+                            <input type="password" placeholder="••••••••••••••">
+                        </div>
+                    </li>
+                    <li class="remember">
+                        <input id="checkbox" type="checkbox">
+                        <label for="checkbox"></label>Remember me
+                    </li>
+                    <li>
+                        <a href="http://shenzekun.cn/MyUi/login.html">Forgot username or password?</a>
+                    </li>
+                    <li>
+                        <input type="button" value="Login">
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div id="footer">
+            <p>Love.ly Personal Blog .PSD Template <a href="http://shenzekun.cn/MyUi/login.html">Copyright ©2012 Matt Gentile</a></p>
+            <p><a href="http://shenzekun.cn/MyUi/login.html">Love.ly Home</a> | <a href="http://shenzekun.cn/MyUi/login.html">Bolg
+			</a> | <a href="http://shenzekun.cn/MyUi/login.html">Work</a> | <a href="http://shenzekun.cn/MyUi/login.html">Terms of Use</a> | <a href="http://shenzekun.cn/MyUi/login.html">Contact Me</a></p>
+        </div>
+    </div>
+
+
+</body></html>

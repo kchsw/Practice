@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		.main{
+			width: 1200px;
+			margin: 0 auto;
+		}
+		.main:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.item{
+			display: block;
+			float: left;
+			margin: 5px;
+			
+		}
+		.item>img{
+
+			width: 100%;
+			height: 100%;
+		}
+		#search-ipt{
+			width: 220px;
+            padding: 5px;
+            outline: none;
+		}
+		#search-btn{
+			width: 100px;
+			border: 1px solid #fff;
+			background: #3385ff;
+			line-height: 27px;
+			outline: none;
+			cursor: pointer;
+			color: #fff;
+			font-size: 14px;
+		}
+		.search{
+			padding: 40px 0;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+    <div class="search">
+    	<input id="search-ipt" placeholder="enter picture name" type="text">
+    	<button id="search-btn">search</button>
+    </div>
+	<div class="main">
+		<!-- <div class="item">
+			<a href=""><img src="https://cdn.pixabay.com/photo/2015/03/12/17/57/buddha-670573_150.jpg" alt=""></a>
+		</div> -->
+	</div>
+
+
+    
+
+	<script>
+		var imgs;
+		var baseHeight = 200;
+		var totalWidth = 0;
+		var rowList = [];
+		var pageIdx = 1;
+		var clock;
+
+
+		
+
+		$('#search-btn').click(function(){
+			$('.main').empty();
+			pageIdx = 1;
+			rowList = [];
+			totalWidth = 0;
+			loadData($('#search-ipt').val());
+		})
+        $('#search-ipt').keyup(function(event){
+        	if (event.keyCode == "13"){
+        		$('#search-btn').click();
+        	}　　　 
+        })
+        $(window).on('scroll',function(){
+        	if(clock){
+        		clearTimeout(clock)
+        	}
+        	clock = setTimeout(function(){
+        		check();
+        	},300)
+        })
+
+		function loadData(value){
+			$.ajax({
+				url: 'https://pixabay.com/api/',
+				dataType: "json",
+				data: {
+					key: '5856858-0ecb4651f10bff79efd6c1044',
+	                q: value,
+	                image_type: 'photo',
+	                page: pageIdx,
+	                per_page: 30
+				}
+				
+			}).done(function(ret){
+				//callback(ret);
+				console.log(ret)
+				render(ret.hits)
+				pageIdx++;
+			})
+
+		}
+
+		/*function callback(data){
+			console.log(data)
+            imgs = data.hits;
+            render(imgs);
+		}*/
+
+		function render(ret){
+			$.each(ret,function(){
+				this.ratio = this.webformatWidth / this.webformatHeight;
+				this.baseWidth = baseHeight * this.ratio;
+				//console.log(this.baseWidth)
+				if(this.baseWidth + totalWidth > $('.main').width()){
+					
+					var itemHeight = baseHeight * ($('.main').width() - rowList.length*10) / totalWidth;
+					layout(rowList,itemHeight);
+					rowList = []
+					rowList.push(this)
+					totalWidth = this.baseWidth
+				}else{
+					rowList.push(this);
+					totalWidth += this.baseWidth;
+				}
+			})
+			//console.log(rowList)
+		}
+
+		/*function layout(row,height){
+		 
+			$.each(row,function(){
+				var html = $('<div class="item"><img src="' + this.webformatURL + '"></div>')
+				$('.main').append(html)
+				html.height(height).width(height * this.ratio)
+
+			})
+		}*/
+
+		function layout(row,height){
+		 
+			$.each(row,function(){
+				var html = $('<a class="item" target="_blank" href="' + this.largeImageURL + '"><img src="' + this.webformatURL + '"></a>')
+				$('.main').append(html)
+				html.height(height).width(height * this.ratio)
+
+			})
+		}
+
+		function isVisible(){
+			if($(document).height() - $(window).height() - $(window).scrollTop() < 5){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		function check(){
+        	if(isVisible()){
+        		loadData($('#search-ipt').val());
+        	}
+        }
+	</script>
+</body>
+</html>

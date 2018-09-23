@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+	<h1><span>勇气</span></h1>
+    <img src="http://img.mukewang.com/52b4113500018cf102000200.jpg" ><br/>
+    <a  href="http://www.acfun.cn" target="_blank">认真你就输了</a><br/>
+    <a  href="http://www.imooc.com"  title="点击进入慕课网">click here!</a><br/>
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520770666216&di=bf17d0a24673853212ac6985340634bb&imgtype=0&src=http%3A%2F%2Fimg1.cache.netease.com%2Fcatchpic%2F1%2F10%2F103568944B6FF469CF711A04F341CA2D.jpg">
+    <form method="post" action="save.php"> 
+    	<label for="username">用户名:</label>
+    	<!--不加label的话鼠标一定要点击小圆点才能激活条目,加了label可以直接点击对应的文字来激活条目标签的for属性 点击文字就可以将光标聚焦到对应的表单上面-->
+    	<input type="text" name="username" id="username" value="">
+    	<label for="pass">密码1:</label>
+    	<input type="psssword" name="pass" id="pass" value=""> 
+    	<input type="reset" value="充" name="reset">
+    	<input type="submit" value="确" name="submit">
+    	<label for="pass2">密码2:</label>
+        <input type="password"  name="pass" id="pass2" value="" />    
+        <input type="submit" value="确定"  name="submit" />
+        <input type="reset" value="重置" name="reset" /><br>
+        <label for="_basketball">爱好：</label>
+        <!--value：提交数据到服务器的值（后台程序PHP使用）name：为控件命名，以备后台程序 ASP、PHP 使用-->
+        <label><input type="radio" value="basketball" name="hobby" id="_basketball">basketball</label>  
+        <label><input type="radio" value="football" name="hobby" id="_football">football</label>  
+        <label><input type="checkbox" value="skating" name="hobby" id="_skating">skating</label>  
+        <label><input type="checkbox" value="dance" name="hobby" id="_dance">dance</label>
+        <label>爱好:</label>
+        <select>
+        	<option value="basketball">basketball</option>
+        	<option value="football">football</option>
+        	<option value="skating">skating</option>
+        	<option value="dance">dance</option>
+        </select> 
+        </form >
+        <p>原价：<span class="oldPrice">300</span>元 现价：230 元</p> 
+        <div class="wrap">
+        <h2>hi,imooc!<br>
+         hi,imooc!
+        </h2>
+        </div>
+        <div class="wrap-center">我们来学习一下这种方法。</div>
+        <input name="button" type="button" onClick="Wopen()" value="点击我，打开新窗口!" /><br/>
+        <input name="button" type="button" onClick="rec()" value="点击我，对成绩做评价!" /><br/>
+        <input name="button" type="button" onClick="Myname()" value="你的名字" /><br/>
+        <input type="button" type="button" onclick="openWindow()" value="新窗口打开网站" /><br/>
+
+        <h2 id="con">JavaScript课程</H2>
+  <div id="txt"> 
+     <h5>JavaScript为网页添加动态效果并实现与用户交互的功能。</h5>
+        <p>1. JavaScript入门篇，让不懂JS的你，快速了解JS。</p>
+        <p>2. JavaScript进阶篇，让你掌握JS的基础语法、函数、数组、事件、内置对象、BOM浏览器、DOM操作。</p>
+        <p>3. 学完以上两门基础课后，在深入学习JavaScript的变量作用域、事件、对象、运动、cookie、正则表达式、ajax等课程。</p>
+  </div>
+  <form>
+  <!--当点击相应按钮，执行相应操作，为按钮添加相应事件-->
+    <input type="button" onclick="chcolor()" value="改变颜色" >  
+    <input type="button" onclick="chwandh()" value="改变宽高" >
+    <input type="button" onclick="hidetext()" value="隐藏内容" >
+    <input type="button" onclick="showtext()" value="显示内容" >
+    <input type="button" onclick="resrt()" value="取消设置" >
+  </form>
+
+
+<div class="form">
+    <form action="" method="post">
+       <label for="username">姓名:</label> 
+       <input type="text" name="username" value="" placeholder="用户名"><br>
+       <label for="password">密码:</label>
+       <input type="text" name="password" value=""><br>
+       <label for="">性别:</label>
+       <input type="radio" value="men" name="sex">
+       <label for="">男</label>
+       <input type="radio" value="female" name="sex">
+       <label for="">女</label><br>
+       <label for="">取向:</label>
+       <input type="radio" value="men" name="orientation">
+       <label for="">男</label>
+       <input type="radio" value="female" name="orientation">
+       <label for="">女</label><br>
+       <label for="">爱好:</label>
+       <input type="checkbox" value="tour" name="hobby" >旅游
+       <input type="checkbox" value="dota" name="hobby" checked="checked">dota
+       <input type="checkbox" value="pet" name="hobby" checked="checked">宠物 <br>
+       <label for="">评论:</label>
+       <textarea name="" id="" cols="30" rows="10"></textarea><br>
+       <label for="">我的car:</label>
+       <select name="" id="">
+           <option value="1">萨摩</option>
+           <option value="2">哈士奇</option>
+           <option value="3">阿拉斯加</option>
+           <option value="4">金毛</option>
+       </select>
+       <input type="submit" value="提交">
+    </form>
+</div>
+
+<div class=sanjiao>
+  
+</div>
+
+<div id="gotop" style = "position: fixed; right: 10px; bottom: 20px; ">回到顶部</div>
+
+
+<script>
+  function GoTop(id){
+    this.id = id ||'gotop';
+    this.init();
+  }
+
+  GoTop.prototype = {
+    init: function(){
+      var $el = $('#' + this.id);
+      if($el.length === 0 ){
+        this.$el = $('<div id="' + this.id + '" style = "position: fixed; right: 10px; bottom: 20px; ">回到顶部</div>')
+        $('body').append(this.$el);
+      }else{
+        this.$el = $el;
+      }
+
+      this.$c = $(document);  
+      this.bind();    
+    },
+
+    bind: function(){
+      var _this = this;
+      this.$el.click(function(){
+        _this.gotoTop()
+      });
+      this.$c.scroll(function(){
+        _this.scroll();
+      })
+    },
+
+    gotoTop:function(){
+      this.$c.scrollTop(0);
+    },
+    scroll:function(){
+      var scrollTop = this.$c.scrollTop();
+      if(scrollTop > 100){
+        this.$el.show();
+      }else{
+        this.$el.hide();
+      }
+    }
+
+  }
+  
+  new GoTop()
+</script>
+
+</body>
+</html>

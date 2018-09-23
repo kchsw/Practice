@@ -1,0 +1,96 @@
+for (var key in obj){
+   console.log(key,obj[key])
+}
+统计频率
+var str = "";
+var dict ={};
+for (var i=0;i<str.length;i++){
+   if (dict[str[i]]){
+     ++dict[str[i]]
+   }else{
+     dict[str[i]]=1 
+   }
+}
+var count = o;
+var maxValue;
+for (key in dict){
+  if(dict[key]>count){
+    conut = dict[key]
+    maxValue = key
+  } 
+}
+console.log(maxValue,count)
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. 实现
+
+代码很简单，思路是定义一个空对象来保存字符和它对应出现的次数，如下：
+
+/*2016-06-29*/
+
+//随便打一串字符做测试
+var str = "sdwprwqsjxg",json = {};
+
+for (var i = 0, l = str.length; i < l; i++) {
+    json[str[i]] = (json[str[i]] + 1) || 1;
+}
+
+console.log(JSON.stringify(json));
+//-> {"s":2,"d":1,"w":2,"p":1,"r":1,"q":1,"j":1,"x":1,"g":1}
+
+2. 扩展
+
+基于此可以扩展出许多类似的应用。
+
+2.1 字符串中第一个重复的字符
+
+例如字符串: var str = "sdwprwqsjxg"; 我们注意到第一个重复的字符为w，下面我们通过js来实现
+
+var str = "sdwprwqsjxg",json = {};
+for (var i = 0, l = str.length; i < l; i++) {
+    json[str[i]] = (json[str[i]] + 1) || 1;
+    if(json[str[i]] == 2){
+        alert(str[i]);//-> 第一个重复的为w
+        break;//-> 找到后退出循环
+    }
+}
+
+2.2 出现次数最多的字符
+
+例如字符串: var str = "dhhafhhheeert"; 我们注意到出现次数最多的字符为h(出现5次)，下面我们通过js来实现
+
+var str = "dhhafhhheeert",json = {};
+for (var i = 0, l = str.length; i < l; i++) {
+    json[str[i]] = (json[str[i]] + 1) || 1;
+}
+var temp_val = 1, temp_key = str[0];
+for(var key in json){
+    if(json[key] > temp_val){
+        temp_key = key;
+        temp_val = json[key];
+    }   
+}
+alert(temp_key + ": " + temp_val);//-> h: 5
+
+
+
+
+
+
+
+
+
+
+
+

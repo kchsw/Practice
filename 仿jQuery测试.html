@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="仿jQuery.js"></script>
+	<style>
+		.col{
+			color: red;
+		}
+		.item{
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+</ul>
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+</ul>
+	<script>
+		console.log($('ul').find('li').end())
+		$('li').addClass('item')
+		console.log($('ul').html())
+		$('li').on('click',function(){
+			this.classList.add("col")
+		})
+		
+	</script>
+	
+</body>
+</html>

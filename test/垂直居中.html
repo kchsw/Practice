@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.boxa{
+		height: 500px;
+		width: 500px;
+		background-color:red;
+		position: relative;
+		
+	}
+	.boxb{
+		width: 200px; 
+		height: 200px;
+		background-color:blue;
+		position: absolute; left: 50%; top: 50%;
+		margin-top: -100px;  
+        margin-left: -100px;  
+	}
+		
+    .boxc{
+    	margin-top: 20px;
+		height: 500px;
+		width: 500px;
+		background-color:red;
+		position: relative;
+	}
+    .boxd{
+		width: 200px; 
+		height: 200px;
+		background-color:blue;
+		position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+		margin: auto;	
+	}
+
+    .boxe{
+    	margin-top: 20px;
+		height: 500px;
+		width: 500px;
+		background-color:red;
+		position: relative;
+		margin-bottom: 20px;
+	}
+    .boxf{
+		width: 200px; 
+		height: 200px;
+		background-color:blue;
+		position: absolute; left: 50%; top: 50%;
+		-webkit-transform:translate(-50%, -50%);
+        -moz-transform:translate(-50%, -50%);
+	    transform: translate(-50% -50%);	
+	}
+
+
+    .boxh{
+		height: 500px;
+		width: 500px;
+		background-color:red;
+		display:table-cell;
+	    vertical-align:middle;
+	    text-align:center;
+		
+	}
+	.boxi{
+		width: 200px; 
+		height: 200px;
+		background-color:blue;
+		vertical-align:middle;
+	    display:inline-block
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .box{
+    width: 300px;
+    height: 200px;
+    border: 1px solid ;
+    text-align: center;
+    font-size: 0;
+    }
+    /*设置font-size:0是为了消除inline-block产生的空隙，否则当文本长度父元素宽度是会产生换行无法居中*/
+    .box:before{
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    }
+    .box .inner{
+    display: inline-block;
+    vertical-align: middle;
+    background: blue;
+    font-size:16px
+    }
+
+ .middle-box{display: table; height: 300px; border:1px solid #ff0000; width:400px; margin:0 auto; position:relative;}
+.middle-inner{display: table-cell; vertical-align:middle; *position:absolute; *top:50%; *left:50%; width:100%; text-align:center;}
+.middle-inner p{position:relative; *top:-50%; *left:-50%;}
+
+
+
+
+
+
+	</style>
+
+</head>
+<body>
+	<div class="boxa">
+		<div class="boxb">
+		</div>
+	</div>
+
+	<div class="boxc">
+		<div class="boxd">可以使用IE的特有的条件语法，不过我习惯用ie hack来写。下面这个的代码实现了水平垂直多行代码（支持一行）居中对齐。目前测试IE、chrome和Firefox均兼
+		</div>
+	</div>
+
+	<div class="boxe">
+		<div class="boxf">11
+		</div>
+	</div>
+
+	<div class="boxh">
+		<div class="boxi">
+		</div>
+	</div>
+
+
+<div class="box">
+    <span class="inner">关于多行文本............垂直居中关于多行文本垂直................................................居中关于多行文本垂直居中</span>
+</div>
+
+
+<div class="middle-box">
+	<div class="middle-inner">
+		<p><span class="suc-tip">前端开发博客，专注前端开发和web教程</span><br/><span class="suc-link">快捷入口：<a href="http://caibaojian.com">http://caibaojian.com</a></span></p>
+		<p style="display:none;"><span class="suc-tip">5年的老博客，一直致力于WEB开发</span></p>
+	</div>
+</div>
+
+</body>
+</html>

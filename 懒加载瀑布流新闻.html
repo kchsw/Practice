@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+<style>
+	ul,li{
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	a{
+		text-decoration: none;
+		color: #000;
+	}
+	.ct-waterfall{
+		width: 1200px;
+		margin: 0 auto;
+	}
+	.pic-ct{
+		position: relative;
+		margin: 0 auto;
+	}
+
+	.item{
+		position: absolute;
+		width: 250px;
+		border: 1px solid #ccc;
+		padding: 10px;
+		margin-right: 10px;
+	    margin-top: 15px;
+	    transition: all 1s;
+	}
+	.item img{
+		width: 250px;
+	}
+	.item h4{
+		border-bottom: 1px solid #ccc;
+		margin: 10px 0 5px;
+		padding-bottom: 2px;
+	}
+	.item p{
+		margin: 8px 0 2px;
+	}
+	.hide{
+		display: none;
+	}
+	.load{
+		visibility: hidden;
+	}
+</style>
+<body>
+	<div class="ct-waterfall">
+		<ul class="pic-ct">
+			
+			<li class="item hide">
+				<a href="">
+					<img src="http://s.img.mix.sina.com.cn/auto/resize?img=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F5_img%2F2016_09%2F453_75615_657883.jpg&size=250_0" alt="">
+					<h4>标题</h4>
+					<p>当地时间2016年3月1日，在东部与亲俄武装作战中受伤的乌克兰士兵接受海豚治疗。</p>
+				</a>
+			</li>
+			
+		</ul>
+		<div class="load">没有更多新闻了</div>
+	</div>
+
+
+	<script>	
+		var colNum = parseInt($('.ct-waterfall').width()/$('.item').outerWidth(true));
+		var colArr = [];
+		var curPage = 1;
+		var perPageCount = 10;
+		var clock;
+
+		$(".pic-ct").width(colNum * $('.item').outerWidth(true))
+		for (var i = 0;i < colNum;i++){
+			colArr[i] = 0;
+		}
+        
+        checkNews()
+
+        /*$(window).resize(function(){
+        	var Num = parseInt($(window).width()/$('.item').outerWidth(true));
+		    var Arr = [];
+		    for (var i = 0;i < Num;i++){
+			    Arr[i] = 0;
+		    }
+		    $('.hide').remove();
+			$('.item').each(function(){
+				var minArr = Math.min.apply(null,Arr);
+			        minIdx = Arr.indexOf(minArr);
+				$(this).css({
+					left: minIdx * $('.item').outerWidth(true),
+					top: minArr
+			    })
+			    Arr[minIdx]+= $(this).outerHeight(true);
+			})
+		})*/
+
+
+        $(window).on('scroll',function(){
+        	if(clock){
+        		clearTimeout(clock)
+        	}
+        	clock = setTimeout(function(){
+        		checkNews();
+        	},300)
+        })
+
+        function checkNews(){
+        	if(isVisible($('.load'))){
+        		getData(callback);
+        	}
+        }
+
+
+        function getData(callback){
+        	$.ajax({
+        		url: 'http://platform.sina.com.cn/slide/album_tech',
+				dataType: 'jsonp', 
+				jsonp:"jsoncallback",
+				data: {
+				app_key: '1271687855',
+				num: perPageCount,
+				page: curPage
+			    }
+        	}).done(function(ret){
+        		if(ret && ret.status && ret.status.code == 0){
+        			callback(ret.data);
+        			curPage++;
+        		}else{
+        			console.log('get error data')
+        		}
+        	});
+        }
+
+        function callback(data){
+        	console.log(data)
+        	$.each(data,function(idx,news){
+        		var $node = getNode(news);
+        		$node.find('img').load(function(){
+        			$('.pic-ct').append($node);
+        			render($node);
+        		})
+        	})
+        	checkNews();
+        }
+        
+        function getNode(item){
+        	var html = '';
+        	html+='<li class="item">';
+        	html+='<a href="' + item.url + '"><img src="' + item.img_url + '">';
+        	html+='<h4>' + item.short_name +'</h4><p>' + item.short_intro + '</p>';
+        	html+='</a></li>'
+        	return $(html);
+        }
+
+		function render($node){
+			var minArr = Math.min.apply(null,colArr);
+			    minIdx = colArr.indexOf(minArr);
+			$node.css({
+				left: minIdx * $('.item').outerWidth(true),
+				top: minArr
+			})
+			colArr[minIdx]+= $node.outerHeight(true);
+			$(".pic-ct").height(Math.max.apply(null,colArr));
+		}
+
+		function isVisible($node){
+			if($node.offset().top <= $(window).height() + $(window).scrollTop()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

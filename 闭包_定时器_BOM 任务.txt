@@ -1,0 +1,101 @@
+var fnArr = [];
+for (var i = 0;i<10;i++){
+  fnArr[i] = (function(i){
+    return function(){
+      return i
+    }
+  })(i)
+}
+console.log(fnArr[3]())
+
+var fnArr = [];
+for (var i = 0;i<10;i++){
+  (function(i){
+    fnArr[i] = function(){
+      return i
+    }
+  })(i)
+}
+console.log(fnArr[3]())
+
+var Car = (function(){
+   var speed = 0;
+   function setSpeed(s){
+       speed = s
+   }
+   function getSpeed(){
+     return speed
+   }
+   function accelerate(){
+     speed+=10
+   }
+   function decelerate(){
+     speed-=10
+   }
+   function getStatus(){
+     if(speed > 0){
+       return "running"
+     }
+     if(speed == 0){
+       return "stop"
+     }
+     
+   }   
+
+   return {
+      setSpeed: setSpeed,
+      getSpeed: getSpeed,
+      accelerate: accelerate,
+      decelerate: decelerate,
+      getStatus: getStatus
+   }
+})()
+
+
+Car.setSpeed(30);
+Car.getSpeed(); //30
+Car.accelerate();
+Car.getSpeed(); //40;
+Car.decelerate();
+Car.decelerate();
+Car.getSpeed(); //20
+Car.getStatus(); // 'running';
+Car.decelerate(); 
+Car.decelerate();
+Car.getStatus();
+//stop
+
+
+
+
+for(var i=0;i<5;i++){
+	(function(i){
+        setTimeout(function(){
+         console.log('delayer:' + i );
+	}, 0);
+	console.log(i);
+        })(i)
+}
+
+for(var i=0;i<5;i++){
+	setTimeout((function(i){
+          return function(){
+            console.log('delayer:' + i );
+          }
+	})(i), 0);
+	console.log(i);
+}
+
+
+function isAndroid(){
+    return /Android/.test(navigator.userAgent);
+}
+funcnction isIphone(){
+    return /iPhone/.test(navigator.userAgent);
+}
+function isIpad(){
+    return /iPad/.test(navigator.userAgent);
+}
+function isChrome(){
+    return / Chrome/i.test(navigator.userAgent);
+}

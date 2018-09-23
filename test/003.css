@@ -1,0 +1,50 @@
+.scenery{
+	width: 800px;
+	margin: 0 auto;
+}
+.scenery h1{
+	text-align: center;
+	color: #666;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+}
+.container{
+	margin: 0px;
+	padding: 0px;
+}
+.sce-card{
+	width: 260px;
+	list-style: none;
+	float: left;
+	margin-top: 30px;
+	margin-left: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)!important;
+}
+.container:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.sce-card>img{
+	width: 100%;
+	opacity: 0.75;
+}
+.sce-card h4{
+	text-align: center;
+	font-weight: normal;
+    margin: 17px 0;
+}
+.container>li:first-child{
+	margin-left: 0px;
+}
+/*margin-left: -10px; 多了10px */
+.container-1{
+	margin: 0px;
+	padding: 0px;
+	margin-left: -10px;
+}
+.container-1:after{
+	content: "";
+	display: block;
+	clear: both;
+}

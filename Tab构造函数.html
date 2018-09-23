@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		ul,li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.tab-div{
+			width: 602px;
+			font-size: 0;
+			border: 1px solid #000;
+		}
+		.tab-div ul li{
+			text-align: center;
+			font-size: 16px;
+			display: inline-block;
+			width: 200px;
+			line-height: 25px;
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
+			cursor: pointer;
+		}
+        .tab-div ul li:last-child{
+        	border-right-width: 0;
+        }
+		.content{
+			height: 150px;
+			font-size: 16px;
+			padding: 10px;
+		}
+		.on{
+			background-color: #eae5e6;
+		}
+		.hide{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="tab-div">
+    	<ul class="tab-ul">
+    		<li class="on">tab1</li>
+    		<li >tab2</li>
+    		<li >tab3</li>
+    	</ul>
+    	<div class="content" >内容1</div>
+    	<div class="content hide" >内容2</div>
+    	<div class="content hide" >内容3</div>
+    </div>
+
+    <script>
+        
+        function Tab ($Node){
+
+        	this.bing = function(){
+        		console.log($Node)
+
+        		$Node.children('ul').on('click','li',function(e){
+        			$(e.target).addClass('on').siblings().removeClass('on');
+        		$Node.children('div').eq($(e.target).index()).removeClass('hide').siblings('div').addClass('hide');
+        		})
+        	} 
+
+        	
+        }
+
+
+    	/*function Tab(Node){
+    		this.init = function(Node){
+
+    			this.tabs = Node.querySelectorAll('li');
+                this.tabNav = Node.querySelector('ul');
+    			this.panels = Node.querySelectorAll('div');
+
+    		}
+
+    		this.bind = function(){
+
+    			var self = this;
+    			
+    			self.tabNav.onclick = function(e){
+    				
+    				if(e.target.tagName.toLowerCase() === 'li'){
+
+    					self.tabs.forEach(function(node){
+	    					node.classList.remove('on');
+	    				})
+	    				self.panels.forEach(function(node){
+	    					node.classList.add('hide');
+	    				}) 
+
+	    				e.target.classList.add('on');
+		    			var index = [].indexOf.call(self.tabs,e.target);
+		    			self.panels[index].classList.remove('hide')   	
+
+    				}
+    						
+    			}
+    			
+    		}
+
+    		this.init(Node);
+    		this.bind();
+    	}
+
+    	var tab1 = document.querySelector('.tab-div');
+
+    	new Tab(tab1);*/
+
+    	var $tab = $('.tab-div')
+    	var tab = new Tab($tab)
+    </script>
+</body>
+</html>

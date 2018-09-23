@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		ul,li{
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		#ct li{
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-top: 10px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		#load-more{
+			display: block;
+			margin: 10px auto;
+			text-align: center;
+			cursor: pointer;
+			height: 40px;
+			line-height: 40px;
+			width: 80px;
+			border: 1px solid #e27272;
+			border-radius: 3px;
+			text-decoration: none;
+			color: #e27272;
+			font-size: 0;
+		}
+		#load-more:after{
+			content: "";
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+		#load-more img{
+			vertical-align: middle;
+		}
+		#load-more span{
+			font-size: 16px;
+		}
+		#ct li:hover{
+			background-color: green;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<ul id="ct">
+		<li>Tset</li>
+	</ul>
+	<a href="" id="load-more"><span>加载更多</span></a>
+	<img src="" alt="">
+	<script>
+		var curIndex = 0;
+		var len = 5;
+		$('#load-more').on("click",function(e){
+
+
+			e.preventDefault();
+			if($(this).data('isLoading')){
+				return;
+			}
+			$(this).data('isLoading','true')
+			       .html('<img src="loading.gif" >');
+			$.ajax({
+				url: '/loadMore',
+				dataType: 'json',
+				type: 'GET',
+				data: {
+					idx: curIndex,
+					len: len
+				},
+				success: function(json){
+					onSuccess(json)
+				},
+				error: function(){
+					onError()
+				}
+			})
+		})
+
+
+		function onSuccess(json){
+			$('.load-more').data('isLoading','false')
+			               .text('加载更多')
+			if(json.status == 1){
+				appendData(json.data);
+				curIndex +=len;
+			}else{
+				alert('获取数据失败')
+			}
+		}
+
+		function onError(){
+			$('.load-more').data('isLoading','false')
+			               .text('加载更多')
+			alert('服务器异常')
+		}
+
+
+
+
+		function appendData(data){
+			for (var i = 0;i<data.length;i++){
+				var child = document.createElement('li');
+				child.innerText = data[i];
+				ct.appendChild(child);
+			}
+		}
+	</script>
+</body>
+</html>

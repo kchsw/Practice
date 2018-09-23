@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<script src="./preload.js"></script>
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+			height: 100%
+		}
+		a{
+			text-decoration: none;
+		}
+		.box{
+			margin: 5px auto ;
+			text-align: center;
+			overflow: hidden;
+		}
+		#img{
+			border: 1px solid #ccc;
+			padding: 20px;
+		}
+		.btn{
+			color: #333;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			padding: 5px 20px;
+			margin-right: 50px;
+		}
+		.btn:hover{
+			background-color: #eee;
+		}
+		.loading{
+			position: absolute;
+			top:0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #eee;
+			text-align: center;
+			font-size: 50px;
+		}
+		.progress{
+			margin-top: 350px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<img src="" alt="" id="img">
+		<p>
+			<a href="javascript:;" class="btn" data-control='prev'>上一页</a>
+		    <a href="javascript:;" class="btn" data-control='next'>下一页</a>
+		</p>
+	</div>
+
+	<div class="loading">
+		<p class="progress">0%</p>
+	</div>
+	<!-- <img src="d:/jirengu.png" alt=""> -->
+    
+    
+	<script>
+		$('.box').hide()
+		var imgs = [
+			'http://imgs.aixifan.com/o_1cmuhv2unjbg112b181s2dp3q5n.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2un1depvo25h3124r1c5ro.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2unhvg1lrnsnn1li42jup.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2unpdt1kcglq2163h14v7q.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2un1c1v1p771iib168g1j86r.jpg',
+		]
+		var index = 0,
+		    len = imgs.length;
+		$('#img').attr('src',imgs[index]);
+
+		$.preload(imgs,{
+			each:function(count){
+				$('.progress').html(Math.round((count) / len * 100) + '%')
+			},
+			all:function(){
+				$('.loading').hide();
+	        	$('.box').show()
+	        	document.title = '1'/len
+			}
+		})
+        // $.each(imgs,function(i,src){
+        // 	var imgobj = new Image();
+        // 	imgobj.src = src;
+        // 	$(imgobj).on("load error",function(){
+        // 		count++;
+        // 		$('.progress').html(Math.round((count) / len * 100) + '%')
+
+        // 		if(count == len){
+	       //  		$('.loading').hide();
+	       //  		$('.box').show()
+	       //  		document.title = '1'/len
+	       //  	}
+	        	
+        // 	})
+        // })
+ 
+		$('.btn').on('click',function(){
+			($(this).data('control')==='prev')?index = Math.max(0,--index):index = Math.min(len,++index)
+			document.title = (index+1) + '/' + len;
+			$('#img').attr('src',imgs[index]) 
+		})
+	</script>
+
+
+</body>
+</html>

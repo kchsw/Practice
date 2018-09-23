@@ -1,0 +1,66 @@
+var a = 1;
+function fn(){
+  var a = 200
+  console.log(a)
+  
+}
+fn();
+console.log(a)
+
+结果 200 1
+
+
+var a = 1;
+function fn(){
+  console.log(a)
+  var a = 200
+}
+fn();
+console.log(a)
+
+结果 underfine 1
+
+
+var a = 1;
+function fn(){
+  console.log(a)
+  a = 200
+  
+}
+fn();
+console.log(a)
+
+结果 1 200
+
+var a = 1;
+function fn(){
+  a = 200
+  console.log(a)
+  
+}
+fn();
+console.log(a)
+
+结果 200 200
+
+//函数内没有var声明的话，a变量就是存在上级作用域，即使没有声明执行后默认在上级作用域内声明
+
+
+
+function fn(){
+  a = 1
+}
+fn()
+console.log(a)
+结果 1
+
+全局作用域内声明了a
+
+
+function fn(){
+  var a = 1
+}
+fn()
+console.log(a)
+
+全局作用域下并没有a这个变量，报错

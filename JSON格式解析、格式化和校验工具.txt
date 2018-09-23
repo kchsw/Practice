@@ -1,0 +1,13 @@
+{
+  'staff':[{'name':'josn','age':20},
+    {'name':'jack','age':30},
+    {'name':'han','age':10}]
+}
+解析成json字符串
+JSON.stringify()
+json字符串解析成JSON
+var jsondata = '{"staff":[{"name":"josn","age":20},{"name":"jack","age":30},{"name":"han","age":10}]}'
+var jsonobj = JSON.parse(jsondata);
+console.log(jsonobj.staff[0].name)
+
+JSON校验工具地址:www.jsonlint.com

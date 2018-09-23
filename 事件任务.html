@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ul class="ct">
+		<li>这里是</li>
+		<li>饥人谷</li>
+		<li>前端6班</li>
+    </ul>
+    <input class="ipt-add-content" placeholder="添加内容"/>
+	<button id="btn-add-start">开头添加</button>
+	<button id="btn-add-end">结尾添加</button>
+
+
+	<ul class="ct1">
+	    <li data-img="https://static.wezeit.com/wp-content/uploads/Picture/2018-04-24/5adecd33c5e03.jpg">鼠标放置查看图片1</li>
+	    <li data-img="https://static.wezeit.com/wp-content/uploads/Picture/2018-04-24/5adecda006b15.jpg">鼠标放置查看图片2</li>
+	    <li data-img="https://static.wezeit.com/wp-content/uploads/Picture/2018-04-24/5adecde3c1a3c.jpg">鼠标放置查看图片3</li>
+	</ul>
+    
+	<div class="img-preview"></div>
+<script>
+	function $(node){
+		return document.querySelector(node)
+	}
+    $('.ct').addEventListener('click',function(e){
+    	if (e.target.tagName.toLowerCase() ==='li'){
+    		console.log(e.target.innerText)
+    	}
+
+    })
+    $('#btn-add-end').addEventListener('click',function(){
+    	var newLi = document.createElement('li');
+    	newLi.innerText = $('.ipt-add-content').value;
+    	$('.ipt-add-content').value = '';
+    	$('.ct').appendChild(newLi);
+
+    })
+    $('#btn-add-start').addEventListener('click',function(){
+    	var newLi = document.createElement('li');
+    	newLi.innerText = $('.ipt-add-content').value;
+    	$('.ipt-add-content').value = '';
+    	$('.ct').insertBefore(newLi,$('.ct').firstChild);
+    })
+    
+
+    /*$('.ct1').addEventListener('mouseover',function(e){
+        if (e.target.tagName.toLowerCase()==='li'){
+            var newImg = document.createElement('img');
+            var imgSrc = e.target.getAttribute('data-img');
+            console.log(imgSrc);
+            newImg.setAttribute('src',imgSrc);
+            $('.img-preview').appendChild(newImg);
+        }
+    })
+    $('.ct1').addEventListener('mouseout',function(e){
+        if (e.target.tagName.toLowerCase()==='li'){
+            $('.img-preview').removeChild($('.img-preview').firstChild);
+
+        }
+
+    })*/
+
+
+    //直接修改.img-preview的innerHTML,代码少
+    $('.ct1').addEventListener('mouseover',function(e){
+        if (e.target.tagName.toLowerCase()==='li'){
+            var imgSrc = e.target.getAttribute('data-img');
+            console.log(imgSrc);
+            $('.img-preview').innerHTML = '<img src="'+imgSrc+'" alt="">'
+        }
+    })
+    // 关于mouseover和mouseenter的区别
+    //当绑定事件的元素里面有子元素的时候，鼠标经过绑定mouseover的当前元素以及它里面的子元素的时候，都会触发，而经过绑定mouseenter的元素时，只会在鼠标刚进入的时候触发，当进入其子元素的时候，是不会再触发的了。
+    //不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件,对应mouseout.
+    //只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。对应mouseleave
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+h1 span{
+	font-size: 100px;
+	color: red;
+	border:1px solid #000;
+}
+.oldPrice {
+	text-decoration:line-through;
+}
+img{
+	border:1px solid #000
+}
+div{
+	
+}
+.wrap h2{                           <!-- 单行文字时文字行间距等于块元素高度时居中 还是有问题的 -->
+    margin:0;
+    height:100px;
+    line-height:50px;
+    background:#ccc;
+    text-align:center;
+}
+.wrap-center{
+	background:#ccc;
+}
+#txt{
+    height:400px;
+    width:600px;
+	border:#333 solid 1px;
+	padding:5px;}
+p{
+	line-height:18px;
+	text-indent:2em;}
+h5{
+	text-align: center;
+}
+
+.form{
+	margin-top: 40px;
+}
+.sanjiao{
+	width: 10px;
+	height: 10px;
+	border-left: 1px solid red;
+	border-bottom: 1px solid red;
+	transform: rotateZ(-45deg);
+}

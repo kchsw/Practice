@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var stc = 'abcde\
+		abcde\
+		';
+		var stc1 = 'hello\n饥人谷'
+		/*function ucFirst(str){
+            var strUp = str.substr(0,1).toUpperCase()+str.substr(1);
+            return strUp;
+		}
+		var str0 = 'hunger';
+		var str1 = ucFirst(str);
+		console.log(str1);*/
+
+        /*function camelize(str){
+        	var stra = str.split("-");
+        	for (var i=1;i<stra.length;i++) {
+        		stra[i]=stra[i].substr(0,1).toUpperCase()+stra[i].substr(1);
+        	}
+        	var strc=stra.join('');
+        	return strc;
+        }
+        var str2 = "my-short-string";
+        var str3 = camelize(str2);
+        console.log(str3);*/
+        
+
+        /*function palindromic(str){
+        	var rts = str.split('').reverse().join('');
+        	if (str==rts){
+        		alert("是回文字符串")
+        	}else{
+        		alter("不是回文字符串")
+        	}
+        }
+        var str4 = "abcdedcba";
+        palindromic(str4);*/
+
+        /*function truncate(str,maxlength){
+        	if (str.length>maxlength){
+        		var stra = str.slice(0,maxlength)+"...";
+        		return stra;
+        	}else{
+        		return str;
+        	}
+        }*/
+
+
+        /*function theMost(str){
+        	var join={}
+        	for(i=0;i<str.length;i++){
+        		if(join[str[i]]){
+        			join[str[i]]++
+        		}else{
+        			join[str[i]]=1
+        		}
+        	}
+        	var count=0;
+        	var moststr;
+        	for(key in join){
+        		if(join[key]>count){
+        			count=join[key]
+        			moststr=key
+        		}
+        	}
+        	alert("出现频率最多的字符是"+":"+moststr)
+        }
+        theMost("dhhafhhheeert")*/
+
+
+        var prod = {
+        	name: '女装',
+            styles: ['短款', '冬季', '春装']
+        }
+        var arr = [];
+        arr.push("<dl class=\"product\">");
+        arr.push("<dt>"+prod.name+"</dt>")
+        for (var i=0;i<prod.styles.length;i++){
+        	arr.push("<dd>"+prod.styles[i]+"</dd>")
+        }
+        arr.push("</dl>")
+        arr = arr.join("")
+        	
+        
+
+        var obj = {
+					"name":"luoqian",
+					"age":21
+				}
+		JSON.stringify(obj);
+
+		var str = '{"name":"luoqian","age":21}';
+		JSON.parse(str);
+
+            
+ 
+	</script>	
+</body>
+</html>

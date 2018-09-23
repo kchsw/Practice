@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+    <style>
+        ul,li{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .tab-div{
+            
+            
+        }
+        .tabs{
+            font-size: 0;
+            width: 304px;
+        }
+
+        .item{
+            display: inline-block;
+            width: 100px;
+            line-height: 30px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            border-right: 1px solid #ccc;
+        }
+        .tabs li:last-child{
+            border-right: none;
+        }
+        .content{
+            width: 302px;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ccc;
+            
+        }
+        .panels{
+            width: 906px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .panels:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .panel{
+            float: left;
+            width: 302px;
+            height: 180px;
+        }
+        .content .panels div:nth-child(1){
+            background-color: red;
+        }
+        .content .panels div:nth-child(2){
+            background-color: blue;
+        }
+        .content .panels div:nth-child(3){
+            background-color: yellow;
+        }
+        .active{
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab-div">
+        <ul class="tabs">
+            <li class="item active">tab1</li>
+            <li class="item">tab2</li>
+            <li class="item">tab3</li>
+        </ul>
+        <div class="content">
+            <div class="panels">
+                <div class="panel">内容1</div>
+                <div class="panel">内容2</div>
+                <div class="panel">内容3</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $('.tabs>li').click(function(){
+                var $this = $(this);
+                var index = $this.index();
+                var panelWidth = $('.tab-div .content').width();
+                $this.addClass('active').siblings().removeClass('active');
+                $this.parents('.tab-div').find('.panels')
+                     .animate({left: -panelWidth * index});
+            })
+        })
+    </script>
+</body>
+</html>

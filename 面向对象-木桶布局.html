@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		.img-ct{
+			width: 1000px;
+			margin: 0 auto;
+			border: 1px solid #ccc;
+			padding: 10px;
+		}
+		.img-ct:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.img-ct>img{
+			float: left;
+			margin: 3px;
+		}
+		.tip{
+			text-align: center;
+			margin: 10px 0;
+			font-size: 18px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div class="tip">等待加载......</div>
+	<div class="img-ct">
+		 
+	</div>
+
+	<script>
+		function Barrel($Node){
+			this.$ct = $Node;
+			this.rowList = [];
+			//this.imgs = [];
+			this.rowWidth = 0;
+			this.loadImg();
+
+		}
+		Barrel.prototype = {
+			getImgUrls:function(num){
+				var color,width,height,urls = [];
+				for(var i = 0;i < num;i++){
+					color = Math.random().toString(16).substring(2,8);
+					width = Math.floor(Math.random()*100 + 50);
+					height = Math.floor(Math.random()*30 + 50);
+                    urls.push("http://placehold.it/" + width + "x" + height + "/" + color + "/fff");
+				}
+
+                return urls;
+			},
+			loadImg:function(){
+				var _this = this;
+				var imgs = this.getImgUrls(100);
+				var proimgs = []
+				$.each(imgs,function(idx,url){
+					var proimg = new Promise(function(resolve,reject){
+						var img = new Image();
+						img.src = url;
+						img.onload = function(){
+							var imgInfo = {
+								target: $(this),
+								height:100,
+								width:100 * this.width/this.height
+							}
+							resolve(imgInfo);
+					    }
+					})
+					proimgs.push(proimg)
+				})
+				console.log(proimgs);
+				Promise.all(proimgs)
+				       .then(function(results){
+				       	_this.render(results)
+				       })
+				
+			},
+			render:function(res){
+				var _this = this;
+				
+				$.each(res,function(){
+					if(this.width + _this.rowWidth >  $('.img-ct').width()){
+						rowHeight = this.height * ($('.img-ct').width() - _this.rowList.length * 6) / _this.rowWidth
+						console.log(_this.rowList)
+                        _this.layout(_this.rowList,rowHeight);
+                        _this.rowList = [];
+                        _this.rowList.push(this);
+                        _this.rowWidth = this.width;
+					}else{
+						_this.rowList.push(this);
+						_this.rowWidth += this.width;
+					}
+				})
+				$('.tip').text('加载完成')
+			},
+			layout:function(list,height){
+				
+				$.each(list,function(){
+					 $('.img-ct').append(this.target);
+					 this.target.height(height)
+				})
+
+			}
+
+		}
+
+		var bar = new Barrel($('.img-ct'))
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.cnblogs.com/duanhuajian/p/3152617.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/bundle-kubrick.css">
+<link type="text/css" rel="stylesheet" href="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/125804.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/bundle-kubrick-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/duanhuajian/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/duanhuajian/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/duanhuajian/wlwmanifest.xml">
+<script type="text/javascript" async="" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/map.js"></script><script async="" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/analytics.js"></script><script type="text/javascript" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/encoder.js"></script><script type="text/javascript" async="" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/"></script><script src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">var currentBlogApp = 'duanhuajian', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/share.js"></script><link rel="stylesheet" href="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/slide_share.css"><script type="text/javascript" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/jquery-1.12.4.min.js"></script></head>
+<body>
+<a name="top"></a>
+<div id="page_begin_html"><!-- 所有的链接在新窗口打开 
+    <base target="_blank">
+-->
+
+<!--样式js-->
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['2']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['1']();</script></div><script>load_page_begin_html();</script>
+
+<div id="header">
+    
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/duanhuajian/">Hello World</a></h1>
+<p id="tagline">关注IT，关注前端</p>
+</div>
+<div id="wrapper">
+<div id="main">
+    
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/duanhuajian/p/3152617.html">JSON和JSONP （含jQuery实例）（share）</a>
+		</h2>
+		<div class="postText"><div id="cnblogs_post_body" class="blogpost-body"><p>来源：<a href="http://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html" target="_blank">http://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html</a></p>
+<h2>前言：</h2>
+<p>&nbsp;</p>
+<p>说到AJAX就会不可避免的面临两个问题，第一个是AJAX以何种格式来交换数据？第二个是跨域的需求如何解决？这两个问题目前都有不同的解决方案，比如数据可以用自定义字符串或者用XML来描述，跨域可以通过服务器端代理来解决。</p>
+<p>但到目前为止最被推崇或者说首选的方案还是用JSON来传数据，靠JSONP来跨域。而这就是本文将要讲述的内容。</p>
+<p>&nbsp;</p>
+<p>JSON和JSONP虽然只有一个字母的差别，但其实他们根本不是一回事儿：<strong>JSON是一种数据交换格式，而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议</strong>。我们拿最近比较火的谍战片来打个比方，JSON是地下党们用来书写和交换情报的“暗号”，而JSONP则是把用暗号书写的情报传递给自己同志时使用的接头方式。看到没？一个是描述信息的格式，一个是信息传递双方约定的方法。</p>
+<p>&nbsp;</p>
+<h2><span>什么是JSON</span></h2>
+<p><span><br>前面简单说了一下，JSON是一种基于文本的数据交换方式，或者叫做数据描述格式。</span>&nbsp;</p>
+<p><strong>JSON的优点：</strong></p>
+<p>1、基于纯文本，跨平台传递极其简单；</p>
+<p>2、Javascript原生支持，后台语言几乎全部支持；</p>
+<p>3、轻量级数据格式，占用字符数量极少，特别适合互联网传递；</p>
+<p>4、可读性较强，虽然比不上XML那么一目了然，但在合理的依次缩进之后还是很容易识别的；</p>
+<p>5、容易编写和解析，当然前提是你要知道数据结构；</p>
+<p><strong>JSON的格式或者叫规则：</strong></p>
+<p>JSON能够以非常简单的方式来描述数据结构，XML能做的它都能做，因此在跨平台方面两者完全不分伯仲。</p>
+<p>1、JSON只有两种数据类型描述符，大括号{}和方括号[]，其余英文冒号:是映射符，英文逗号,是分隔符，英文双引号""是定义符。</p>
+<p>2、大括号{}用来描述一组“不同类型的无序键值对集合”（每个键值对可以理解为OOP的属性描述），方括号[]用来描述一组“相同类型的有序数据集合”（可对应OOP的数组）。</p>
+<p>3、上述两种集合中若有多个子项，则通过英文逗号,进行分隔。</p>
+<p>4、键值对以英文冒号:进行分隔，并且建议键名都加上英文双引号""，以便于不同语言的解析。</p>
+<p>5、JSON内部常用数据类型无非就是字符串、数字、布尔、日期、null 这么几个，字符串必须用双引号引起来，其余的都不用，日期类型比较特殊，这里就不展开讲述了，只是建议如果客户端没有按日期排序功能需求的话，那么把日期时间直接作为字符串传递就好，可以省去很多麻烦。</p>
+<p>&nbsp;</p>
+<p><strong>JSON实例：</strong></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<pre>// 描述一个人
+
+var person = {
+    "Name": "Bob",
+    "Age": 32,
+    "Company": "IBM",
+    "Engineer": true
+}
+
+// 获取这个人的信息
+
+var personAge = person.Age;
+
+// 描述几个人
+
+var members = [
+    {
+        "Name": "Bob",
+        "Age": 32,
+        "Company": "IBM",
+        "Engineer": true
+    },
+    {
+        "Name": "John",
+        "Age": 20,
+        "Company": "Oracle",
+        "Engineer": false
+    },
+    {
+        "Name": "Henry",
+        "Age": 45,
+        "Company": "Microsoft",
+        "Engineer": false
+    }
+]
+
+// 读取其中John的公司名称
+
+var johnsCompany = members[1].Company;
+
+// 描述一次会议
+
+var conference = {
+    "Conference": "Future Marketing",
+    "Date": "2012-6-1",
+    "Address": "Beijing",
+    "Members": 
+    [
+        {
+            "Name": "Bob",
+            "Age": 32,
+            "Company": "IBM",
+            "Engineer": true
+        },
+        {
+            "Name": "John",
+            "Age": 20,
+            "Company": "Oracle",
+            "Engineer": false
+        },
+        {
+            "Name": "Henry",
+            "Age": 45,
+            "Company": "Microsoft",
+            "Engineer": false
+        }
+    ]
+}
+
+// 读取参会者Henry是否工程师
+
+var henryIsAnEngineer = conference.Members[2].Engineer;</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><strong>什么是JSONP?</strong></h2>
+<p><strong><br>先说说JSONP是怎么产生的：</strong>&nbsp;</p>
+<p>1、一个众所周知的问题，Ajax直接请求普通文件存在跨域无权限访问的问题，甭管你是静态页面、动态网页、web服务、WCF，只要是跨域请求，一律不准；</p>
+<p>2、不过我们又发现，<strong>Web页面上调用js文件时则不受是否跨域的影响（不仅如此，我们还发现凡是拥有"src"这个属性的标签都拥有跨域的能力，比如&lt;script&gt;、&lt;img&gt;、&lt;iframe&gt;</strong>）；</p>
+<p>3、于是可以判断，当前阶段如果想通过纯web端（ActiveX控件、服务端代理、属于未来的HTML5之Websocket等方式不算）跨域访问数据就只有一种可能，那就是在远程服务器上设法把数据装进js格式的文件里，供客户端调用和进一步处理；</p>
+<p>4、恰巧我们已经知道有一种叫做JSON的纯字符数据格式可以简洁的描述复杂数据，更妙的是JSON还被js原生支持，所以在客户端几乎可以随心所欲的处理这种格式的数据；</p>
+<p>5、这样子解决方案就呼之欲出了，web客户端通过与调用脚本一模一样的方式，来调用跨域服务器上动态生成的js格式文件（一般以JSON为后缀），显而易见，服务器之所以要动态生成JSON文件，目的就在于把客户端需要的数据装入进去。</p>
+<p>6、客户端在对JSON文件调用成功之后，也就获得了自己所需的数据，剩下的就是按照自己需求进行处理和展现了，<strong>这种获取远程数据的方式看起来非常像AJAX，但其实并不一样</strong>。</p>
+<p>7、<strong>为了便于客户端使用数据，逐渐形成了一种非正式传输协议，人们把它称作JSONP，该协议的一个要点就是允许用户传递一个callback参数给服务端，然后服务端返回数据时会将这个callback参数作为函数名来包裹住JSON数据，这样客户端就可以随意定制自己的函数来自动处理返回数据了。</strong></p>
+<p>&nbsp;</p>
+<p><strong>JSONP的客户端具体实现：</strong></p>
+<p>下面来说明一下jsonp在客户端的实现：</p>
+<p>1、我们知道，哪怕跨域js文件中的代码（当然指符合web脚本安全策略的），web页面也是可以无条件执行的。</p>
+<p>远程服务器remoteserver.com根目录下有个remote.js文件代码如下：</p>
+<div class="cnblogs_code">
+<pre>alert('我是远程文件');</pre>
+</div>
+<p>本地服务器localserver.com下有个jsonp.html页面代码如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type="text/javascript" src="http://remoteserver.com/remote.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>毫无疑问，页面将会弹出一个提示窗体，显示跨域调用成功。</p>
+<p>&nbsp;</p>
+<p>2、现在我们在jsonp.html页面定义一个函数，然后在远程remote.js中传入数据进行调用。</p>
+<p>jsonp.html页面代码如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type="text/javascript"&gt;
+    var localHandler = function(data){
+        alert('我是本地函数，可以被跨域的remote.js文件调用，远程js带来的数据是：' + data.result);
+    };
+    &lt;/script&gt;
+    &lt;script type="text/javascript" src="http://remoteserver.com/remote.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>remote.js文件代码如下：</p>
+<div class="cnblogs_code">
+<pre>localHandler({"result":"我是远程js带来的数据"});</pre>
+</div>
+<p>运行之后查看结果，页面成功弹出提示窗口，显示本地函数被跨域的远程js调用成功，并且还接收到了远程js带来的数据。很欣喜，跨域远程获取数据的目的基本实现了，但是又一个问题出现了，我怎么让远程js知道它应该调用的本地函数叫什么名字呢？毕竟是jsonp的服务者都要面对很多服务对象，而这些服务对象各自的本地函数都不相同啊？我们接着往下看。</p>
+<p>&nbsp;</p>
+<p>3、聪明的开发者很容易想到，只要服务端提供的js脚本是动态生成的就行了呗，这样调用者可以传一个参数过去告诉服务端“我想要一段调用XXX函数的js代码，请你返回给我”，于是服务器就可以按照客户端的需求来生成js脚本并响应了。</p>
+<p>看jsonp.html页面的代码：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type="text/javascript"&gt;
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert('你查询的航班结果是：票价 ' + data.price + ' 元，' + '余票 ' + data.tickets + ' 张。');
+    };
+    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
+    var url = "http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler";
+    // 创建script标签，设置其属性
+    var script = document.createElement('script');
+    script.setAttribute('src', url);
+    // 把script标签加入head，此时调用开始
+    document.getElementsByTagName('head')[0].appendChild(script); 
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>这次的代码变化比较大，不再直接把远程js文件写死，而是编码实现动态查询，而这也正是jsonp客户端实现的核心部分，本例中的重点也就在于如何完成jsonp调用的全过程。</p>
+<p>我们看到调用的url中传递了一个code参数，告诉服务器我要查的是CA1998次航班的信息，而callback参数则告诉服务器，我的本地回调函数叫做flightHandler，所以请把查询结果传入这个函数中进行调用。</p>
+<p>OK，服务器很聪明，这个叫做flightResult.aspx的页面生成了一段这样的代码提供给jsonp.html（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）：</p>
+<div class="cnblogs_code">
+<pre>flightHandler({
+    "code": "CA1998",
+    "price": 1780,
+    "tickets": 5
+});</pre>
+</div>
+<p>我们看到，传递给flightHandler函数的是一个json，它描述了航班的基本信息。运行一下页面，成功弹出提示窗口，jsonp的执行全过程顺利完成！</p>
+<p>&nbsp;</p>
+<p>4、到这里为止的话，相信你已经能够理解jsonp的客户端实现原理了吧？剩下的就是如何把代码封装一下，以便于与用户界面交互，从而实现多次和重复调用。</p>
+<h1><span style="font-size: 18px;">jQuery对JSONP的实现</span></h1>
+<p>我们依然沿用上面那个航班信息查询的例子，假定返回jsonp结果不变：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+ &lt;html xmlns="http://www.w3.org/1999/xhtml" &gt;
+ &lt;head&gt;
+     &lt;title&gt;Untitled Page&lt;/title&gt;
+      &lt;script type="text/javascript" src=jquery.min.js"&gt;&lt;/script&gt;
+      &lt;script type="text/javascript"&gt;
+     jQuery(document).ready(function(){ <br>        $.ajax({
+             type: "get",
+             async: false,
+             url: "http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998",
+             dataType: "jsonp",
+             jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+             jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+             success: function(json){
+                 alert('您查询到航班信息：票价： ' + json.price + ' 元，余票： ' + json.tickets + ' 张。');
+             },
+             error: function(){
+                 alert('fail');
+             }
+         });
+     });
+     &lt;/script&gt;
+     &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+ &lt;/html&gt;</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a title="复制代码" href="http://www.cnblogs.com/duanhuajian/admin/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode(1).gif" alt="复制代码"></a></span></div>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>是不是有点奇怪？为什么我这次没有写flightHandler这个函数呢？而且竟然也运行成功了！这就是jQuery的功劳了，jquery在处理jsonp类型的ajax时（还是忍不住吐槽，虽然jquery也把jsonp归入了ajax，但其实它们真的不是一回事儿），自动帮你生成回调函数并把数据取出来供success属性方法来调用，是不是很爽呀？</p>
+<p>&nbsp;</p>
+<h2><span>这里针对ajax与jsonp的异同再做一些补充说明：</span><strong><span lang="EN-US">&nbsp;</span></strong></h2>
+<p><span lang="EN-US">1、ajax和jsonp这两种技术在调用方式上“看起来”很像，目的也一样，都是请求一个url，然后把服务器返回的数据进行处理，因此jquery和ext等框架都把jsonp作为ajax的一种形式进行了封装；</span></p>
+<p><span lang="EN-US">2、但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加&lt;script&gt;标签来调用服务器提供的js脚本。</span></p>
+<p><span lang="EN-US">3、所以说，其实ajax与jsonp的区别不在于是否跨域，ajax通过服务端代理一样可以实现跨域，jsonp本身也不排斥同域的数据的获取。</span></p>
+<p><span lang="EN-US">4、还有就是，jsonp是一种方式或者说非强制性协议，如同ajax一样，它也不一定非要用json格式来传递数据，如果你愿意，字符串都行，只不过这样不利于用jsonp提供公开服务。</span></p>
+<p><span lang="EN-US">总而言之，jsonp不是ajax的一个特例，哪怕jquery等巨头把jsonp封装进了ajax，也不能改变着一点！</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div><div id="MySignature" style="display: block;"><div style="border:1px #bbb solid;padding:4px 6px;margin-top:50px;">
+【作者】：<a href="http://www.weibo.com/duanhuajian/" target="_blank">@挨踢前端</a><br>
+【出处】：<a id="dhjHref" href="http://www.cnblogs.com/duanhuajian/" target="_blank">http://www.cnblogs.com/duanhuajian/</a><br>
+【声明】：所有博文标题后加（share）的表示收集的他人优秀文章，其余的则为原创。欢迎转载，但请在显要位置显示本文链接，并保留本段声明，否则追究法律责任，谢谢！
+</div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/duanhuajian/category/421382.html" target="_blank">Ajax</a>,<a href="http://www.cnblogs.com/duanhuajian/category/406666.html" target="_blank">javascript</a>,<a href="http://www.cnblogs.com/duanhuajian/category/492360.html" target="_blank">jsonp</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(3152617,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;7f2a463b-2fe2-e111-aa3f-842b2b196315&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/duanhuajian/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/20140904174029.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/duanhuajian/">挨踢前端</a><br>
+            <a href="http://home.cnblogs.com/u/duanhuajian/followees">关注 - 25</a><br>
+            <a href="http://home.cnblogs.com/u/duanhuajian/followers">粉丝 - 417</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;7f2a463b-2fe2-e111-aa3f-842b2b196315&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(3152617,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">3</span>
+    </div>
+    <div class="buryit" onclick="votePost(3152617,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/duanhuajian/p/3152177.html" class="p_n_p_prefix" target="_blank">« </a> 上一篇：<a href="http://www.cnblogs.com/duanhuajian/p/3152177.html" title="发布于2013-06-24 11:42" target="_blank">纯JavaScrip图表插件——Highcharts</a><br><a href="http://www.cnblogs.com/duanhuajian/p/3155080.html" class="p_n_p_prefix" target="_blank">» </a> 下一篇：<a href="http://www.cnblogs.com/duanhuajian/p/3155080.html" title="发布于2013-06-25 17:23" target="_blank">jsonp跨域请求数据实例——手机号码查询</a><br></div>
+</div>
+
+</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2013-06-24 15:52</span> <a href="http://www.cnblogs.com/duanhuajian/">挨踢前端</a> 阅读(<span id="post_view_count">33258</span>) 评论(<span id="post_comment_count">7</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=3152617" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#" onclick="AddToWz(3152617);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=125804,cb_entryId=3152617,cb_blogApp=currentBlogApp,cb_blogUserGuid='7f2a463b-2fe2-e111-aa3f-842b2b196315',cb_entryCreatedDate='2013/6/24 15:52:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<a name="comments"></a>
+<div id="comments">
+<h3>评论</h3>
+
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#2713713" class="layer">#1楼</a><a name="2713713" id="comment_anchor_2713713"></a><span> <span class="comment_date">2013-06-26 13:29</span></span><a id="a_comment_author_2713713" href="http://www.cnblogs.com/cy056/" target="_blank">积跬步</a> <a href="http://msg.cnblogs.com/send/%E7%A7%AF%E8%B7%AC%E6%AD%A5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_2713713" class="blog_comment_body">不错</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2713713,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2713713,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2713713_avatar" style="display:none;">http://pic.cnblogs.com/face/u360236.jpg?id=16185710</span><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#2751133" class="layer">#2楼</a><a name="2751133" id="comment_anchor_2751133"></a><span> <span class="comment_date">2013-08-14 14:34</span></span><a id="a_comment_author_2751133" href="http://www.cnblogs.com/wumadi/" target="_blank">无码帝</a> <a href="http://msg.cnblogs.com/send/%E6%97%A0%E7%A0%81%E5%B8%9D" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_2751133" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2751133,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2751133,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2751133_avatar" style="display:none;">http://pic.cnblogs.com/face/497929/20130421185755.png</span><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3165004" class="layer">#3楼</a><a name="3165004" id="comment_anchor_3165004"></a><span> <span class="comment_date">2015-04-17 16:55</span></span><a id="a_comment_author_3165004" href="http://www.cnblogs.com/tobystudy/" target="_blank">dhl_345</a> <a href="http://msg.cnblogs.com/send/dhl_345" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_3165004" class="blog_comment_body">这么好的文章 ，多多支持、推荐。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3165004,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3165004,&#39;Bury&#39;,this)">反对(0)</a></div><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3177923" class="layer">#4楼</a><a name="3177923" id="comment_anchor_3177923"></a>[<span class="louzhu">楼主</span>]<span> <span class="comment_date">2015-05-07 11:09</span></span><a id="a_comment_author_3177923" href="http://www.cnblogs.com/duanhuajian/" target="_blank">挨踢前端</a> <a href="http://msg.cnblogs.com/send/%E6%8C%A8%E8%B8%A2%E5%89%8D%E7%AB%AF" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_3177923" class="blog_comment_body"><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3165004" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3165004);">@</a>
+dhl_345<br>谢谢，我也是转发别人的，觉得很好，就收藏了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3177923,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3177923,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3177923_avatar" style="display:none;">http://pic.cnblogs.com/face/436120/20140904174029.png</span><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3251634" class="layer">#5楼</a><a name="3251634" id="comment_anchor_3251634"></a><span> <span class="comment_date">2015-08-21 13:13</span></span><a id="a_comment_author_3251634" href="http://www.cnblogs.com/wangqiideal/" target="_blank">踏歌&amp;而行</a> <a href="http://msg.cnblogs.com/send/%E8%B8%8F%E6%AD%8C%26amp%3B%E8%80%8C%E8%A1%8C" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_3251634" class="blog_comment_body">讲的很详细</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3251634,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3251634,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3251634_avatar" style="display:none;">http://pic.cnblogs.com/face/u28596.jpg</span><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3634777" class="layer">#6楼</a><a name="3634777" id="comment_anchor_3634777"></a><span> <span class="comment_date">2017-03-08 13:22</span></span><a id="a_comment_author_3634777" href="http://home.cnblogs.com/u/995323/" target="_blank">别说</a> <a href="http://msg.cnblogs.com/send/%E5%88%AB%E8%AF%B4" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_3634777" class="blog_comment_body">非常好！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3634777,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3634777,&#39;Bury&#39;,this)">反对(0)</a></div><span class="comment_actions"></span><p></p>
+
+	<h4><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#3909697" class="layer">#7楼</a><a name="3909697" id="comment_anchor_3909697"></a><span id="comment-maxId" style="display:none;">3909697</span><span id="comment-maxDate" style="display:none;">2018/2/23 15:30:45</span><span> <span class="comment_date">2018-02-23 15:30</span></span><a id="a_comment_author_3909697" href="http://www.cnblogs.com/carlows/" target="_blank">黑糖玛奇朵</a> <a href="http://msg.cnblogs.com/send/%E9%BB%91%E7%B3%96%E7%8E%9B%E5%A5%87%E6%9C%B5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a></h4>
+	<p></p><div id="comment_body_3909697" class="blog_comment_body">循序渐进，很好的让我理解了运作原理最后的补充让我恍然大悟·····看了好几篇文章里面都只有代码，但就是不说那个回调方法到底是个什么情况</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3909697,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3909697,&#39;Bury&#39;,this)">反对(0)</a></div><span class="comment_actions"></span><p></p>
+
+</div><div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="https://www.yunqi2050.com/" target="_blank">【活动】2050 大会 - 年青人因科技而团聚（5.26-5.27 杭州·云栖小镇）</a><br><a href="http://clickc.admaster.com.cn/c/a105960,b2436452,c1705,i0,m101,8a1,8b2,h" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-DevCloud&#39;)">【推荐】华为云7大明星产品0元免费使用</a><br><a href="https://cloud.tencent.com/product/tac?fromSource=gwzcw.926333.926333.926333" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云如何降低移动开发成本</a><br><a href="http://challenge.xfyun.cn/?ch=bk" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-xfyun&#39;)">【大赛】2018首届“顶天立地”AI开发者大赛</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1&#39;);" href="https://cloud.tencent.com/solution/la?fromSource=gwzcw.926335.926335.926335" target="_blank"><img width="300" height="250" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/24442-20180520213658559-918592692.jpg" alt="腾讯云0518"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/597272/" target="_blank">幸运56人：小米IPO令早期员工投资获200倍回报</a><br> ·  <a href="https://news.cnblogs.com/n/597271/" target="_blank">星巴克回应“联合美团上线外卖”：有兴趣，但从没说跟谁一起合作</a><br> ·  <a href="https://news.cnblogs.com/n/597270/" target="_blank">百度高级副总裁向海龙：AI赋能，百度已经准备好全面拥抱视频时代</a><br> ·  <a href="https://news.cnblogs.com/n/597269/" target="_blank">蚂蚁金服胡喜：自主研发是唯一出路，IoT将为芯片产业带来机会</a><br> ·  <a href="https://news.cnblogs.com/n/597268/" target="_blank">Google让AI帮你给餐厅打电话订位子做预约，但这事儿，微软不服！</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/9667/" target="_blank"><img src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/TB1iQKbhqmWBuNjy1XaXXXCbXXa-468-60.jpg" alt="" style="width: 468px; height: 60px;"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/576411/" target="_blank">你可以把编程当做一项托付终身的职业</a><br> ·  <a href="http://kb.cnblogs.com/page/596164/" target="_blank">评审的艺术——谈谈现实中的代码评审</a><br> ·  <a href="http://kb.cnblogs.com/page/577233/" target="_blank">如何高效学习</a><br> ·  <a href="http://kb.cnblogs.com/page/578689/" target="_blank">如何成为优秀的程序员？</a><br> ·  <a href="http://kb.cnblogs.com/page/594930/" target="_blank">菜鸟工程师的超神之路 -- 从校园到职场</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+    
+</div>
+<div id="rightmenu">
+    
+        
+<h3>公告</h3>
+	<div id="blog-news"><!--微博秀
+<div id="dhj_weibo" style="margin:10px 0;"></div>
+<div style="display: none" id="__document_write_ajax_div-1"></div><script type="text/javascript">window['__document_write_ajax_callbacks__']['1']();</script>
+-->
+
+
+<!--统计地图-->
+<div id="clustrmaps-widget"></div><a target="_top" href="https://clustrmaps.com/map/Cnblogs.com/duanhuajian/?utm_source=widget&amp;utm_campaign=widget_ctr" id="clustrmaps-widget-v2" class="clustrmaps-map-control" style="width: 245px;"><div class="clustrmaps-map-container" style="background-color: rgb(45, 120, 173);"><div class="clstm clustrmaps-visitors" style="font-size: 12px; line-height: 16px; color: rgb(255, 255, 255);">2,149 Pageviews</div><div class="clstm clustrmaps-date" style="font-size: 12px; line-height: 16px; color: rgb(255, 255, 255);">Apr. 22nd - May. 22nd</div><div class="clustrmaps-map liveDotsReady" style="width: 245px; height: 120.098px; background-image: url(&quot;//clustrmaps.com/generated_content/backs/bg-w_245.png&quot;);"><div class="jvectormap-container" style="background-color: transparent;"><svg width="245" height="120"><defs></defs><g transform="scale(0.22685185185185183) translate(90.00000000000003, 44.1366405463009)"></g><g></g><g style="visibility: visible;"><circle data-index="0" cx="180.2415750730661" cy="61.27551506658551" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="4" class="jvectormap-marker jvectormap-element"></circle><circle data-index="1" cx="182.02426455141568" cy="50.6841744706474" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="4" class="jvectormap-marker jvectormap-element"></circle><circle data-index="2" cx="184.8709554515213" cy="56.4259498653807" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="3" cx="175.5552199775098" cy="53.91727348267146" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="4" cx="180.74332749196367" cy="61.62448506777176" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="5" cx="184.16754775275433" cy="56.895522041671605" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="6" cx="175.0250654065179" cy="56.66282810857922" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="7" cx="182.47210968563837" cy="51.20901401217719" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="8" cx="180.82291032213186" cy="56.716887586086976" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="9" cx="183.38160340000144" cy="55.787817727195886" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="10" cx="180.4020472323988" cy="54.12059092035825" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="11" cx="180.16409400215292" cy="58.204184994892366" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="12" cx="177.78683387186163" cy="54.39314461082484" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="13" cx="182.37014595961995" cy="52.83717441773864" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="14" cx="184.9421312446696" cy="60.118647625045064" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="15" cx="176.43727721294977" cy="57.34973410249034" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="16" cx="183.68170053902958" cy="59.49897099890795" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="17" cx="77.28377373129791" cy="58.31434278177142" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="18" cx="182.53124296629863" cy="55.91237635971339" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="19" cx="186.02584375997895" cy="49.4264936445381" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="20" cx="182.98630224715322" cy="60.45639442977366" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="21" cx="177.43924833453178" cy="61.455081972293804" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="22" cx="184.64390864767967" cy="61.04572158365261" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="23" cx="181.39186223288448" cy="50.71041083457126" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="24" cx="176.53037946751476" cy="59.181293310716306" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="25" cx="184.98598416750315" cy="51.361791103327405" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="26" cx="181.76580496735778" cy="57.975882349771766" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="27" cx="180.75281381076314" cy="61.77374213816404" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="28" cx="178.29443713409057" cy="50.19845171294576" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="29" cx="184.46293013453487" cy="60.65910864461001" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="30" cx="184.28712081307128" cy="53.20756472057035" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="31" cx="184.41407843293274" cy="56.26400983670721" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="32" cx="180.17426197260266" cy="61.32935152457098" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="33" cx="174.25911616883934" cy="60.11882901070197" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="34" cx="187.8533518343334" cy="46.68068832821827" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="35" cx="184.23980282768224" cy="56.09783968391573" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="36" cx="181.16356573435064" cy="51.25514418685249" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="37" cx="184.28712081307128" cy="53.20756472057035" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="38" cx="180.76230012956268" cy="61.79361049444836" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="39" cx="184.62499281438488" cy="66.29913675303624" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="40" cx="180.74332749196367" cy="61.73393682054574" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="41" cx="174.8691375915203" cy="53.234936074010015" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="42" cx="48.73892922489539" cy="54.5302882364838" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="43" cx="184.9560482991958" cy="57.15395667549314" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="44" cx="180.50668076071412" cy="61.325459766876094" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="45" cx="45.97380930560456" cy="44.13367690036237" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="46" cx="184.02366245024473" cy="55.517097925456646" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="47" cx="184.66435819718754" cy="66.31839269415246" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="48" cx="179.79895593482883" cy="52.14448987886985" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="49" cx="184.05694977249925" cy="55.96308471709708" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="50" cx="46.40733975517166" cy="52.276398867660134" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="51" cx="182.19831293944952" cy="50.96428159105506" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="52" cx="175.5552199775098" cy="53.91727348267146" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="53" cx="180.42209915177733" cy="61.777560911578426" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="54" cx="46.45539619651519" cy="45.40161081095009" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="55" cx="179.79265065706392" cy="61.31474185653969" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="56" cx="183.2725391359594" cy="60.19438231283314" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="57" cx="175.4155949978143" cy="56.166652055692836" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="58" cx="184.50189788720826" cy="56.609426021889504" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="59" cx="188.0408060381556" cy="52.247527226038095" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="60" cx="117.24560172795111" cy="44.443185619051064" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="61" cx="71.95399628219774" cy="51.314063590115225" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="62" cx="51.392315077847286" cy="40.9857684502839" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="63" cx="184.61794908066548" cy="56.21791521913933" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="64" cx="184.40050220423166" cy="57.07140995395439" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="65" cx="184.3363701448028" cy="49.57738241778378" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="66" cx="187.09944510914278" cy="47.99131073515097" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="67" cx="72.83798486398013" cy="46.967850186886686" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="68" cx="173.71856641018098" cy="52.87078991537626" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="69" cx="179.8344586249467" cy="58.478078581962826" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="70" cx="179.8341746034257" cy="55.198036858188765" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="71" cx="195.2955109432936" cy="53.475448588799956" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="72" cx="183.22283536979438" cy="60.14972099552426" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="73" cx="179.86161108234887" cy="51.96792466932459" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="74" cx="184.57273285453135" cy="55.807601939237905" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="75" cx="184.02491214493688" cy="58.03109468203319" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="76" cx="174.90526512898424" cy="73.90634736288828" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="77" cx="137.27854846891444" cy="39.18420093319867" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="78" cx="191.46042515030706" cy="90.3548439240735" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="79" cx="115.83685498407478" cy="42.48114044992747" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="80" cx="73.6043885360922" cy="50.97748680098677" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="81" cx="120.45504491460484" cy="45.79040819634869" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="82" cx="165.67155507022096" cy="48.046142047263565" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="83" cx="188.0398403649844" cy="52.2288207993233" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="84" cx="183.03617642623078" cy="50.118847568836784" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="85" cx="63.35087080423167" cy="47.85822009550078" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="86" cx="46.57684379887033" cy="52.346435627796104" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="87" cx="74.11233262414632" cy="46.8360337063026" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="88" cx="50.954978739899545" cy="33.56738008155443" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="89" cx="174.8598216856334" cy="73.87953119910853" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="90" cx="176.27839557413432" cy="51.65594848976077" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="91" cx="180.5921712385179" cy="53.71831427924689" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="92" cx="178.58953549435017" cy="63.10239286634385" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="93" cx="180.77172964405798" cy="61.75381113281695" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="94" cx="175.5552199775098" cy="67.2154765852481" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="95" cx="121.02308795649046" cy="42.85747457485879" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="96" cx="60.81052551661501" cy="51.96482935501295" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="97" cx="184.62766261668173" cy="60.26034654814919" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="98" cx="184.8711258644339" cy="52.27160950937538" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="99" cx="184.69724788931273" cy="56.17386946071555" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="100" cx="182.38451744857963" cy="60.077526387494764" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="101" cx="177.8841964492408" cy="62.25025026206161" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="102" cx="180.75281381076314" cy="61.77374213816404" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="103" cx="188.0572224820661" cy="52.43036112123968" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="104" cx="178.72654747605299" cy="62.34576833547005" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="105" cx="179.33395590074122" cy="50.09166453696647" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="106" cx="202.87309151343936" cy="90.6867219187874" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="107" cx="124.76268571413607" cy="38.850805069022954" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="108" cx="119.9870342523953" cy="48.136278562518314" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="109" cx="72.28596063587568" cy="51.12579129180893" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="110" cx="71.10977071334733" cy="51.66817862993647" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="111" cx="68.3422650132806" cy="49.0953477870405" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="112" cx="73.74509279756725" cy="50.35821616285084" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="113" cx="48.744950481139355" cy="54.638191910720465" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="114" cx="55.1917845721076" cy="54.52096024007974" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="115" cx="200.5603610727063" cy="95.48947371583463" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="116" cx="130.03281864383825" cy="35.498662918270654" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="117" cx="186.26129760084058" cy="68.80171771023262" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="118" cx="180.94833422578017" cy="52.57952414129602" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="119" cx="180.65812103568084" cy="61.70408991027007" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="120" cx="179.40592695414813" cy="57.91971586814447" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="121" cx="119.30475775478646" cy="42.462263569072164" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="122" cx="62.814638172691645" cy="47.198151495168595" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="123" cx="73.96804969150736" cy="50.02281997460521" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="124" cx="50.50139637095388" cy="53.214635424120935" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="125" cx="60.686464916267184" cy="43.595247339930445" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="126" cx="201.7420042084367" cy="94.70231595550061" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="127" cx="180.97293048949382" cy="53.49717381756339" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="128" cx="177.65845614439547" cy="54.342261120174456" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="129" cx="178.9066739246349" cy="62.15109578359327" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="130" cx="178.0484744969541" cy="60.55716103652987" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="131" cx="183.8737558914911" cy="57.63212025663608" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="132" cx="180.14688229798378" cy="61.594613366310966" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="133" cx="180.9705447087179" cy="52.90335011238752" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="134" cx="178.3047187131487" cy="59.20262560162087" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="135" cx="196.54742100330532" cy="97.24644819504987" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="136" cx="126.17444308613437" cy="36.25457582762578" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="137" cx="121.47752238999895" cy="41.861452995295735" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="138" cx="113.3639932098341" cy="40.44690151442817" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="139" cx="60.92254360447484" cy="55.33465934815254" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="140" cx="66.09122404689626" cy="49.32077644216809" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="141" cx="65.67672303923234" cy="48.8802635404571" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="142" cx="49.382521991351766" cy="45.30403552749239" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="143" cx="182.46097604201742" cy="54.44291168109571" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="144" cx="175.5552199775098" cy="64.3067752247128" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="145" cx="184.27468067045396" cy="61.564734861248844" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="146" cx="183.22953827768862" cy="56.02438923153652" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="147" cx="175.96591509679303" cy="53.58182352882017" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="148" cx="195.2955109432936" cy="53.475448588799956" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="149" cx="181.99574879071304" cy="61.16070017560693" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="150" cx="201.7420042084367" cy="94.64907954295595" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="151" cx="126.1638774855553" cy="36.25129884736886" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="152" cx="72.97130456591069" cy="50.8057101479463" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="153" cx="60.628297308778095" cy="55.36865667267974" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="154" cx="75.50415168537447" cy="49.0252977083102" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="155" cx="73.8379110306114" cy="50.131322853497714" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="156" cx="52.31720275864545" cy="54.765720403845705" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="157" cx="46.54043223988546" cy="45.305407778756845" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="158" cx="165.67127104870002" cy="57.38867058600767" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="60799166" cx="175.0250654065179" cy="56.66282810857922" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="532034653" cx="182.02426455141568" cy="50.6841744706474" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="34806510" cx="182.47210968563837" cy="51.20901401217719" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="463147799" cx="72.83798486398013" cy="46.967850186886686" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="572637761" cx="180.2415750730661" cy="61.27551506658551" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle></g><g></g></svg><div class="jvectormap-legend-cnt jvectormap-legend-cnt-h"></div><div class="jvectormap-legend-cnt jvectormap-legend-cnt-v"></div></div></div></div><div class=""></div></a><style type="text/css">.jvectormap-container {    width: 100%;    height: 100%;    position: absolute;    overflow: hidden;}.jvectormap-tip {    position: absolute;    display: none;    border: solid 1px #CDCDCD;    border-radius: 3px;    background: #292929;    color: white;    font-family: Arial, Helvetica, sans-serif;    padding: 3px;    z-index: 9999;    font-size: 11px;    line-height: 13px;}.jvectormap-zoomin, .jvectormap-zoomout, .jvectormap-goback {    background: #ffffff none repeat scroll 0 0;    border: 1px solid #bebebe;    border-radius: 2px;    box-sizing: content-box;    color: #838383;    cursor: pointer;    font-weight: bold;    left: 10px;    padding: 3px;    position: absolute;    text-align: center;    z-index: 1;}.jvectormap-zoomin, .jvectormap-zoomout {    padding: 2px 10px;}.jvectormap-zoomin {    top: 10px;}.jvectormap-zoomout {    top: 37px;}.jvectormap-goback {    bottom: 10px;    z-index: 1000;    padding: 6px;}.jvectormap-spinner {    position: absolute;    left: 0;    top: 0;    right: 0;    bottom: 0;    background: center no-repeat url(data:image/gif;base64,R0lGODlhIAAgAPMAAP///wAAAMbGxoSEhLa2tpqamjY2NlZWVtjY2OTk5Ly8vB4eHgQEBAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ/V/nmOM82XiHRLYKhKP1oZmADdEAAAh+QQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY/CZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB+A4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6+Ho7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq+B6QDtuetcaBPnW6+O7wDHpIiK9SaVK5GgV543tzjgGcghAgAh+QQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK++G+w48edZPK+M6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE+G+cD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm+FNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk+aV+oJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0/VNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc+XiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30/iI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE/jiuL04RGEBgwWhShRgQExHBAAh+QQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR+ipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY+Yip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd+MFCN6HAAIKgNggY0KtEBAAh+QQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1+vsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d+jYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg+ygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0+bm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h+Kr0SJ8MFihpNbx+4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX+BP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA==);}.jvectormap-legend-title {    font-weight: bold;    font-size: 14px;    text-align: center;}.jvectormap-legend-cnt {    position: absolute;}.jvectormap-legend-cnt-h {    bottom: 0;    right: 0;}.jvectormap-legend-cnt-v {    top: 0;    right: 0;}.jvectormap-legend {    background: black;    color: white;    border-radius: 3px;}.jvectormap-legend-cnt-h .jvectormap-legend {    float: left;    margin: 0 10px 10px 0;    padding: 3px 3px 1px 3px;}.jvectormap-legend-cnt-h .jvectormap-legend .jvectormap-legend-tick {    float: left;}.jvectormap-legend-cnt-v .jvectormap-legend {    margin: 10px 10px 0 0;    padding: 3px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick {    width: 40px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick-sample {    height: 15px;}.jvectormap-legend-cnt-v .jvectormap-legend-tick-sample {    height: 20px;    width: 20px;    display: inline-block;    vertical-align: middle;}.jvectormap-legend-tick-text {    font-size: 12px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick-text {    text-align: center;}.jvectormap-legend-cnt-v .jvectormap-legend-tick-text {    display: inline-block;    vertical-align: middle;    line-height: 20px;    padding-left: 3px;}</style><style type="text/css">a#clustrmaps-widget-v2, #clustrmaps-widget-v2 {    display: block;    font-size: 11px;    line-height: 13px;    margin: 0 auto;    padding: 0;    position: relative;    text-align: center;    color: transparent;    min-height: 139px;    text-decoration: none;    /* text-shadow: 1px 1px 0 #01324f; */    border: 0 none;}.clustrmaps-map {    position: relative;}#clustrmaps-widget-v2 > .clustrmaps-map-container {    background-position: 0 0;    background-repeat: no-repeat;    position: relative;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-date {    text-align: center;    width: 100%;    z-index: 10;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-logo {    position: absolute;    background-image: url("//cdn.clustrmaps.com/assets/clustrmaps/img/logo4-small.png");    bottom: 0px;    background-repeat: no-repeat;    background-position: center center;    z-index: 1;    width: 100px;    height: 31px;    left: 0px;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-connection {    background-position: center center;    background-repeat: no-repeat;    bottom: 0;    color: rgba(255, 255, 255, 0.5);    padding: 4px 4px;    position: absolute;    right: 0;    z-index: 1;    font-variant: small-caps;}#clustrmaps-widget-v2 > .clustrmaps-bottom-text {    letter-spacing: 0px;    background: #FFFFFF;    color: #000000;    text-shadow: none;}#clustrmaps-widget-v2 > .clustrmaps-cursor-click {    background-position: center center;    background-repeat: no-repeat;    display: block;    height: 29px;    position: absolute;    right: 0;    top: 56px;    width: 30px;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-connection.clustrmaps-failed {    color: rgba(255, 0, 0, 0.8);}/*#clustrmaps-widget-v2 > .clustrmaps-map-container {    background-image: url("//cdn.clustrmaps.com/images/map_v2_loading.png");}*/#clustrmaps-widget-v2 > .clustrmaps-cursor-click {    background-image: url("//cdn.clustrmaps.com/assets/clustrmaps/img/cursor_click.png");}#clustrmaps-widget-v2 > .clustrmaps-bottom-text.variation {    display: none;}/* CONTROL *//*#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-map-container {    background-image: url("//cdn.clustrmaps.com/images/map_v2-control.png");}*/#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-bottom-text {    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;    border: 1px solid #999;    background: #F24D58;    background: -moz-linear-gradient(top, #FF636D 50%, #DD2929 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#f83737), color-stop(50%,#f83737));    background: linear-gradient(to bottom, #FF636D 50%,#DD2929 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#FF636D", endColorstr="#f83737",GradientType=0 );    display: block;    margin: 2px auto 0;    padding: 3px 14px;    color: #FFFFFF;    text-shadow: 1px 1px 0px #5B0000;    font-weight: 600;}#clustrmaps-widget-v2.clustrmaps-map-control  > .clustrmaps-bottom-text:hover {    border: 1px solid #888;    background: #a3f5a2;    background: -moz-linear-gradient(top,  #ed8b92 50%, #D76666 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#ed8b92), color-stop(50%,#D76666));    background: linear-gradient(to bottom, #ed8b92 50%,#D76666 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed8b92", endColorstr="#D76666",GradientType=0 );}#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-bottom-text.variation {    display: none;}.clstm {    text-transform: capitalize !important;    position: relative;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text {    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;    border: 1px solid #999;    background: #F24D58;    background: -moz-linear-gradient(top, #FF636D 50%, #DD2929 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#f83737), color-stop(50%,#f83737));    background: linear-gradient(to bottom, #FF636D 50%,#DD2929 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#FF636D", endColorstr="#f83737",GradientType=0 );    display: block;    margin: 2px auto 0;    padding: 3px 14px;    color: #FFFFFF;    text-shadow: 1px 1px 0px #5B0000;    font-weight: 600;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text {    display: none;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text.variation {    display: block;}#clustrmaps-widget-v2.clustrmaps-map-variation  > .clustrmaps-bottom-text:hover {    border: 1px solid #888;    background: #a3f5a2;    background: -moz-linear-gradient(top,  #ed8b92 50%, #D76666 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#ed8b92), color-stop(50%,#D76666));    background: linear-gradient(to bottom, #ed8b92 50%,#D76666 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed8b92", endColorstr="#D76666",GradientType=0 );}.clustrmaps-visitors, .clustrmaps-date, .clustrmaps-bottom-text {    font-family: Arial, Helvetica, sans-serif;    text-align: center;    font-weight: normal;}.clustrmaps-bottom-text {    font-size: 12px;}</style>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['4']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['2']();</script><noscript>&lt;a href="http://www2.clustrmaps.com/user/cd5108ffc"&gt;&lt;img src="http://www2.clustrmaps.com/stats/maps-no_clusters/www.cnblogs.com-duanhuajian--thumb.jpg" alt="Locations of visitors to this page" /&gt;&lt;/a&gt;</noscript><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/duanhuajian/">挨踢前端</a><br>园龄：<a href="https://home.cnblogs.com/u/duanhuajian/" title="入园时间：2012-08-09">5年9个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/duanhuajian/followers/">417</a><br>关注：<a href="https://home.cnblogs.com/u/duanhuajian/followees/">25</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;7f2a463b-2fe2-e111-aa3f-842b2b196315&#39;)">+加关注</a></div><script type="text/javascript">window['__document_write_ajax_callbacks__']['5']();</script><script>window['__document_write_ajax_callbacks__']['3']();</script></div></div><script type="text/javascript">loadBlogNews();</script>
+
+        
+<h3>导航</h3>
+<ul>
+			<li><a id="blog_nav_sitehome" href="http://www.cnblogs.com/" target="_blank">博客园</a></li>
+			<li><a id="blog_nav_myhome" href="http://www.cnblogs.com/duanhuajian/" target="_blank">首页</a></li>
+			<li></li>
+			<li><a id="blog_nav_contact" accesskey="9" rel="nofollow" href="https://msg.cnblogs.com/send/%E6%8C%A8%E8%B8%A2%E5%89%8D%E7%AB%AF" target="_blank">联系</a></li>
+			<li>
+			</li><li><a id="blog_nav_admin" rel="nofollow" href="https://i.cnblogs.com/" target="_blank">管理</a></li>
+</ul>
+        <div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+        <div id="blog_stats">
+<h3>统计</h3>
+	<ul>
+		<li>随笔 - 120
+		</li><li>文章 - 1
+		</li><li>评论 - 150
+		</li><li>引用 - 0
+	</li>
+</ul></div>
+        <div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block"></div><div id="sidebar_shortcut" class="sidebar-block">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/duanhuajian/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/duanhuajian/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/duanhuajian/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/duanhuajian/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/duanhuajian/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div></div><div id="sidebar_categories">
+		<h3>随笔分类<span style="font-size:11px;font-weight:normal">(173)</span></h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/duanhuajian/category/421382.html">Ajax(4)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/duanhuajian/category/488949.html">api(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/duanhuajian/category/439007.html">backbone.js(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/duanhuajian/category/420255.html">canvas(4)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/duanhuajian/category/408683.html">CSS3(7)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/duanhuajian/category/421364.html">DOM(8)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/duanhuajian/category/406667.html">html&amp;css(8)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/duanhuajian/category/408682.html">HTML5(14)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/duanhuajian/category/468265.html">iScroll(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/duanhuajian/category/406666.html">javascript(51)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/duanhuajian/category/439002.html">javascript 前端模版(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/duanhuajian/category/421372.html">JQuery(5)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/duanhuajian/category/492360.html">jsonp(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/duanhuajian/category/491917.html">js插件(7)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/duanhuajian/category/496115.html">linux(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/duanhuajian/category/430829.html">php(4)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/duanhuajian/category/421360.html">seo(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/duanhuajian/category/480184.html">smarty(2)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/duanhuajian/category/406832.html">web开发那点事(14)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/duanhuajian/category/430828.html">服务器(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/duanhuajian/category/469178.html">工具(7)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_21" href="http://www.cnblogs.com/duanhuajian/category/446942.html">前端优化(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_22" href="http://www.cnblogs.com/duanhuajian/category/446947.html">图片格式(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_23" href="http://www.cnblogs.com/duanhuajian/category/418831.html">移动端开发(12)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_24" href="http://www.cnblogs.com/duanhuajian/category/492592.html">正则表达式(3)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_25" href="http://www.cnblogs.com/duanhuajian/category/474825.html">字符编码(1)</a> </li>
+			
+				<li><a id="CatList_LinkList_0_Link_26" href="http://www.cnblogs.com/duanhuajian/category/450397.html">字体(2)</a> </li>
+			
+				</ul>
+			
+	
+		<h3>随笔档案<span style="font-size:11px;font-weight:normal">(120)</span></h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/duanhuajian/archive/2015/07.html">2015年7月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/duanhuajian/archive/2015/05.html">2015年5月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/duanhuajian/archive/2015/01.html">2015年1月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/duanhuajian/archive/2014/12.html">2014年12月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/duanhuajian/archive/2014/11.html">2014年11月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/duanhuajian/archive/2014/10.html">2014年10月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/duanhuajian/archive/2014/09.html">2014年9月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/duanhuajian/archive/2014/07.html">2014年7月 (1)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/duanhuajian/archive/2014/03.html">2014年3月 (2)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/duanhuajian/archive/2014/01.html">2014年1月 (3)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/duanhuajian/archive/2013/12.html">2013年12月 (8)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/duanhuajian/archive/2013/11.html">2013年11月 (4)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/duanhuajian/archive/2013/10.html">2013年10月 (5)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/duanhuajian/archive/2013/07.html">2013年7月 (6)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/duanhuajian/archive/2013/06.html">2013年6月 (10)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/duanhuajian/archive/2013/05.html">2013年5月 (7)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/duanhuajian/archive/2013/04.html">2013年4月 (10)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/duanhuajian/archive/2013/03.html">2013年3月 (5)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/duanhuajian/archive/2013/01.html">2013年1月 (6)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/duanhuajian/archive/2012/12.html">2012年12月 (4)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/duanhuajian/archive/2012/11.html">2012年11月 (7)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/duanhuajian/archive/2012/10.html">2012年10月 (17)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/duanhuajian/archive/2012/09.html">2012年9月 (8)</a> </li>
+			
+				<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/duanhuajian/archive/2012/08.html">2012年8月 (7)</a> </li>
+			
+				</ul>
+			
+	</div><div id="sidebar_scorerank" class="sidebar-block">
+<h3>积分与排名</h3>
+<ul>
+	<li>
+		积分 -
+		222684
+	</li><li>
+		排名 -
+		1058
+	</li>
+</ul>
+</div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<h3 class="catListTitle">阅读排行榜</h3>
+<div class="RecentComment" id="TopViewPosts"> 
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/duanhuajian/archive/2013/04/08/3008323.html">1. iScroll.js  用法参考 （share）(147166)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/p/4097310.html">2. Swiper 中文API手册（share）(135394)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/archive/2013/01/31/2887088.html">3. Web中常用字体介绍(46600)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/p/3398904.html">4. jQuery plugin: Autocomplete  参数及实例(39963)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/p/3227410.html">5. HTML5实战——svg学习(39392)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/duanhuajian/archive/2012/09/23/2699119.html">1. 常见浏览器的兼容问题(14)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/archive/2013/01/04/2844151.html">2. require.js 入门学习  （share）(10)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/p/3227410.html">3. HTML5实战——svg学习(8)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/p/3166493.html">4. 如何成为一名优秀的前端工程师  (share)(8)</a></li><li><a href="http://www.cnblogs.com/duanhuajian/archive/2013/04/08/3008323.html">5. iScroll.js  用法参考 （share）(7)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+    
+</div>
+</div>
+<div class="clear"></div>
+
+<div id="footer">
+	Powered by: 
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>	Copyright © 挨踢前端
+</div>
+
+<!--PageEndHtml Block Begin-->
+<!--返回顶部-->
+<a href="javascript:void(0);" id="dhj_top"></a>
+<style type="text/css">
+#dhj_top{width:50px;height:50px;display:block;position:fixed;bottom:20px;right:266px;background:url(http://images.cnblogs.com/cnblogs_com/duanhuajian/531394/o_top.png) 0 0 no-repeat;}
+#dhj_top:hover{background-position:-50px 0;}
+</style>
+<script type="text/javascript">
+$(function(){
+    $('#dhj_top').click(function(){
+        $("body").animate({scrollTop: "0"},"fast");
+    });
+    //标签连接
+function setHref(){
+    var dhjHref = $('#dhjHref');
+    dhjHref.attr('href', window.location.href);
+    dhjHref.html(window.location.href);
+    console.log(dhjHref.html());
+}
+setTimeout(setHref,1000);
+})
+</script>
+
+<!--baidu分享-->
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"221.5"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+<div style="display:none;">
+<!--Clicki统计-->
+<script type="text/javascript">
+(function() {
+    var c = document.createElement('script'); 
+    c.type = 'text/javascript';
+    c.async = true;
+    c.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'noscript.cnitblog.com/boot/49448';
+    var h = document.getElementsByTagName('script')[0];
+    h.parentNode.insertBefore(c, h);
+})();
+</script>
+
+<!--百度统计-->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6c94f91954821f89599a8533e1d37187' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/h.js" type="text/javascript"></script><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=6c94f91954821f89599a8533e1d37187" target="_blank"><img border="0" src="./JSON和JSONP （含jQuery实例）（share） - 挨踢前端 - 博客园_files/21.gif" width="20" height="20"></a>
+
+<!--cnzz 统计
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000539006'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1000539006' type='text/javascript'%3E%3C/script%3E"));</script>
+-->
+</div><script type="text/javascript">
+$(function(){
+//连接在新窗口打开
+    $('.postText a').attr('target','_blank');
+    $('#rightmenu a').attr('target','_blank');
+    $('.postTitle a').attr('target','_blank');
+});
+</script>
+<!--PageEndHtml Block End-->
+
+
+<div class="bdshare-slide-button-box bdshare-slide-style-r0" style="top: 221px; width: 0px; z-index: 99999; right: 0px;" data-bd-bind="1526971342412"><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#" onclick="return false;" class="bdshare-slide-button" style="left: -24px;"></a><div class="bdshare-slide-list-box" style="width: 0px; display: none;"><div class="bdshare-slide-top">分享到</div><div class="bdshare-slide-list"><ul class="bdshare-slide-list-ul" style="width: 226px;"></ul></div><div class="bdshare-slide-bottom" style="width: 226px;"><a href="http://www.cnblogs.com/duanhuajian/p/3152617.html#" onclick="return false;" class="slide-more" data-cmd="more">更多...</a></div></div></div><script type="text/javascript">var _clustrmaps = {'url' : 'http://www.cnblogs.com/duanhuajian/', 'user' : 1085436, 'server' : '2', 'id' : 'clustrmaps-widget', 'version' : 1, 'date' : '2013-04-10', 'lang' : 'zh', 'corners' : 'square' };(function (){ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'http://www2.clustrmaps.com/counter/map.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);})();</script><script type="text/javascript">getFollowStatus('7f2a463b-2fe2-e111-aa3f-842b2b196315')</script><div class="jvectormap-tip"></div></body></html>

@@ -1,0 +1,30 @@
+
+body,div,ul,li,h1,h2,h3,h4,a,p{
+	margin: 0px;
+	padding: 0px;
+	font-family:
+}
+ol,ul,li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	display: block;
+	color: #fff;
+}
+img{
+	border: none;
+	display: block;
+}
+.clearfloat{
+	zoom:1;
+}
+.clearfloat:after{
+	display: block;
+	clear: both;
+	content: "";
+	visibility: hidden;
+	height: 0;
+	color: #fff;
+	line-height: 1.8;
+}

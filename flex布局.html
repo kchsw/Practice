@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.navigation{
+			margin: 0;
+			list-style: none;
+			background: deepskyblue;
+			display: flex;
+		    flex-flow: row wrap;
+		    justify-content: flex-end;
+		}
+		/*.navigation li {
+			flex: 1 ;
+		}*/
+		.navigation a {
+			text-decoration: none;
+			display: block;
+			padding: 1em;
+			color: white;
+		}
+		@media (max-width: 800px){
+			.navigation{
+				justify-content: space-around;
+			}
+		}
+		@media (max-width: 500px){
+			.navigation{
+				flex-direction: column;
+			}
+		}
+
+
+		.flex-container {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-around;
+		}
+		.flex-item {
+		  background: tomato;
+		  padding: 5px;
+		  width: 200px;
+		  height: 150px;
+		  margin-top: 10px;	  
+		  line-height: 150px;
+		  color: white;
+		  font-weight: bold;
+		  font-size: 3em;
+		  text-align: center;
+		}
+
+		.wrapper {
+		  margin: 20px;
+		  display: flex;  
+		  flex-flow: row wrap;
+		  font-weight: bold;
+		  text-align: center;
+		}
+
+		.wrapper > * {
+		  padding: 10px;
+		  flex: 1 100%;/*100%占据整行空间*/
+		}
+
+		.header {
+		  background: tomato;
+		}
+
+		.footer {
+		  background: lightgreen;
+		}
+
+		.main {
+		  text-align: left;
+		  background: deepskyblue;
+		}
+
+		.aside-1 {
+		  background: gold;
+		}
+
+		.aside-2 {
+		  background: hotpink;
+		}
+		@media (min-width: 600px){
+			.aside{
+				flex: 1 auto;/*auto可以不写，自动分配空间*/
+			}
+		}
+		@media (min-width: 800px){
+			.main{
+				flex: 4 0px;/*0px可以不写，自动分配空间*/
+			}
+			.aside-1 { order: 1; }
+			.main    { order: 2; }
+			.aside-2 { order: 3; }
+			.footer  { order: 4; }
+		}
+		
+	</style>
+</head>
+<body>
+	<ul class="navigation">
+	  <li><a href="#">Home</a></li>
+	  <li><a href="#">About</a></li>
+	  <li><a href="#">Products</a></li>
+	  <li><a href="#">Contact</a></li>
+	</ul>
+
+	<ul class="flex-container">
+	  <li class="flex-item">1</li>
+	  <li class="flex-item">2</li>
+	  <li class="flex-item">3</li>
+	  <li class="flex-item">4</li>
+	  <li class="flex-item">5</li>
+	  <li class="flex-item">6</li>
+	</ul>
+
+	<div class="wrapper">
+	  <header class="header">Header</header>
+	  <article class="main">
+	    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>  
+	  </article>
+	  <aside class="aside aside-1">Aside 1</aside>
+	  <aside class="aside aside-2">Aside 2</aside>
+	  <footer class="footer">Footer</footer>
+	</div>
+</body>
+</html>

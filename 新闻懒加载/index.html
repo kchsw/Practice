@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+
+	html,body,h2,p,ul,li,a{
+		margin: 0;
+		padding: 0;
+        text-decoration: none;
+        color: #000;
+    }
+    .item:after{
+    	content: '';
+    	display: block;
+    	clear: both;
+    } 
+
+    .container{
+    	width: 550px;
+    	margin: 30px auto;
+    	
+    }
+
+    .item{
+    	border: 1px solid #ccc;
+    	padding: 10px;
+    	overflow: hidden;
+    	margin: 10px 0 10px;
+    }
+    .item img{
+    	float: left;
+    	height: 80px;
+    	margin-right: 10px;
+    }
+    .item h2{
+    	font-size: 18px;
+    	margin: 10px;
+    }
+    .load{
+    	visibility: hidden;
+    }        
+	</style>
+	
+</head>
+<body>
+	<div class="container">
+		<ul class="news">
+			
+			<li class="item"><a href="http://view.inews.qq.com/a/20160830A02SEB00">
+				<img src="http://inews.gtimg.com/newsapp_ls/0/531730377_150120/0" alt="">
+				<h2>中国轰6K研发险些被俄罗斯发动机厂商卡脖子</h2>
+				<p>近日，轰6K＂战神＂轰炸机首次公开亮相。在中国...</p>
+			</a></li>
+
+		</ul>
+		<p class="load">没有更多数据了~</p>
+	</div>
+
+
+
+	<script>
+		var pageIndex = 0;
+		var isOver = false;
+		var clock;
+		getNews();
+
+		$(window).on('scroll',function(){
+			if(clock){
+				clearTimeout(clock)
+			}
+			clock = setTimeout(function(){
+				checkNews();
+			},300)
+		})
+
+        function checkNews(){
+        	if(isVisible($('.load')) && !isOver){
+        		getNews()
+        	}
+        }
+
+        function getNews(){
+        	$.get('/getNews',{page: pageIndex}).done(function(ret){
+        		if(ret.status == 0){
+        			appendHtml(ret.data)
+        			pageIndex++;
+        			checkNews();
+        		}else{
+        			alert('获取错误')
+        		}
+        	}).fail(function(){
+        		alert('系统异常')
+        	})
+
+        }
+
+		function isVisible($node){
+			if($(window).scrollTop() + $(window).height() >= $node.offset().top && $node.offset().top >= $(window).scrollTop()){
+				return true
+			}
+			return false
+		}
+
+		function appendHtml(data){
+			if(data.length == 0){
+				isOver = true;
+				$('.load').css('visibility','visible');
+				return
+			}
+			var htmls='';
+			$.each(data,function(){
+				htmls += '<li class="item"><a href="'+ this.link +'"><img src="'+ this.img +'"><h2>'+ this.title +'</h2><p>'+ this.brif +'</p></a></li>'
+			})
+			console.log(htmls)
+			$('.news').append(htmls);
+		}
+
+	</script>
+</body>
+</html>

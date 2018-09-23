@@ -1,0 +1,23 @@
+// 定义存放生成随机数的数组 
+var array=new Array(); 
+ 
+// 死循环，循环N次生成随机数 
+for(var i = 0 ; ; i++){ 
+    // 只生成10个随机数 
+    if(array.length<10){ 
+          generateRandom(10); 
+    }else{ 
+      break; 
+   } 
+} //一直循环直到array的length等于10，生成10个不重复的数字
+
+// 生成随机数的方法 
+function generateRandom(count){ 
+     var rand = parseInt(Math.random()*count); 
+     for(var i = 0 ; i < array.length; i++){ 
+          if(array[i] == rand){ 
+               return false; //如果有重复退出循环，否则加入数组
+          }      
+     } 
+     array.push(rand); 
+} 

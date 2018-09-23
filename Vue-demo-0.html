@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+	<style>
+		.fade-leave-active,.fade-enter-active{
+			transition: opacity 1s;
+		}
+		.fade-enter,.fade-leave-to{
+			opacity: 0;
+		}
+		.v-leave-active,.v-enter-active{
+			transition: opacity 1s;
+		}
+		.v-enter,.v-leave-to{
+			opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">
+		<counter ref="one" @chang="handleChange" :count="2"></counter>
+		<counter ref="two" @chang="handleChange" :count="3"></counter>
+		{{total}}
+	</div>
+	    
+	<script>
+		var counter = {
+			// props:['count'], 参数校验
+			props: {
+				count: [Number,String]
+			},
+			template: '<div @click="handleClick(2)">{{number}}</div>',
+			data(){
+				return{
+					number: this.count
+				}
+			},
+			methods:{
+				handleClick(val){
+					this.number+= val;
+					this.$emit("chang",val)
+				}
+			}
+
+		}
+		new Vue({
+			el: "#root",
+			data: {
+				total: 5
+			},
+			methods: {
+				handleChange(val){
+					// this.total = this.$refs.one.number + this.$refs.two.number
+					this.total += val
+ 				}
+			},
+			components:{
+				counter
+			}
+		})
+	</script>
+
+	<!-- 非父子组件之间传值  bus总线 发布订阅模式-->
+	<div id="father">
+		<child :content="'Dell'"></child>
+		<child :content="'Lee'"></child>
+	</div>
+
+	<script>
+		Vue.prototype.bus = new Vue()
+
+		Vue.component("child", {
+			data(){
+				return{
+					selfcontent: this.content
+				}
+			},
+			props:{
+				content: String
+			},
+			template: "<div @click='handleClick'>{{selfcontent}}</div>",
+			methods:{
+				handleClick(){
+					this.bus.$emit('change',this.selfcontent)
+				}
+			},
+			mounted(){
+				var _this = this
+				this.bus.$on('change',msg => {
+					_this.selfcontent = msg
+				})
+			}
+		})
+
+		new Vue({
+			el: "#father"
+		})
+	</script>
+
+	<!-- 具名插槽 -->
+	<div id="slot">
+    	<jsbang>
+    		<span slot='blogUrl'>{{jsbangData.blogUrl}}</span>
+    		<span slot='netName'>{{jsbangData.netName}}</span>
+    		<span slot='skill'>{{jsbangData.skill}}</span>
+    	</jsbang>
+    </div>
+    <template id = "jstem">
+    	<div>
+    		<p>博客地址:<slot name='blogUrl'></slot></p>
+    		<p>网名:<slot name='netName'></slot></p>
+    		<p>技术类型:<slot name='skill'></slot></p>
+    	</div>
+    </template>
+    <script>
+    	var jsbang = {
+    		template:"#jstem"
+    	}
+    	new Vue({
+    		el:'#slot',
+    		data:{
+    			jsbangData:{
+    				blogUrl:'www.hanbz.com',
+	    			netName:'hswr',
+	    			skill:'web'
+    			}
+    		},
+    		components:{
+    			jsbang:jsbang
+    		}
+    	})
+    </script>
+
+
+    <!-- 作用域插槽 -->
+
+   <!--  <div id="slot">
+    	<slotchild>
+    		<template slot-scope="props">
+    			<li>{{props.item}}</li>
+    		</template>
+    	</slotchild>
+    </div>
+
+    <script>
+    	Vue.component('slotchild',{
+    		data(){
+    			return{
+    				list: [1, 2, 3, 4]
+    			}
+    		},
+    		template: `<div>
+    		             <ul>
+    		               <slot
+    		                   v-for="item of list"
+    		                   :item=item
+    		               ></slot>
+    		             </ul>  
+    		          </div>`,
+    	})
+
+    	new Vue({
+    		el: '#slot'
+    	})
+    </script> -->
+
+	<div id="anima">
+		<!-- JS钩子 -->
+		<transition
+		type="transition"
+		name="fade"
+		appear
+		enter-active-class="animated swing fade-enter-active"
+		leave-active-class="animated shake fade-leave-active"
+		appear-active-class="animated swing"
+		@before-enter="handleBeforeEnter"
+		@enter="handleEnter"
+		@after-enter="handleAfterEnter"
+		>
+			<div v-show="show">Hello World</div>
+		</transition>
+		<button @click="ifshow">toggle</button>	
+	</div>
+	<script>
+		new Vue({
+			el: '#anima',
+			data: {
+				show: true
+			},
+			methods:{
+				ifshow(){
+					this.show = !this.show
+				},
+				handleBeforeEnter(el){
+
+				},
+				handleEnter(el,done){
+
+				},
+				handleAfterEnter(el){
+
+				}
+
+			}
+		})
+	</script>
+
+	<div id="list-anima">
+		<transition-group>
+			<div v-for='item of list' :key="item.id">
+				{{item.title}}
+			</div>
+		</transition-group>
+		
+		<button @click="handleClick">add</button>
+	</div>
+
+	<script>
+		new Vue({
+			el: '#list-anima',
+			data:{
+				count: 0,
+				list: []
+			},
+			methods:{
+				handleClick(){
+					this.list.push({
+						id: this.count++,
+						title: 'hello'
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

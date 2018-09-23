@@ -1,0 +1,166 @@
+body{
+	font-size: 12px;
+	font-family: Arial;
+}
+div.boughtDiv{
+	max-width: 1013px;
+	margin: 10px auto;
+}
+div.orderType div{
+	border-bottom: 2px solid #e8e8e8;
+	float: left;
+	padding-bottom: 10px;
+}
+div.orderType:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+div.orderType a{
+	border-right: 1px solid #e8e8e8;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	padding: 0 20px;
+	text-decoration: none;
+}
+div.orderType a:hover{
+	color: #c40000;
+	text-decoration: none;
+}
+div.orderType div.selectedOrderType{
+	border-bottom: 2px solid #c40000;
+}
+div.orderType div.selectedOrderType a{
+	color: #c40000;
+}
+a.noRightborder{
+	border-right-width:0px !important;
+}
+div.orderTypeLastOne{
+	height: 34px;
+	overflow: hidden;
+	float: none !important;
+	border-bottom: 2px solid #e8e8e8;
+}
+table.orderListTitleTable{
+	border: 1px solid #e8e8e8;
+	width: 100%;
+	margin: 20px 0;
+	background-color: #f5f5f5;
+	text-align: center;
+	font-size: 12px;
+}
+table.orderListTitleTable td{
+	padding: 12px 0;
+}
+
+
+
+table.orderListItemTable{
+	border: 2px solid #ececec;
+	width: 100%;
+	margin: 20px 0;
+	font-size: 12px;
+}
+table.orderListItemTable:hover{
+	border: 2px solid #ececec !important;
+}
+table.orderListItemTable td{
+	padding: 8px 10px;
+}
+tr.orderListItemFirstTR{
+	background-color: #f1f1f1;
+}
+div.orderItemWangWangGif{
+	display: inline-block;
+	width: 67px;
+	height: 22px;
+	background-image: url(http://how2j.cn/tmall/img/site/wangwang.gif);
+	background-repeat: no-repeat;
+	background-position: 0% 0%;
+	background-color: transparent;
+	background-attachment: scroll;
+	position: relative;
+	top: 0;
+	left: 2px;
+}
+td.orderItemDeleteTD{
+	text-align: right;
+}
+span.orderListItemDelete{
+	display: inline-block;
+	margin: 0 10px;
+	color: #999999;
+	font-size: 16px;
+}
+div.orderListItemProductLinkOutDiv{
+	position: relative;
+	height: 80px;
+}
+div.orderListItemProductLinkInnerDiv{
+	position: absolute;
+	bottom: 0;
+}
+div.orderListItemProductOriginalPrice{
+	color: #999999;
+	font-size: 14px;
+}
+div.orderListItemProductPrice{
+	color: #3c3c3c;
+	font-size: 14px;
+}
+td.orderListItemNumberTD{
+	text-align: center;
+}
+td.orderItemOrderInfoPartTD{
+	border: 1px solid #ececec;
+	text-align: center;
+}
+span.orderListItemNumber{
+	color: #3c3c3c;
+}
+td.orderListItemProductRealPriceTD{
+	text-align: center;
+}
+div.orderListItemProductRealPrice{
+	color: #3c3c3c;
+	font-size: 14px;
+	font-weight: bold;
+}
+div.orderListItemPriceWithTransport{
+	font-size: 12px;
+	color: #6c6c6c;
+}
+button.orderListItemReview{
+	border: 1px solid #dcdcdc;
+	background-color: #fff;
+	border-radius: 2px;
+	color: #3c3c3c;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 6px 12px;
+}
+button.orderListItemReview:hover{
+	border-color: #c40000;
+	color: #c40000;
+}
+button.orderListItemConfirm{
+	background-color: #66b6ff;
+	border-radius: 2px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 6px 12px;
+	border-width: 0;
+}
+button.orderListItemConfirm:hover{
+	background-color: #118adb;
+}
+a{
+   color: #999;
+}
+a:hover{
+	color: #c40000;
+	text-decoration: none;
+}

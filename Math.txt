@@ -1,0 +1,101 @@
+0和1的随机数
+Math.round(Math.random())
+
+
+a和b之间的随机数（包括a和b,a<b）
+function random(a,b){
+  return Math.floor(Math.random()*(b-a+1)+a)
+}
+
+a和b之间的随机数（包括a不包括b,a<b）
+function randomA(a,b){
+  return Math.floor(Math.random()*(b-a)+a)
+}
+
+随机数组
+var arr= [];
+for (var i=0;i<n;i++){
+  arr.push(random(0,10))
+}
+console.log(arr)
+
+
+得到随机字符串
+
+function randomStr(n){
+  var dict="0123456789abcdefghijklmnopqrstuvwxyz"
+  var str=""
+  for(var i=0;i<n;i++){ 
+    str+=dict[random(0,dict.length-1)]
+  }
+  return str
+}
+
+随机ip地址
+function randomIp(len){
+  var arr=[]；
+  for(var i=0;i<4;i++){
+    arr.push(random(0,255))
+  }
+  return arr.join(".")
+}
+
+随机颜色字符串
+function getRandColor(){
+  var dict="0123456789abcdef"
+  var str="#"
+  for(var i=0;i<6;i++){ 
+    str+=dict[random(0,dict.length-1)]
+  }
+  return str
+}
+
+
+数组排序
+
+var arr = [-4,1,3,14,22,11];
+arr.sort(function(a,b){
+  return b-a
+})
+b-a 从大到小
+a-b 从小到大
+
+对数组里的对象进行排序
+
+var students = [
+  {name:"",age:""}
+  {name:"",age:""}
+  {name:"",age:""}
+  {name:"",age:""}
+]
+
+students.sort(function(a,b){
+
+ return a.age - b.age
+ if (a.name > b.name){
+   return 1
+ }else{
+  return -1
+ }
+})
+
+
+
+var arr = [2,4,5]
+function squareArr(arr){
+  arr.forEach(function(e,i,array){ 
+    arr[i]=e*e
+})
+}
+squareArr(arr)
+
+
+function filterPositive(arr){
+  newArr = arr.filter(function(item,index,array){
+    return (typeof item ==="number" && item >0)
+  })
+  return newArr
+}
+var arr = [3, -1,  2,  '饥人谷', true]
+var newArr = filterPositive(arr)
+console.log(newArr)

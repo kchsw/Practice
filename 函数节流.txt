@@ -1,0 +1,44 @@
+
+debounce()
+
+function debounce(fn,delay){
+	var timer = null;
+	return function(){
+        clearTimeout(timer)
+        timer = setTimeout(function(){
+            fn()
+        },delay)
+	}
+}
+
+function debounce(fn,delay){
+	var timer = null;
+	return function(){
+	    var context = this
+        clearTimeout(timer)
+        timer = setTimeout(function(){
+            fn.apply(context,arguments)
+        },delay)
+	}
+}
+
+
+throttle()
+
+
+function throttle(fn,delay,atleast){
+	var timer = null;
+	var previous = Date.now();
+	return function(){
+	    var now = Date.now();
+	    if(now - previous > atleast){
+	        fn()
+	        previous = now;
+	    }else{
+	        clearTimeout(timer)
+	        timer = setTimeout(function(){
+	            fn()
+	        },delay)
+	    }
+	}
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/font-awesome.min.css">
+</head>
+<body>
+
+	<p>要相对于字体图标的容器增加它们的尺寸，可以使用class fa-lg(增加33%)，fa-2x，fa-3x，fa-4x或fa-5x。</p>
+	<p><i class="fa fa-camera-retro fa-lg"></i></p>
+	<p><i class="fa fa-camera-retro fa-2x"></i></p>
+
+    <p>使用fa-fw可以将图标设置为固定宽度。这在不同宽度的图标要进行对齐时十分有用。特别是在制作导航列表和列表组是特别有用。</p>
+	<div class="list-group">
+	  <a class="list-group-item" href="#"><i class="fa fa-home fa-fw"></i>  Home</a>
+	  <a class="list-group-item" href="#"><i class="fa fa-book fa-fw"></i>  Library</a>
+	  <a class="list-group-item" href="#"><i class="fa fa-pencil fa-fw"></i>  Applications</a>
+	  <a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>  Settings</a>
+	</div>	
+
+    <p>使用class fa-ul和fa-li可以很容易的将无需列表的图标转换为字体图标。</p>
+	<ul class="fa-ul">
+	  <li><i class="fa-li fa fa-check-square"></i>List icons</li>
+	  <li><i class="fa-li fa fa-check-circle "></i>can be used</li>
+	  <li><i class="fa-li fa fa-spinner fa-spin"></i>as bullets</li>
+	  <li><i class="fa-li fa fa-square"></i>in lists</li>
+	</ul>	
+    
+
+    <p>使用class fa-border和fa-pull-right或fa-pull-left可以很容易的制作出文章的引用图标。</p>
+	<i class="fa fa-quote-left fa-3x fa-pull-left fa-border"></i>
+	<p style="width: 200px">...tomorrow we will run faster, stretch out our arms farther...
+	And then one fine morning— So we beat on, boats against the
+	current, borne back ceaselessly into the past.		</p>
+
+    <p>使用class fa-spin可以使任何图标执行旋转动画，使用class fa-pulse可以使图标以8步为周期进行旋转。可以完美执行旋转动画的图标有：fa-spinner，fa-refresh和fa-cog。</p>
+	<i class="fa fa-spinner fa-spin fa-4x"></i>
+	<i class="fa fa-circle-o-notch fa-spin"></i>
+	<i class="fa fa-refresh fa-spin"></i>
+	<i class="fa fa-cog fa-spin"></i>
+	<i class="fa fa-spinner fa-pulse"></i>
+
+	<p>要任意旋转和翻转图标，可以使用class fa-rotate-*和fa-flip-*。</p>		
+
+	<i class="fa fa-shield"></i> normal<br>
+	<i class="fa fa-shield fa-rotate-90"></i> fa-rotate-90<br>
+	<i class="fa fa-shield fa-rotate-180"></i> fa-rotate-180<br>
+	<i class="fa fa-shield fa-rotate-270"></i> fa-rotate-270<br>
+	<i class="fa fa-shield fa-flip-horizontal"></i> fa-flip-horizontal<br>
+	<i class="fa fa-shield fa-flip-vertical"></i> icon-flip-vertical<br>
+
+    
+
+    <p>要将多个图标堆叠在一起，可以在父元素上使用class fa-stack，fa-stack-1x是正常的图标尺寸，fa-stack-2x是大尺寸的图标。fa-inverse可以反转图标的颜色。在父元素还可以使用fa-lg等图标尺寸来设置图标的尺寸。</p>
+	<span class="fa-stack fa-3x">
+	  <i class="fa fa-square-o fa-stack-2x"></i>
+	  <i class="fa fa-twitter fa-stack-1x"></i>
+	</span>
+	fa-twitter on fa-square-o<br>
+	<span class="fa-stack fa-4x">
+	  <i class="fa fa-circle fa-stack-2x"></i>
+	  <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+	</span>
+	fa-flag on fa-circle<br>
+	<span class="fa-stack fa-lg">
+	  <i class="fa fa-square fa-stack-2x"></i>
+	  <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+	</span>
+	fa-terminal on fa-square<br>
+	<span class="fa-stack fa-lg">
+	  <i class="fa fa-camera fa-stack-1x"></i>
+	  <i class="fa fa-ban fa-stack-2x text-danger"></i>
+	</span>
+	fa-ban on fa-camera
+    <a href="">
+    	<span class="fa-stack fa-3x">
+		  <i class="fa fa-circle-o fa-stack-2x"></i>
+		  <i class="fa fa-angle-left fa-stack-1x "></i>
+		</span>		
+    </a>
+
+    <i class="fa fa-arrow-circle-left fa-3x"></i>
+    <i class="fa fa-chevron-circle-left fa-3x" aria-hidden="true"></i>
+		
+</body>
+</html>

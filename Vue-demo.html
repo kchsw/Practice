@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<style>
+		.tab-button {
+		  padding: 6px 10px;
+		  border-top-left-radius: 3px;
+		  border-top-right-radius: 3px;
+		  border: 1px solid #ccc;
+		  cursor: pointer;
+		  background: #f0f0f0;
+		  margin-bottom: -1px;
+		  margin-right: -1px;
+		}
+		.tab-button:hover {
+		  background: #e0e0e0;
+		}
+		.tab-button.active {
+		  background: #e0e0e0;
+		}
+		.tab {
+		  border: 1px solid #ccc;
+		  padding: 10px;
+		}
+		.classA{
+			color: red;
+		}
+		.classB{
+			color: blue;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">
+		姓：<input v-model="firstName">
+		名：<input v-model="lastName">
+		<p>{{fullName}}</p>
+		<p>{{count}}</p>
+	</div>
+	<script>
+		new Vue({
+			el: '#root',
+			data: {
+				firstName: "",
+				lastName: "",
+				count: 0 
+			},
+			computed: {
+				fullName: function(){
+				   return this.firstName + " " + this.lastName
+			    }
+			},
+			watch: {
+				//监听计算属性、数据的变化
+				fullName: function(){
+				   this.count++ 
+			    }
+			}
+		})
+	</script>
+
+	<div id="root1">
+		<div v-if="show">hello guys</div>
+		<button @click="handleClick">toggle</button>
+	</div>
+
+	<script>
+		new Vue({
+			el:"#root1",
+			data:{
+				show:true
+			},
+			methods:{
+				handleClick: function(){
+					this.show = !this.show
+				}
+			}
+		})
+	</script>
+	<!-- <div id="root">
+		<div v-bind:title="title">hello world</div>
+		<input type="text" v-model="content">
+        <p>{{content}}</p>
+	</div>
+
+    <script>
+    	new Vue({
+    		el: "#root",
+    		data: {
+    			title: "this is a title",
+    			content: "this is content"
+    		}
+    	})
+    </script>
+ -->
+	<!-- <div id="app">
+	  {{ message }}
+	</div>
+
+	<div id="app-2">
+	  <span v-bind:title="message">
+	    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+	  </span>
+	</div>
+	<div id="app-4">
+	  <ol>
+	    <li v-for="todo in todos">
+	      {{ todo.text }}
+	    </li>
+	  </ol>
+	</div>
+	<div id="app-5">
+	  <p>{{ message }}</p>
+	  <button v-on:click="reverseMessage">逆转消息</button>
+	</div>
+
+	<div id="app-6">
+	  <p>{{ message }}</p>
+	  <input v-model="message">
+	</div> -->
+    
+
+    <!-- <div id="app-7">
+	  <ol> 
+	      现在我们为每个 todo-item 提供 todo 对象
+	      todo 对象是变量，即其内容可以是动态的。
+	      我们也需要为每个组件提供一个“key”，稍后再
+	      作详细解释。
+	    
+	    <todo-item
+	      v-for="item in groceryList"
+	      v-bind:todo="item"
+	      v-bind:key="item.id">
+	    </todo-item>
+	  </ol>
+	</div> -->
+
+
+	<!-- <div id="components-demo">
+	  <button-counter></button-counter>
+	</div>
+
+    <div id="blog-posts-events-demo">
+	  <div :style="{ fontSize: postFontSize + 'em' }">
+	  	aaa
+	    <blog-post
+	      v-for="post in posts"
+	      v-bind:key="post.id"
+	      v-bind:post="post"
+	      v-on:enlarge-text="postFontSize += 0.1"
+	    ></blog-post>
+	  </div>
+	</div>
+ -->
+
+	<div id="dynamic-component-demo" class="demo">
+	  <button
+	    v-for="tab in tabs"
+	    v-bind:key="tab"
+	    v-bind:class="['tab-button', { active: currentTab === tab }]"
+	    v-on:click="currentTab = tab"
+	  >{{ tab }}</button>
+
+	  <component
+	    v-bind:is="currentTabComponent"
+	    class="tab"
+	  ></component>
+	</div>
+
+
+	<div id="todolist">
+		<input v-model="inputValue">
+		<button @click="handleSubmit">Submit</button>
+		<ul>
+			<todo-item
+			  v-for="(item,index) of list"
+			  :key = "index"
+			  :content = "item"
+			  :index = "index"
+			  @delete="list.splice(index,1)"
+			>
+			</todo-item>
+		</ul>
+	</div>
+      
+	<script>
+		Vue.component('todo-item',{
+			props: ['content','index'],//接受从外部传进来的属性
+			template: '\
+			<li>\
+			{{content}}\
+			<button @click="$emit(\'delete\')">delete</button>\
+			</li>\
+			',
+			// <button @click="handleclick">delete</button>\
+			methods: {
+				// handleclick:function(){
+				// 	this.$emit("delete",this.index)
+				// } 传进index 又传了出去  @delete="handleDelete"
+			}
+		})
+		var vm = new Vue({
+			el:"#todolist",
+			data:{
+				inputValue:"",
+				list:[]
+			},
+			methods:{
+				handleSubmit: function(){
+					this.list.push(this.inputValue)
+					this.inputValue = ""
+				},
+				// handleDelete: function(index){
+				// 	this.list.splice(index,1)
+				// }
+			}
+		})
+	</script>
+
+	<script>
+		// var app = new Vue({
+		//   el: '#app',
+		//   data: {
+		//     message: 'Hello Vue!'
+		//   }
+		// })
+
+		// var app2 = new Vue({
+		//   el: '#app-2',
+		//   data: {
+		//     message: '页面加载于 ' + new Date().toLocaleString()
+		//   }
+		// })
+
+		// const app4 = new Vue({
+		// 	el:'#app-4',
+		// 	data: {
+		// 	    todos: [
+		// 	      { text: '学习 JavaScript' },
+		// 	      { text: '学习 Vue' },
+		// 	      { text: '整个牛项目' }
+		// 	    ]
+		//     }
+		// })
+
+		// var app5 = new Vue({
+		//   el: '#app-5',
+		//   data: {
+		//     message: 'Hello Vue.js!'
+		//   },
+		//   methods:{
+		//   	reverseMessage() {
+		//   		this.message = this.message.split('').reverse().join('')
+		//   	}
+		//   }
+		// })
+        
+  //       var app6 = new Vue({
+		//   el: '#app-6',
+		//   data: {
+		//     message: 'Hello Vue!'
+		//   }
+		// })
+
+
+		// Vue.component('todo-item', {
+		//   // todo-item 组件现在接受一个
+		//   // "prop"，类似于一个自定义特性。
+		//   // 这个 prop 名为 todo。
+		//   props: ['todo'],
+		//   template: '<li>{{ todo.text }}</li>'
+		// })
+		// var app7 = new Vue({
+		//   el: '#app-7',
+		//   data: {
+		//     groceryList: [
+		//       { id: 0, text: '蔬菜' },
+		//       { id: 1, text: '奶酪' },
+		//       { id: 2, text: '随便其它什么人吃的东西' }
+		//     ]
+		//   }
+		// })
+
+
+		// // 定义一个名为 button-counter 的新组件
+		// Vue.component('button-counter', {
+		//   data: function () {
+		//     return {
+		//       count: 0
+		//     }
+		//   },
+		//   template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+		// })
+
+		// new Vue({ el: '#components-demo' }) //Vue 根实例
+
+
+		// Vue.component('blog-post', {
+		//   props: ['title'],
+		//   template: '<h3>{{ title }}</h3>'
+		// })
+
+  //       var app8 = new Vue({
+		//   el: '#blog-posts-events-demo',
+		//   data: {
+		//     posts: [{ id: 1, title: 'My journey with Vue' },
+		// 		    { id: 2, title: 'Blogging with Vue' },
+		// 		    { id: 3, title: 'Why Vue is so fun' }],
+		//     postFontSize: 3
+		//   }
+		// })
+		// Vue.component('blog-post', {
+		//   props: ['post'],
+		//   template: `
+		//     <div class="blog-post">
+		//       <h3>{{ post.title }}</h3>
+		//       <button v-on:click="$emit('enlarge-text')">
+		// 		  Enlarge text
+		// 	  </button>
+		//       <div v-html="post.content"></div>
+		//     </div>
+		//   `
+		// })
+
+
+		Vue.component('tab-home', { 
+			template: '<div>Home component</div>' 
+		})
+		Vue.component('tab-posts', { 
+			template: '<div>Posts component</div>' 
+		})
+		Vue.component('tab-archive', { 
+			template: '<div>Archive component</div>' 
+		})
+
+		new Vue({
+		  el: '#dynamic-component-demo',
+		  data: {
+		    currentTab: 'Home',
+		    tabs: ['Home', 'Posts', 'Archive']
+		  },
+		  computed: {
+		    currentTabComponent: function () {
+		      return 'tab-' + this.currentTab.toLowerCase()
+		    }
+		  }
+		})
+	</script>
+
+    <div id="bind">
+    	<p :class="isok?classA:classB">绑定三元运算符</p>
+    	<hr>
+    	<input type="checkbox" id="isok" v-model="isok">
+    	<label for="isok">{{isok}}</label>
+    </div>
+
+    <script>
+    	new Vue({
+    		el:'#bind',
+    		data:{
+    			isok:true,
+    			classA:'classA',
+    			classB:'classB',
+    		}
+    	})
+
+    	//v-pre 原样输出
+    	//v-cloak 渲染完成后显示
+    	//v-once 只渲染一次
+    </script>
+
+    <h4>Vue.directive 自定义指令</h4>
+    <div id="directive">
+		<div v-zidingyi="color">{{message}}</div>
+	</div>
+
+    <script>
+    	Vue.directive('zidingyi',{
+    		//自定义指令5个生命周期函数
+    		bind:function(el,binding){//被绑定
+			     console.log('1 - bind');
+			     console.log(binding);
+			     el.style = "color:" + binding.value;
+			},
+			inserted:function(){//绑定到节点
+			      console.log('2 - inserted');
+			},
+			update:function(){//组件更新
+			      console.log('3 - update');
+			},
+			componentUpdated:function(){//组件更新完成
+			      console.log('4 - componentUpdated');
+			},
+			unbind:function(){//解绑
+			      console.log('5 - unbind');
+			}
+    	})
+    	var set = new Vue({
+    		el: "#directive",
+    		data: {
+    			message:'hello world',
+    			color:'red',
+    			arr:[]
+    		}
+    	})
+
+    	console.log(set.message)
+    	Vue.set(set.arr,0,"1")
+    	console.log(set.arr)
+    	//Vue无法监听数组下标改变数据、长度的变化
+    </script>
+
+    <h4>Vue模板</h4>
+	<div id="template">
+		<div>{{message}}</div>
+	</div>
+
+	<script type="x-template" id='tem1'>
+		<h2>script标签模板</h2>  
+	</script>
+   <!--  可被外部引用 -->
+    <template id="tem">
+    	<h2>标签模板</h2>
+    </template>
+	<script>
+		new Vue({
+			el:'#template',
+			data:{
+				message:'Hello World'
+			},
+			template:"#tem1"
+			// `
+			//   <h2>选项模板</h2>
+			// `
+    	})
+	</script>
+
+    <h4>组件</h4>
+   <!--  全局组件 -->
+    <div id="compotent">
+    	<component-1 :here='message'></component-1>
+    	<component-0 :here='message'></component-0>
+    </div>
+    <script>
+    	Vue.component('component-0',{
+    		template:`<div style='color:red'>全局组件</div>`
+    	})
+    	var city = {
+    		template:`<span style='color:pink'>beijing</span>`,
+    	}
+    	var Compotent0 = {
+    		template:`<div style='color:blue'>局部组件 is {{here}} <city></city> </div>`,
+    		props:['here'],
+    		components:{
+    			city:city
+    		}
+    	}
+    	new Vue({
+    		el:'#compotent',
+    		data:{
+    			message:'china'
+    		},
+    		components:{
+    			// 'component-1':{
+    			// 	template:`<div style='color:blue'>局部组件 is {{here}}</div>`,
+    			// 	props:['here']
+    			// }
+    			'component-1':Compotent0
+    		}
+    	})
+    </script>
+    
+
+    <div id="compotent0">
+    	<component :is='who'></component>
+    	<button @click='change'>change</button>
+    </div>
+
+    <script>
+
+    	var compotentA = {
+    		template:`<p style='color:green'>this is templateA</p>`
+    	}
+        var compotentB = {
+    		template:`<p style='color:blue'>this is templateB</p>`
+    	}
+    	var compotentC = {
+    		template:`<p style='color:yellow'>this is templateC</p>`
+    	}
+    	new Vue({
+    		el:'#compotent0',
+    		data:{
+    			who:'compotentA'
+    		},
+    		methods:{
+    			change:function(){
+    				if(this.who == 'compotentA'){
+    					this.who = 'compotentB'
+    				}else if(this.who == 'compotentB'){
+    					this.who = 'compotentC'
+    				}else{
+    					this.who = 'compotentA'
+    				}
+    			}
+    		},
+    		components:{
+    			'compotentA':compotentA,
+    			'compotentB':compotentB,
+    			'compotentC':compotentC,
+    		}
+    	})
+    </script>
+
+
+    <div id="computed">
+    	<p>{{newPrice}}</p>
+    	<ul>
+    		<li v-for="item of reverseNews">{{item.title}} - {{item.date}}</li>
+    	</ul>
+    	<p>{{num}}</p><button @click="add(4,$event)">Add</button>
+    	<btn @click.native="add(10)"></btn>
+    </div>
+    <button onclick='comput.reduce(10)'>外部Reduce</button>
+    <button onclick='reduce0()'>实例Reduce</button>
+
+
+    <script>
+    	var newList = [
+    		{title:'香港或就“装甲车被扣”事件追责 起诉涉事运输公司',date:'2017/3/10'},
+            {title:'日本第二大准航母服役 外媒：针对中国潜艇',date:'2017/3/12'},
+            {title:'中国北方将有明显雨雪降温天气 南方阴雨持续',date:'2017/3/13'},
+            {title:'起底“最短命副市长”：不到40天落马，全家被查',date:'2017/3/23'},
+    	]
+    	var btn = {
+    		template:`<button>组件Add</button>`
+    	}
+    	var addConsole = {
+    		updated:function(){
+    			console.log('数据发生变化，新数据' + this.num)
+    		}
+    	}
+    	var extendsObj = {
+    		updated:function(){
+    			console.log('我是扩展的updated')
+    		}
+    	}
+    	var comput = new Vue({
+    		el:'#computed',
+    		data:{
+    			num:24,
+    			price:100,
+    			newList:newList
+    		},
+    		components:{
+    			"btn":btn
+    		},
+    		methods:{
+    			add:function(num,event){
+    				console.log(event)
+    				this.num += num
+    			},
+    			reduce:function(num){
+    				console.log(event)
+    				this.num -= num
+    			}
+    		},
+    		computed:{
+    			newPrice:function(){
+    				return this.price = '$' + this.price
+    			},
+    			reverseNews:function(){
+    				return this.newList.reverse();
+    			}
+    		},
+    		watch:{
+    			num:function(newVal,oldVal){
+    			}
+    		},
+    		mounted:function(){
+    			console.log($('#computed'))
+    		},//挂载时
+    		mixins:[addConsole],
+    		extends:extendsObj
+    		 //扩展只能放一个对象，只能有一个扩展
+    		 // delimiters:['${','}']  改变差值的形式
+    	})
+
+    	comput.$watch('price',function(newVal,oldVal){
+    	})
+
+    	comput.$on('reduce0',function(){
+    		console.log('执行了reduce()')
+    		this.num--;
+    	})
+
+    	function reduce0(){
+    		comput.$emit('reduce0')
+    	}
+    </script>
+    
+
+    <h4>slot内置组件</h4>
+    <div id="slot">
+    	<jsbang>
+    		<span slot='blogUrl'>{{jsbangData.blogUrl}}</span>
+    		<span slot='netName'>{{jsbangData.netName}}</span>
+    		<span slot='skill'>{{jsbangData.skill}}</span>
+    	</jsbang>
+    </div>
+    <template id = "jstem">
+    	<div>
+    		<p>博客地址:<slot name='blogUrl'></slot></p>
+    		<p>网名:<slot name='netName'></slot></p>
+    		<p>技术类型:<slot name='skill'></slot></p>
+    	</div>
+    </template>
+    <script>
+    	var jsbang = {
+    		template:"#jstem"
+    	}
+    	new Vue({
+    		el:'#slot',
+    		data:{
+    			jsbangData:{
+    				blogUrl:'www.hanbz.com',
+	    			netName:'hswr',
+	    			skill:'web'
+    			}
+    		},
+    		components:{
+    			jsbang:jsbang
+    		}
+    	})
+    </script>
+</body>
+</html>

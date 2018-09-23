@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		ul,li{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			
+		}
+		a{
+			text-decoration: none;
+		}
+		.nav-div{
+			width: 240px;
+		}
+		.nav-bar{
+			font-size: 0;
+		}
+		.list{
+			padding-left: 20px;
+			
+			background-color: #de2721;
+		}
+		.item{
+			display: inline-block;
+			vertical-align: top;
+			font-size: 14px;
+			width: 200px;
+			line-height: 40px;
+			
+			color: #fff;
+		}
+		.list span{
+			display: inline-block;
+			width: 20px;
+			color: #fff;
+			line-height: 40px;
+			font-size: 14px;
+		}
+        .hid-nav{
+        	width: 200px;
+        	display: inline-block;
+        	position: absolute;
+        	font-size: 0;
+        	border: 1px solid #ccc;
+        }
+        .hid-list{
+        	display: inline-block;
+        	width: 100px;
+        	text-align: center;
+        	line-height: 40px;
+        	font-size: 14px;
+        	
+
+        }
+        .hid-list a{
+        	color: #000;
+        }
+        .on{
+        	display: none;
+        }
+	</style>
+</head>
+<body>
+	<div class="nav-div">
+		<ul class="nav-bar">
+			<li class="list">
+				<a class= "item" href="">珠宝玉器</a>
+				<span>></span>
+				<div class="hid-nav on">
+					<ul class="nav-bar">
+						<li class="hid-list"><a href="">翡翠</a></li>
+						<li class="hid-list"><a href="">玛瑙</a></li>
+						<li class="hid-list"><a href="">宝石</a></li>
+						<li class="hid-list"><a href="">和田</a></li>
+						<li class="hid-list"><a href="">宝石</a></li>
+					</ul>
+				</div>
+			</li>
+			<li class="list">
+				<a class= "item" href="">珠宝玉器</a>
+				<span>></span>
+				<div class="hid-nav on">
+					<ul class="nav-bar">
+						<li class="hid-list"><a href="">翡翠</a></li>
+						<li class="hid-list"><a href="">玛瑙</a></li>
+						<li class="hid-list"><a href="">琥珀</a></li>
+						<li class="hid-list"><a href="">珍珠</a></li>
+						<li class="hid-list"><a href="">宝石</a></li>
+						<li class="hid-list"><a href="">和田</a></li>
+						<li class="hid-list"><a href="">宝石</a></li>
+					</ul>
+				</div>
+			</li>
+			<li class="list">
+				<a class= "item" href="">珠宝玉器</a>
+				<span>></span>
+				<div class="hid-nav on">
+					<ul class="nav-bar">						
+						<li class="hid-list"><a href="">玛瑙</a></li>
+						<li class="hid-list"><a href="">琥珀</a></li						
+						<li class="hid-list"><a href="">和田</a></li>
+						<li class="hid-list"><a href="">宝石</a></li>
+					</ul>
+				</div>
+			</li>
+	    </ul>
+	</div>
+	<script>
+		$(function(){
+			$('.list').mouseenter(function(){
+			    $(this).find('.hid-nav').removeClass('on');
+			})
+			$('.list').mouseleave(function(){
+				$(this).find('.hid-nav').addClass('on');
+			})
+			$('.list').find('.hid-nav').mouseleave(function(){
+				$(this).addClass('on');
+			})
+
+		})
+		
+	</script>
+</body>
+</html>

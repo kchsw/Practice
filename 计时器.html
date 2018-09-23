@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<form>
+      <input placeholder='选择时间开始倒计时' type="text" id="count" />
+    </form>
+
+
+    <form action="">
+    	<select  name="" id="mySelect">
+    		<option value="1">1分钟</option>
+    		<option value="3">3分钟</option>
+    		<option value="5">5分钟</option>
+    		<option value="10">10分钟</option>
+    		<option value="30">30分钟</option>
+    	</select>
+    </form>
+    <button id="startbtn">开始</button>
+    <button id="pausebtn">暂停</button>
+    <button id="resumebtn">恢复</button>
+    <button id="resetbtn">重置</button>
+	<script>
+
+        //用setInterval的计时器
+        /*var btn = document.getElementById("btn");
+        var num = 10;
+        var timerId = setInterval(function () {
+            num--;
+            btn.value = "到时器开始" + num;
+            if (num == 0) {
+                clearInterval(timerId);
+                btn.disabled = false;
+                btn.value = "同意，可以点了";
+            }
+        },1000);*/
+
+
+
+
+    
+    var num;
+    var i;
+    var second
+    var minute
+    var hour 
+    pausebtn.disabled = true;
+    resetbtn.disabled = true;
+    resumebtn.disabled = true;
+
+    //计时器
+	/*function startCount(){
+	    second = num%60;
+	    minute = Math.floor(num/60%60);
+	    hour = Math.floor(num/60/60);
+	    count.value = hour +'时'+minute+'分'+second+'秒'
+	    num++;
+	    i=setTimeout("startCount()",1000);
+
+	}
+	startbtn.onclick = function(){
+		if(i){
+			window.clearTimeout(i);
+		}
+		startCount();
+		pausebtn.disabled = false;
+        resetbtn.disabled = false;
+	}	  
+    
+    pausebtn.onclick = function(){
+    	if(i){
+			window.clearTimeout(i);
+		}
+    }
+    
+    resetbtn.onclick = function(){
+    	window.clearTimeout(i);
+    	num = 0;
+    	count.value = num;
+    	pausebtn.disabled = true;
+        resetbtn.disabled = true;
+    }
+    */
+    //倒计时器
+    function startCount(){
+    	if(i){
+    		window.clearTimeout(i);
+    	}
+    	second = num%60;
+	    minute = Math.floor(num/60%60);
+	    hour = Math.floor(num/60/60);
+	    count.value = hour +'时'+minute+'分'+second+'秒'
+	    if(num===0){
+    		return
+    	}
+    	num--;
+    	i = setTimeout('startCount()',1000);
+
+    }
+    startbtn.onclick = function(){
+    	num = parseInt(mySelect.value)*60;
+    	startCount();
+    	startbtn.disabled = true;
+		pausebtn.disabled = false;
+        resetbtn.disabled = false;
+        resumebtn.disabled = true;
+        mySelect.disabled = true;
+
+    }
+    pausebtn.onclick = function(){
+    	if(i){
+    		window.clearTimeout(i)
+    	}
+    	resumebtn.disabled = false;
+    }
+    resumebtn.onclick = function(){
+    	startCount();
+    	resumebtn.disabled = true;
+    }
+    resetbtn.onclick = function(){
+    	window.clearTimeout(i);
+    	count.value ='';
+    	startbtn.disabled = false;
+		pausebtn.disabled = true;
+        resetbtn.disabled = true;
+        resumebtn.disabled = true;
+        mySelect.disabled = false;
+    }
+    </script>
+</body>
+</html>
+

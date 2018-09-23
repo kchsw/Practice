@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	    .container{
+	    	width: 900px;
+	    	margin: 30px auto;
+	    }
+		ul,li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.container li{
+			border: 1px solid #ccc;
+			line-height: 1.5;
+		}
+		#show{
+			background: #ccc;
+		}
+
+
+
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul>
+			<li>q</li>
+			<li>w</li>
+			<li>e</li>
+			<li>w</li>
+		</ul>
+		<input id='add-ipt' type="text"><button id='add-btn'>添加</button><button id='remove-btn'>删除</button>
+	    <div id="show"></div>
+	</div>
+	
+
+
+	<script>
+		/*function $(node){
+			return document.querySelector(node)
+		}
+		function $$(nodes){
+			return document.querySelector(nodes)
+		}
+	    function $$$(el){
+	    	if (el.length < 1){
+	    		return;
+	    	}
+	    	var sub = el.substring(1);
+	    	if (el[0]==='#'){
+	    		return document.getElementById(sub);
+	    	}else if (el[0]==='.'){
+	    		return document.getElementsByClassName(sub);
+	    	}else{
+	    		return document.getElementsByTagName(el)
+	    	}
+
+	    }*/
+        
+        var liNodes = document.querySelectorAll('.container li');
+        var container = document.querySelector('.container ul');
+        var addNode = document.querySelector('#add-btn');
+        var removeNode = document.querySelector('#remove-btn');
+        var addIpt = document.querySelector('#add-ipt');
+        var showNode = document.querySelector('#show');
+
+        /*liNodes.forEach(function(node){
+        	//node参数==> li
+        	console.log(node);
+        	node.addEventListener('click',function(){
+        		showNode.innerText = this.innerText;
+        	})
+
+        })
+        addNode.addEventListener('click',function(){
+        	var newNode = document.createElement('li')
+        	newNode.innerText = addIpt.value;
+        	addIpt.value = '';
+        	container.appendChild(newNode);
+        	//新添加的li未绑定事件，要重新绑定
+        	//newNode.addEventListener('click',function(){
+        		//showNode.innerText = this.innerText;
+        	//})
+        	//重新绑定代码比较臃肿
+        })
+        */
+        //把事件绑定到ul上
+        container.addEventListener('click',function(e){
+        	var target = e.target;
+        	console.log(target);
+        	if(target.tagName.toLowerCase()==='li'){
+        		showNode.innerText = target.innerText;
+        	}
+        })
+        addNode.addEventListener('click',function(){
+        	var newNode = document.createElement('li')
+        	newNode.innerText = addIpt.value;
+        	addIpt.value = '';
+        	container.appendChild(newNode);
+        	console.log(container.innerHTML);
+        })
+        removeNode.addEventListener('click',function(){
+        	console.log(container.lastChild);
+        	container.removeChild(container.lastChild);
+        	//ul中li节点间的换行空白符是一个空白节点
+        })
+
+
+
+
+
+	</script>
+
+
+
+
+</body>
+</html>

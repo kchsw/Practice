@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+     <button class="btn">11</button>	
+	<script>
+        function handlerWrapper(event){
+        	console.log(this)
+		  function handler(){
+		    console.log(this) // 请问这里的 this 是什么
+		  }
+
+		}
+		$('.btn').on('click', handlerWrapper)
+
+
+        var obj = {
+		  foo: {
+		  	fnc:function(){
+		    console.log(this)	
+		  }
+		  }
+		}
+
+		var module= {
+			  bind: function(){
+			  	var _this = this
+			    $(window).on('click', function(){
+			      console.log(this) //this指什么
+			      _this.showMsg();
+			    })
+			  },
+			  
+			  showMsg: function(){
+			    console.log('饥人谷');
+			  }
+		}
+        
+        module.bind();
+
+			  
+
+		function Person(name, sex){
+		    this.name = name;
+		    this.sex = sex;
+		}
+
+		Person.prototype.printName = function(){
+		    console.log(this.name);
+		};
+
+		function Male(age){
+		    this.age = age;
+		}
+        
+        Male.prototype = Object.create(Person.prototype);
+
+		Male.prototype.printAge = function(){
+		    console.log(this.age);
+		};
+
+
+
+        var str = 'ahbbccdeddddfg';
+        String.prototype.getMostOften = function(){
+        	var dict = {};
+        	for(var i = 0;i < this.length;i++){
+        		if(dict[this[i]]){
+        			dict[this[i]]++
+        		}else{
+        			dict[this[i]] = 1
+        		}
+        	}
+        	var count = 0
+        	var morevalue;
+        	for(key in dict){
+        		if(dict[key]>count){
+        			count = dict[key]
+        			morevalue = key
+        		}
+        	}
+        	console.log(morevalue+':'+ count + '次')
+        }
+		var ch = str.getMostOften();
+		console.log(ch)
+		
+
+
+        function Person(name,sex){
+        	this.name = name;
+        	this.sex = sex;
+        }
+        Person.prototype.printName = function(){
+        	console.log(this.name);
+        }
+        function Male(age,name,sex){
+        	this.age = age;
+        	Person.call(this,name,sex);
+        }
+        var pro = Object.create(Person.prototype);
+        pro.constructor = Male;
+        Male.prototype = pro;
+        Male.prototype.getAge = function(){
+        	console.log(this.age);
+        }
+        var male = new Male(18,'kid','man')
+	</script>
+</body>
+</html>

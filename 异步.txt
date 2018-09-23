@@ -1,0 +1,128 @@
+function aa(){
+  return setTimeout(function(){
+    return 99     
+    },0) 
+}
+aa()
+setTimeout(function(){return 99},0)
+整体是一个timeID 
+
+function aa(bb){
+  setTimeout(function(){
+    bb(99)    
+    },0) 
+}
+
+function bb(result){
+  return a = result;
+}
+aa(bb) 
+a//99
+
+
+
+function taskAsync(callback){
+  var result = setTimeout(function(){
+    callback('异步任务的结果')
+  }, 3000)
+  return result
+}
+
+taskAsync(function callback(result){
+  console.log(result) // 三秒钟后，这个 callback 函数会被执行
+})
+otherTask()              // 立即执行其他任务，不等异步任务结束
+
+
+
+
+
+function taskAsync(callback){
+  var result = setTimeout(function(){
+    callback('异步任务的结果')
+  }, 3000)
+  return result
+}
+var a 
+taskAsync(function callback(result){
+  return a = result // 三秒钟后，这个 callback 函数会被执行
+})
+otherTask()              // 立即执行其他任务，不等异步任务结束
+
+
+
+
+
+
+
+function getNum(callMe){
+  setTimeout(function(){
+     callMe(222)
+  },0)
+}
+var myNum = undefined;
+function callMe(result){
+  myNum = result
+}
+getNum(callMe)
+
+
+
+for (var i= 0;i<5;i++){
+  setTimeout((function(i){
+    console.log(i);
+  })(i),i*1000);
+}
+
+setTimeout(undefined,0)
+
+
+var a = 1
+function aa(){
+  var a = 1
+  a =3
+}
+aa()
+
+
+
+面试题
+
+for (var i = 0;i<5;i++){
+  console.log(i);
+}
+
+
+for (var i = 0;i<5;i++){
+  setTimeout(function(){
+    console.log(i);
+  },1000*i) 
+}
+
+
+for (var i = 0;i<5;i++){
+  (function(i){
+     setTimeout(function(){
+        console.log(i)
+     },1000*i) 
+  })(i) 
+}
+
+for (var i = 0;i<5;i++){
+  (function(){
+     setTimeout(function(){
+        console.log(i)
+     },1000*i) 
+  })(i) 
+}
+
+
+for (var i = 0;i<5;i++){
+  setTimeout((function(i){
+    return function(){
+      console.log(i);
+    }
+  })(i),1000*i) 
+}
+
+

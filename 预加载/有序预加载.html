@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+			height: 100%
+		}
+		a{
+			text-decoration: none;
+		}
+		.box{
+			margin: 5px auto ;
+			text-align: center;
+			overflow: hidden;
+		}
+		#img{
+			border: 1px solid #ccc;
+			padding: 20px;
+		}
+		.btn{
+			color: #333;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			padding: 5px 20px;
+			margin-right: 50px;
+		}
+		.btn:hover{
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<img src="" alt="" id="img">
+		<p>
+			<a href="javascript:;" class="btn" data-control='prev'>上一页</a>
+		    <a href="javascript:;" class="btn" data-control='next'>下一页</a>
+		</p>
+	</div>
+
+	<!-- <img src="d:/jirengu.png" alt=""> -->
+    
+    
+	<script>
+		var imgs = [
+			'http://imgs.aixifan.com/o_1cmuhv2unjbg112b181s2dp3q5n.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2un1depvo25h3124r1c5ro.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2unhvg1lrnsnn1li42jup.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2unpdt1kcglq2163h14v7q.jpg',
+			'http://imgs.aixifan.com/o_1cmuhv2un1c1v1p771iib168g1j86r.jpg',
+		]
+		var index = 0,
+		    count = 0,
+		    nextcount = index + 1;
+		    len = imgs.length;
+		// load();
+		window.onload = function(){
+			document.title = (index+1) + '/' + len;
+			$('#img').attr('src',imgs[index]);
+	        loadnext();
+		}
+ 
+        //全部预加载
+		function load(){
+			var imgObj = new Image();
+			imgObj.src = imgs[count]
+			$(imgObj).on('load erro',function(){
+				if(count == len){
+					return;
+				}else{
+					load()
+				}
+				count++;
+			})
+		}
+		//点击预加载下一张
+		function loadnext(){
+			if(nextcount == len){
+				return;
+			}	
+			var imgObj = new Image();
+			imgObj.src = imgs[nextcount]
+			$(imgObj).on('load erro',function(){		
+				nextcount++;
+			})
+		}
+		$('.btn').on('click',function(){
+			($(this).data('control')==='prev')?index = Math.max(0,--index):(index = Math.min(len,++index),loadnext())
+			document.title = (index+1) + '/' + len;
+			$('#img').attr('src',imgs[index]) 
+		});
+	</script>
+
+
+</body>
+</html>

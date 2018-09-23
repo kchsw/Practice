@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	    .hiddiv{
+	    	position: fixed;
+	    	left: 0;
+	    	right: 0;
+	    	top: 0;
+	    	bottom: 0;
+	    	background-color: rgba(0, 0, 0, 0.4);
+	    }
+	    .container{
+	    	width: 600px;
+	    	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	    	position: absolute;
+	    	top: 50%;
+	    	left: 50%;
+	    	background-color: #fff;
+	    	transform: translate(-50%,-50%);
+	    }
+
+	    .container .header,.container .footer{
+	    	color: #fff;
+	    	background-color: #009688;
+	    	padding: 1px 20px ;
+	    	/*overflow: hidden; 外边距合并的问题div没有h4完全撑开*/
+	    }
+	    .close{
+	    	float: right;
+	    	cursor: pointer;
+	    	font-size: 30px;
+	    	margin-top: 10px;
+	    	transform: rotateZ(45deg);
+	    }
+        .main{
+        	height: 150px;
+        	padding: 20px;
+        }
+		.hide{
+			display: none;
+		}
+		.footer:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		#surebtn,#resbtn{
+			border: none;
+			font-size: 16px;
+			background-color: #009688;
+			margin-right: 15px;
+			float: right;
+			padding: 10px 0;
+			outline: none;
+		}
+		ul,li{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.tabdiv{
+			width: 602px;
+			font-size: 0;
+			border: 1px solid #000;
+		}
+		.tabdiv ul li{
+			text-align: center;
+			font-size: 16px;
+			display: inline-block;
+			width: 200px;
+			line-height: 25px;
+			border-bottom: 1px solid #000;
+			border-right: 1px solid #000;
+			cursor: pointer;
+		}
+        .tabdiv ul li:last-child{
+        	border-right-width: 0;
+        }
+		.content{
+			height: 150px;
+			font-size: 16px;
+			padding: 10px;
+		}
+		.on{
+			background-color: #eae5e6;
+		}
+
+	</style>
+</head>
+<body>
+	<button id='showbtn'>点我</button>
+    <div class="hiddiv hide">
+    	<div class="container">
+    		<div class="header">
+    			<span class="close">+</span>
+    			<h4>我是标题</h4>
+    		</div>
+    		<div class="main">
+    			我是内容
+    		</div>
+    		<div class="footer">
+    			<button id='surebtn'>确定</button>
+    			<button id='resbtn'>取消</button>
+    		</div>
+    	</div>
+    </div>
+    <div class="tabdiv">
+    	<ul class="tabul">
+    		<li cid="1">tab1</li>
+    		<li cid="2">tab2</li>
+    		<li cid="3">tab3</li>
+    	</ul>
+    	<div class="content" cid="1">内容1</div>
+    	<div class="content hide" cid="2">内容2</div>
+    	<div class="content hide" cid="3">内容3</div>
+    </div>
+
+
+
+    <script>
+    	function $(node){
+		    return document.querySelector(node)
+	    }
+	    function $$(node){
+		    return document.querySelectorAll(node)
+	    }
+	    $('#showbtn').addEventListener('click',function(){
+	    	$('.hiddiv').classList.remove('hide')
+	    })
+	    $('.hiddiv').addEventListener('click',function(e){
+	    	console.log(e.target.className)
+	    	console.log(this)
+	    	if(e.target.classList.contains('hiddiv')){
+	    		this.classList.add('hide')
+	    	}
+	    })
+
+	    $('.close').addEventListener('click',function(){
+	    	$('.hiddiv').classList.add('hide')
+	    })
+	    $('#resbtn').addEventListener('click',function(){
+	    	$('.hiddiv').classList.add('hide')
+	    })
+	    var tt = document.querySelector('.content[cid="2"]');
+        //var rr = $('.content[cid="3"]'); 自定义属性查找
+        //$('.content[cid="'+ cidNum +'"]')
+        // 通过自定义属性查找
+	    /*$$('li').forEach(function(node){	    	
+	    	//node.classList.remove('on')
+        	node.addEventListener('click',function(){
+        		$$('li').forEach(function(node){
+        			node.classList.remove('on');
+        		})
+        		$$('.content').forEach(function(node){
+        			node.classList.add('hide');
+        		})
+        		console.log(this.innerText);
+        		this.classList.add('on');
+        		var cidNum = this.getAttribute('cid');
+        		//var ciddiv = $("\.content[cid=\""+cidNum+"\"]");
+        	    //console.log(ciddiv);
+        		$('.content[cid="'+ cidNum +'"]').classList.remove('hide');
+	        })
+    	})*/
+    	/*$('.tabul').addEventListener('click',function(e){
+    		if(e.target.tagName.toLowerCase() === 'li'){
+    			$$('li').forEach(function(node){
+        			node.classList.remove('on');
+        		})
+        		$$('.content').forEach(function(node){
+        			node.classList.add('hide');
+        		})
+        		e.target.classList.add('on');
+        		var cidNum = e.target.getAttribute('cid');
+        		$('.content[cid="'+ cidNum +'"]').classList.remove('hide');
+    		}
+    	})*/
+
+        //通过索引值查找
+    	$('.tabul').addEventListener('click',function(e){
+    		if(e.target.tagName.toLowerCase() === 'li'){
+    			$$('li').forEach(function(node){
+        			node.classList.remove('on');
+        		})
+        		$$('.content').forEach(function(node){
+        			node.classList.add('hide');
+        		})
+
+        		e.target.classList.add('on');
+        		var index = [].indexOf.call($$('li'), e.target);
+        		console.log(index);
+        		$$('.content')[index].classList.remove('hide');
+    		}
+    	})
+    	//关于的索引值的方法，把div的集合类数组对象转化成数组，用indexof的方法获取index
+        //[].indexOf.call(nodearr, node);
+		// or
+		//Array.prototype.indexOf.call(nodearr, node);
+		// or
+		//var array = Array.prototype.slice.call(nodearr, 0); // 先转成数组
+		//array.indexOf(node);    // 再调用数组的indexOf方法
+		//index获取函数
+        /*function getClickIndex(e) {
+		var node = e.target //目标div
+		var nodearr = node.parentNode.children //所有子div的集合,类数组
+		var nodeArr = Array.from(nodearr) //把类数组转成数组
+		var index = nodeArr.indexOf(node) //拿到index
+		return index;*/
+
+
+    </script>
+	
+</body>
+</html>

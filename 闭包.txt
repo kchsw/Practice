@@ -1,0 +1,149 @@
+var a = 1
+function xxx(a){
+  //var a
+  a = 2;
+  console.log(a)   
+}
+xxx(a) //这里a是全局作用域下的a作为参数传递进来
+console.log(a)
+
+
+
+变量提升
+function a(){}
+var a = 100 ;
+console.log(a)
+
+和
+
+var a = 100 ;
+function a(){}
+console.log(a)
+
+结果一样
+
+
+
+
+
+
+先声明前置
+var a 
+function a(){}
+
+a = 100
+
+
+var a = 100;
+var a = function(){};
+function a(){};
+console.log(a);
+
+声明前置
+var a
+var a
+function a(){}
+
+a = 100
+a = function(){}
+console.log(a)
+a = function a(){}
+
+先看声明再看代码
+var a = 100
+function f1(){
+  var b = 2
+  if(b===1){
+      var a
+  }
+  a = 1 
+}
+
+a是哪个a？
+
+变量提升
+var a 
+function f1(){
+  var b
+  var a
+  if(b===1){
+  }
+  a = 1 
+}
+a = 100
+
+
+
+
+for (i=0;i<x.length;i++){
+  !function(j){
+    console.log(j)
+    items[j].onclick = function(){
+      console.log(j)
+      return j
+    }
+  }(i)
+}
+
+items[i].onclick = (function(i){
+  return function(){
+    console.lof(i)
+    return i
+  }    
+})(i)
+
+
+
+//立即执行函数
+
+
+如下代码输出多少？如果想输出3，那如何改造代码？
+var fnArr = [];
+for (var i = 0; i < 10; i ++) {
+  fnArr[i] =  function(){
+    return i
+  };
+}
+console.log( fnArr[3]() ) // 10
+//题目中要求的是fnArr[3]()等于3，fnArr[3]是一个函数，fnArr[3]()执行后的return的值等于3
+所以要return一个函数
+var fnArr = [];
+for (var i = 0; i < 10; i ++) {
+  fnArr[i] =(function(i){
+    return function(){
+      return i
+    }
+  })(i);
+}
+console.log( fnArr[3]() )
+//如果题目中要求的是fnArr[3]等于3，return一个值
+var fnArr = [];
+for (var i = 0; i < 10; i ++) {
+  fnArr[i] =!function(i){
+    return i
+  }(i);
+}
+//////
++function(){
+  var a = 1
+  console.log(a)
+}()
+
+
+
+///注意
+
+
+
+var fnArr = []
+for (var i = 0; i < 10; i ++) {
+  (function(j){
+    fnArr[i] =  function(){
+      return i
+    } 
+  })(i)
+}
+console.log( fnArr[3]() ) 
+
+
+虽然函数有形参J，但是下文中并没有赋值给它和引用，每次循环i的值并没有传递进来，结果还是都是5

@@ -1,0 +1,148 @@
+body,div,ul,li,h1,h2,h3,h4,a,p{
+	margin: 0px;
+	padding: 0px;
+}
+.clearfloat{
+	zoom:1;
+}
+.clearfloat:after{
+	display: block;
+	clear: both;
+	content: "";
+	visibility: hidden;
+	height: 0;
+	color: #fff;
+	line-height: 1.8;
+}	
+.header{
+	text-align:center;
+	height: 680px;
+	background-image: url(bgimg.jpg);
+	background-position: 50% 50%
+}
+.navigation-bar{
+	list-style-type: none;
+	position: relative;
+    top: 40px;
+    display:inline-block;
+
+}
+.navigation-item
+{
+	float: left;
+	width: 160px;
+	height: 70px;
+	background-color:#261712;
+    border:1px solid #3f2a22;
+    line-height: 70px;
+}
+.navigation-item a{
+    text-decoration:none;
+    color: #f8b408;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+.navigation-logo{
+	width: 235px;
+}
+.navigation-logo img{
+	position: relative;
+	top: -40px;
+}
+.banner{
+	text-align:center;
+	height: 330px;
+	background-color: #120d0a;
+
+}
+.banner-list{
+	list-style-type: none;
+	position: relative;
+    top: 40px;
+    display:inline-block;
+}
+.banner-item{
+	float: left;
+	margin-right: 16px;
+	transition: all 0.3s;
+}
+.banner-item h3{
+	height: 70px;
+	line-height: 70px;
+	text-decoration:none;
+	color: #f8b408;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #251812;
+}
+.banner-item:hover{
+	transform: translateY(-30px);
+
+}
+.footer{
+	background-color: #000
+}
+.footer-notice{
+	height: 130px;
+	width: 1200px;
+	color: #ccc;
+	font-size: 12px;
+	border-top: 2px solid #ccc;
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 40px;
+}
+.footer-logo{
+	width: 900px;
+	margin:0 auto;
+}
+.footer-logo .logo-top{
+	height: 100px;
+	position: relative;
+	top: 60px;
+}
+.logo-top .logo-top-l{
+	float: left;
+	color: #fff;
+	text-decoration:none;
+	margin-right: 25px;
+	font-size: 14px;
+    font-weight: bold;
+}
+.logo-icon{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-image: url(icons.png);
+	vertical-align: middle;
+	/*position: relative;
+	top: 4px;*/
+}
+.icon-1{
+	background-position: -6px -6px;
+}
+.icon-2{
+	background-position: -6px -33px;
+}
+.icon-3{
+	background-position: -32px -6px;
+}
+.logo-top .logo-top-r{
+	float: right;
+	color: #fff;
+	text-decoration:none;
+	font-size: 16px;
+    font-weight: bold;
+}
+.logo-top .logo-top-r img{
+	margin-bottom: -6px;
+}
+.footer-logo .logo-bottom{
+	margin-top: 40px;
+}
+.logo-bottom-list .net{
+	position: relative;
+	bottom: 80px;
+	left: 15px;
+}

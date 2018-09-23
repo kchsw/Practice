@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<style>
+		li{
+			height: 500px;
+		}
+		.btn{
+			position: fixed;
+			left: 10px;
+			bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="ct">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		
+	</div>
+	
+
+
+	<script>
+		function Car(name,color,status){
+			this.name = name;
+			this.color = color;
+			this.status = status;
+		}
+		Car.prototype = {
+			run: function(){
+				this.status++;
+			},
+			stop:function(){
+				this.status--;
+			},
+			getStatus:function(){
+				console.log(this.status)
+			}
+		}
+		var car = new Car('Nick','red',11)
+
+		function Gotop(){
+			this.ct = $('.ct');
+			this.target = $('<button class="btn">回到顶部</button>')
+		}
+		Gotop.prototype = {
+			createNode:function(){
+				this.ct.append(this.target)
+			},
+			bindEvent:function(){
+				var _this = this;
+				this.target.click(function(){
+					$(window).scrollTop(0)
+				})
+			}
+		}
+		var go = new Gotop();
+	</script>
+</body>
+</html>

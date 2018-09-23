@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="ajaxbtn">获取</button>
+	<div id="ajaxcot"></div>
+	<script>
+		document.querySelector('#ajaxbtn').onclick = function(){
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET','/getWeather?city=beijing','true')
+			xhr.send()
+			xhr.onload = function(){
+				document.querySelector('#ajaxcot').innerText = JSON.parse(xhr.responseText).weather
+				console.log(xhr.responseText);
+				console.log(JSON.parse(xhr.responseText))
+			}
+		}
+	</script>
+</body>
+</html>

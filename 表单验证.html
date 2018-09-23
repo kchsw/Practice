@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+    body.div.dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    th,
+    td {
+        margin: 0:padding:0;
+        font: 12px/1.5;
+        color: #666;
+    }
+
+    ul,
+    ol,
+    li {
+        list-style: none
+    }
+
+    img {
+        border: none
+    }
+
+    input,
+    select,
+    img {
+        verticat-align: middle
+    }
+
+    label {
+        vertical-align: middle
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none
+    }
+
+    .btn {
+        border: none 0
+    }
+
+    .mb10 {
+        margin-bottom: 10px
+    }
+    /*main*/
+
+    form {
+        width: 740px;
+        height: 500px;
+        margin: 100px auto
+    }
+
+    form div {
+        overflow: hidden;
+        clear: both;
+    }
+
+    form div label {
+        float: left;
+        clear: both
+    }
+
+    form div label .text {
+        width: 152px;
+        height: 26px;
+        padding: 0 2px: border: 1px solid #ccc
+    }
+
+    form div label b {
+        font-weight: normal;
+        font-size: 12px;
+        color: #ccc;
+        visibility: hidden
+    }
+
+    form div em {
+        display: inline-block;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        vertical-align: middle;
+        font-style: normal;
+        width: 53px;
+        height: 15px;
+        line-height: 15px;
+        background: #FFD099
+    }
+
+    form div .active {
+        background-color: #FF6600
+    }
+
+    div span {
+        display: inline-block;
+        width: 80px;
+        text-align: right
+    }
+
+    .submitBtn {
+        width: 135px;
+        height: 33px;
+        color: #fff;
+        margin: 20px 0 0 80px
+    }
+
+    .changelmg {
+        width: 22px;
+        height: 22px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .msg {
+        line-height: 12px;
+        color: #999;
+        float: left;
+        margin-left: 5px;
+        display: none;
+        margin-top: 5px
+    }
+
+    .msg i {
+        display: inline-block;
+        vertical-align: middle;
+        width: 25px;
+        height: 20px;
+    }
+
+    .msg .ati {
+        background: url(../img/deng.jpg) no-repeat;
+        background-size: cover;
+    }
+
+    .msg .err {
+        background: url(../img/cha.jpg) no-repeat;
+        background-size: cover;
+    }
+
+    .msg .ok {
+        background: url(../img/dui.jpg) no-repeat;
+        background-size: cover;
+    }
+
+    #count {}
+    </style>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label>
+                <span>会员名：</span>
+                <input type="text" class="text" />
+            </label>
+            <p class="msg" style="margin-bottom: 0;">
+            </p>
+        </div>
+        <div>
+            <label style="margin-left: 55px;">
+                <span>
+      <b ="count" id="count">0个字符</b>
+     </span>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>
+      登录密码：
+     </span>
+                <input type="password" class="text">
+            </label>
+            <p class="msg" style="margin-bottom: 0;">
+            </p>
+        </div>
+        <div style="margin: 3px 0 10px 0;">
+            <label>
+                <span></span>
+                <em class="active">弱</em>
+                <em class="">中</em>
+                <em class="">强</em>
+            </label>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label>
+                <span>确认密码</span>
+                <input type="password" class="text" disabled="">
+            </label>
+            <p class="msg"> <i class="ati"></i> 请在输入一次
+            </p>
+            </p>
+        </div>
+        <div>
+            <label>
+                <span>验证码：</span>
+                <input type="text" class="text" style="50px">
+                <img src="" width="100" height="30">
+                <a class="changelmg" href="#" title="重新获取验证码"></a>
+            </label>
+        </div>
+        <div>
+            <input class="submitBtn btn" type="submit" value="同意协议并注册">
+        </div>
+    </form>
+    <script>
+    var alnput = document.getElementsByTagName('input')
+    var oName = alnput[0];
+    var pwd = alnput[1];
+    var pwdd = alnput[2];
+    var aP = document.getElementsByTagName('p');
+    var name_msg = aP[0];
+    var pwd_msg = aP[1];
+    var pwd2_msg = aP[2];
+    var count = document.getElementById('count')
+    var aEM = document.getElementsByTagName('em');
+    var name_length = 0;
+
+    function getLength(str) {
+        return str.replace(/[^\x00-xff]/g, "xx").length;
+    }
+
+    oName.onfocus = function() {
+        name_msg.style.display = "block";
+        name_msg.innerHTML = '<i class="ati"></i>5-25个字符，一个汉字为两个字符，推荐使用中文会员名'
+    }
+    oName.onkeyup = function() {
+        count.style.visibility = "visible";
+        name_length = getLength(this.value)
+        count.innerHTML = name_length + "个字符";
+        if (name_length == 0) {
+            count.style.visibility = "hidden"
+        }
+    }
+    oName.onblur = function() {
+        //含有非法字符
+        var re = /[^\w\u4e00-\u9fa5]/g;
+        if (re.test(this.value)) {
+            name_msg.innerHTML = "<i class='err'></i>  含有有非法字符"
+        }
+
+        //不能为空
+        else if (this.value == "") {
+            name_msg.innerHTML = "<i class='err'></i>  不能为空"
+        }
+        //长度超过25个字符
+        else if (name_length > 25) {
+            name_msg.innerHTML = "<i class='err'></i>  长度超过25个字符"
+        }
+        //长度少于6个字符
+        else if (name_length < 6) {
+            name_msg.innerHTML = "<i class='err'></i>  长度小于6个字符"
+        } else {
+            name_msg.innerHTML = "<i class='ok'></i>  ok"
+        }
+
+    }
+
+
+    //相同的字母
+    function findStr(str, n) {
+        var tmp = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) == n) {
+                tmp++
+            }
+        }
+        return tmp
+    }
+
+    pwd.onfocus = function() {
+        pwd_msg.style.display = 'block';
+        pwd_msg.innerHTML = '<i class="ati"></i> 6-16个字符，请使用字母加数字或符号的组合密码，不能单独使用字母，数字或符号。'
+    }
+
+    pwd.onkeyup = function() {
+        //大于5个字符“中
+        if (this.value.length > 5) {
+            aEM[1].className = 'active';
+            pwdd.removeAttribute('disabled');
+            pwd2_msg.style.display = 'block'
+        } else {
+            aEM[1].className = '';
+            pwdd.setAttribute("disabled", "");
+            pwd2_msg.style.display = "none"
+        }
+
+        //大于10个字符“强
+        if (this.value.length > 10) {
+            aEM[2].className = 'active';
+        } else {
+            aEM[2].className = '';
+        }
+    }
+
+    pwd.onblur = function() {
+        var m = findStr(pwd.value, pwd.value[0]);
+        var re_n = /[^\d]/g; //不能全为数字
+        var re_t = /[^a-zA-Z]/g; //不能全为字母
+        //不能为空
+        if (this.value == '') {
+            pwd_msg.innerHTML = '<i class="err"></i>  不能为空'
+        }
+
+        //不能用相同的字符
+        else if (m == this.value.length) {
+            pwd_msg.innerHTML = '<i class="err"></i>  不能用相同字符'
+        }
+
+
+        //长度应为6-16个字符
+        else if (this.value.length < 6 || this.value.length > 16) {
+            pwd_msg.innerHTML = '<i class="err"></i>  长度应为6-16个字符'
+        }
+
+
+        //不能全为数字
+        else if (!re_n.test(this.value)) {
+            pwd_msg.innerHTML = '<i class="err"></i>  不能全为数字'
+        }
+
+
+
+        //不能全为字母
+        else if (!re_t.test(this.value)) {
+            pwd_msg.innerHTML = '<i class="err"></i>  不能全为字母'
+        }
+
+
+        //ok
+        else {
+            pwd_msg.innerHTML = '<i class="ok"></i>  OK'
+        }
+    }
+
+    pwdd.onblur = function() {
+        if (this.value != pwd.value) {
+            pwd2_msg.innerHTML = '<i class="err"></i>  两字输入的密码不一致'
+        } else {
+            pwd2_msg.innerHTML = '<i class="ok"></i> Ok'
+        }
+    }
+    </script>
+</body>
