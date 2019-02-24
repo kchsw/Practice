@@ -1,0 +1,125 @@
+<script>
+    
+	
+	
+	//第一步会从入口文件开始，对其进行依赖分析，第二步对其所有依赖再次递归进行依赖分析，第三步构建出模块的依赖图集，最后一步根据依赖图集使用CommonJS规范构建出最终的代码
+
+	//通过构造一个立即执行函数(function () {})()，手动定义module，exports和require变量，使转换后的CommomJS代码在浏览器运行
+
+	//最终的代码示例
+
+	/* name.js */
+
+	// export const name = 'World'
+	/* message.js */
+
+	// import { name } from './name.js'
+
+	// export default `Hello ${name}!`
+	/* entry.js */
+
+	// import message from './message.js'
+
+	//console.log(message)
+
+	//转换后的代码
+    
+	(function (modules) {
+	  function require(id) {
+	    const [fn, mapping] = modules[id];
+
+	    function localRequire(name) {
+	      return require(mapping[name]);
+	    }
+        //
+	    const module = { exports: {} };
+
+	    fn(localRequire, module, module.exports);
+        
+        //console.log(module.exports)
+        // 把模块(变量、函数)放进module.exports对象里面并返回 
+        // export import 是ES6的语法需要转化
+        // export ==> module.exports  import from ==> require()
+        //export const name = 'World' ===> module = { exports: { name：'World' } };
+        //export default 'Hello'  ===> module = { exports: { default：'Hello' } };
+
+	    return module.exports;
+	  }
+
+	  require(0);
+	})({
+	  0: [
+	    function (require, module, exports) {
+	      "use strict";
+
+	      var _message = require("./message.js");
+
+	      //这里的require是传进来的localRequire 递归调用require
+	      //localRequire("./message.js") ==> require(1)
+	      //
+
+	      var _message2 = _interopRequireDefault(_message);
+
+	      function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	      console.log(_message2.default);
+	    },
+	    { "./message.js": 1 },
+	  ], 1: [
+	    function (require, module, exports) {
+	      "use strict";
+
+	      Object.defineProperty(exports, "__esModule", {
+	        value: true
+	      });
+
+	      var _name = require("./name.js");
+	      // _name ==> exports = {
+	      // 	name: 'world'
+	      // }
+
+	      exports.default = "Hello " + _name.name + "!";
+	    },
+	    { "./name.js": 2 },
+	  ], 2: [
+	    function (require, module, exports) {
+	      "use strict";
+
+	      Object.defineProperty(exports, "__esModule", {
+	        value: true
+	      });
+	      var name = exports.name = 'world';
+	    },
+	    {},
+	  ],
+	})
+
+
+	//简易版本代码
+
+    {
+    (function (modules){
+    	function require(id){
+    		const module = { exports: {} }
+    		modules[id](require, module, module.exports)
+    		return module.exports
+    	}
+    	require('./entry.js')
+    })({
+	    	'./entry.js': function(require, module, exports){
+	    		var _a = require('./a.js')
+	    		console.log(_a.a)
+	    		//console.log(_a.default)
+	    	},
+	        './a.js': function(require, module, exports){
+	        	var a = 1
+	        	exports.a = a
+	        	// exports.default = a
+	        }
+        })
+    }
+
+</script>
+
+
+
