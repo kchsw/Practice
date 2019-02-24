@@ -1,0 +1,100 @@
+<script>
+	var a = 'a in window'
+	var obj = {
+		a: 'a in obj',
+		objfn: function(){
+			console.log(this.a)
+		}
+	}
+
+	function fn(){
+		console.log(this.a)
+	}
+	fn.call(null)
+	fn.call(obj)
+	obj.objfn.call() //不传参数 指向window
+	//call
+
+	Function.prototype.myCall = function(context){
+		//console.log(this) //指向调用该方法的函数
+		if(typeof this !== 'function'){
+    		throw new TypeErro
+    	}
+		context = context || window
+		context.fn = this  //这里用'fn'不严谨，需要是唯一值 如果
+		/*var obj = {
+			a: 'a in obj',
+			fn: function(){
+				console.log(this.a)
+			}
+		}*/
+		//fn.myCall(obj) 调用后obj.fn 被delete了
+		const args = [...arguments].slice(1)
+		const result = context.fn(...args)
+		delete context.fn
+		return result
+	}
+    
+    fn.myCall(null)
+    fn.myCall(undefined)
+    fn.myCall(obj)
+    obj.objfn.call()
+    
+
+    //apply
+    Function.prototype.myApply = function(context){
+    	if(typeof this !== 'function'){
+    		throw new TypeErro
+    	}
+    	context = context || window
+		context.fn = this 
+		const args = arguments[1]
+		let result
+		if(args){
+			result = context.fn(...args)
+		}else{
+			result = context.fn()
+		}
+		delete context.fn
+		return result
+    }
+
+    //bind
+    // 关于bind的用法，bind返回的函数有两种调用方法，直接调用和new方式
+    // 那么对一个bind返回的函数执行new时会怎样呢
+    function A(a,b){
+	    this.a=a;
+	    this.b=b
+	}
+	var a = A.bind({x:1},1)
+	var b = new a(2) // {a: 1, b: 2}
+    // 当我们对一个bind返回的函数进行new操作时，实际上这种操作是对目标函数的操作，也就是调用bind的函数
+    // 并且把所有的参数列表传进去，也就是bind的时候传进去的参数加上new时传进去的参数。
+
+    // 对于new方式调用的判断
+    function F(){
+    	console.log(this instanceof F)
+    }
+    var f = new F()  //true
+    // 当new 一个构造函数时this指向的该构造函数的实例
+    // 所以 this instanceof F 返回的是true
+    
+    Function.prototype.myBind = function(context){
+    	if(typeof this !== 'function'){
+    		throw new TypeErro
+    	}
+
+    	const _this = this
+    	const args = [...arguments].slice(1)
+
+    	return function F(){
+    		//判断返回函数的调用
+    		if(this instanceof F){
+    			return new _this(...args, ...arguments)
+    		}
+    		return _this.apply(context, args.concat(...arguments))
+    	}
+    }
+
+
+</script>

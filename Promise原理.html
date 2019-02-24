@@ -1,0 +1,145 @@
+<script>
+    /*class Promise {
+    	constructor(){
+    		this.callbacks = []
+    		this.oncatch = null
+    	}
+
+    	then(onsuccess, onfail){
+    		this.callbacks.push({
+    			resolve: onsuccess,
+    			reject: onfail
+    		})
+
+    		return this
+    	}
+    	catch(onfail){
+    		this.oncatch = onfail
+    		return this
+    	}
+
+    	resolve(result){
+    		this.complete('resolve', result)
+    	}
+
+    	reject(result){
+    		this.complete('reject', result)
+    	}
+
+    	complete(type, result){
+    		if(type === 'reject' && this.oncatch){
+    			this.callbacks = []
+    			this.oncatch(result)
+    		}else if(this.callbacks[0]){
+    			var handlerObj = this.callbacks.shift()
+    			if(handlerObj[type]){
+    				handlerObj[type](result)
+    			}
+    		}
+    		
+    	}
+    }
+    */
+
+    class Promise {
+    	constructor(fn){
+    		this.callbacks = []
+    		this.oncatch = null
+            fn(this.resolve.bind(this), this.reject.bind(this))
+            //resolve 和 reject 需要在Promise 里调用
+    	}
+        
+        
+
+    	then(onsuccess, onfail){
+    		this.callbacks.push({
+    			resolve: onsuccess,
+    			reject: onfail
+    		})
+
+    		return this
+    	}
+    	catch(onfail){
+    		this.oncatch = onfail
+    		return this
+    	}
+
+    	resolve(result){
+    		this.complete('resolve', result)
+    	}
+
+    	reject(result){
+    		this.complete('reject', result)
+    	}
+
+    	complete(type, result){
+    		if(type === 'reject' && this.oncatch){
+    			this.callbacks = []
+    			this.oncatch(result)
+    		}else if(this.callbacks[0]){
+    			var handlerObj = this.callbacks.shift()
+    			if(handlerObj[type]){
+    				handlerObj[type](result)
+    			}
+    		}
+    		
+    	}
+    }
+
+    
+    var p = new Promise(function(resolve, reject){
+    	console.log('fn')
+    	setTimeout(function(){
+    		resolve('data')
+    	},2000)
+    })
+    
+    function cb(re){
+    	console.log('cb', re)
+    }
+    
+    p.then(cb)
+
+
+    /*var p = new Promise()
+
+
+
+	function fn(){
+		console.log('fn1')
+		setTimeout(function(){
+			p.resolve('data2')
+		}, 1000)
+
+		return p
+	}
+
+	function fn2(result){
+		console.log('fn2', result)
+		setTimeout(function(){
+			p.resolve('data3')
+		}, 2000)
+	}
+
+	function fn3(result){
+		console.log('fn3', result)
+		setTimeout(function(){
+			p.reject('data4')
+		}, 3000)
+	}
+
+	function fn4(result){
+		console.log('fn4', result)
+	}
+	
+	fn().then(fn2).then(fn3).catch(fn4)*/
+
+
+
+
+
+
+
+
+
+</script>

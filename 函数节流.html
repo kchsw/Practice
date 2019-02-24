@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	function scrollFn(){
+		console.log('scroll')
+	}
+	window.onscroll=scrollFn
+
+	/*function throttle(fn, delay){
+		var timer = null
+		return function(){
+			var context = this
+			var args = arguments
+			if(timer){
+				clearTimeout(timer)
+			}
+			timer = setTimeout(function(){
+				fn.apply(context, args)
+			}, delay)
+		}
+	}*/
+
+	//使函数在节流的同时在规定时间duration内执行一次
+    
+    function throttle(fn, delay, duration){
+    	var timer = null
+    	var lastTime = Date.now()
+    	return function(){
+    		var now = Date.now()
+    		var context = this
+    		var args = arguments
+    		if(now - lastTime >= duration){
+    			fn.apply(context, args)
+    			lastTime = now
+    		}else{
+    			if(timer){
+					clearTimeout(timer)
+				}
+				timer = setTimeout(function(){
+					fn.apply(context, args)
+				}, delay)
+    		}
+    	}
+    }
+
+</script>
