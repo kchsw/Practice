@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="todolist">
+		<input type="text" v-model="inputValue">
+		<button @click="submitHandle">Submit</button>
+		<ul>
+			<todo-item
+			  v-for = "(item, index) in list"
+			  :key = "index"
+			  :content = "item"
+			  @delete="deleteHandle(index)"
+			></todo-item>
+		</ul>
+	</div>
+	<script>
+		Vue.component('todo-item', {
+			props: {
+				content: String,
+			},
+			template: '\
+			<li>\
+			{{content}}\
+			<button @click="$emit(\'delete\')">delete</button>\
+			</li>\
+			',
+		})
+		new Vue({
+			el: '#todolist',
+			data: {
+				inputValue: '',
+				list: ['a', 'b']
+			},
+			methods: {
+				submitHandle(){
+					if(this.inputValue){
+						this.list.push(this.inputValue)
+						this.inputValue = ''
+					}	
+				},
+				deleteHandle(index){
+					this.list.splice(index, 1)
+				}
+			}
+		})
+	</script>
+</body>
+</html>
