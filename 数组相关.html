@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		//数组去重
+		var arr = [1,1,2,2,7,5,7,5,4,3,3,4,'a','c','a','b','c','b']
+
+		//利用对象
+		function unique1(arr){
+			var res = []
+			var obj = {}
+			for(var i = 0; i < arr.length; i++){
+				if(!obj[arr[i]]){
+					obj[arr[i]] = 1
+					res.push(arr[i])
+				}
+			}
+			return res
+		}
+        unique1(arr)
+
+        //数组的indexOf方法
+
+        function unique2(arr){
+        	var res = []
+        	for(var i = 0; i < arr.length; i++){
+        		if(res.indexOf(arr[i]) == -1){
+        			res.push(arr[i])
+        		}
+        	}
+        	return res
+        }
+        unique2(arr)
+
+        //数组的includes方法
+
+        function unique3(arr){
+        	var res = []
+        	for(var i = 0; i< arr.length; i++){
+        		if(!res.includes(arr[i])){
+        			res.push(arr[i])
+        		}
+        	}
+        	return res
+        }
+        unique3(arr)
+
+        // ES6 Set数据结构，其成员是唯一的
+        function unique4(arr){
+        	return [...new Set(arr)]
+        }
+        unique4(arr)
+
+        // 数组的filter方法
+
+        function unique5(arr){
+        	var res = arr.filter((self, index, arr) =>
+        		arr.indexOf(self) == index
+        	)
+        	return res
+        }
+        unique5(arr)
+       
+        //数组浅拷贝
+       
+        var arr1 = arr.concat()
+        var arr2 = arr.slice()
+
+        //深拷贝
+        function deepClone(arr){
+        	var res = []
+        	for(key in arr){
+        		if(typeof arr[key] === 'object'){
+        			res[key] = deepClone(arr[key])
+        		}else{
+        			res[key] = arr[key]
+        		}
+        	}
+        	return res
+        }
+
+        //数组最大值
+        var max = [1,2,3,4,5]
+        Math.max.apply(null, max)
+        max.reduce((n1, n2) => n1 > n2? n1 : n2)
+
+        max.sort((item1, item2) => item1 - item2)
+        max.sort((item1, item2) => item2 - item1)
+
+        //数组平铺
+
+        //[].concat(...arr)
+
+        //冒泡排序
+        var arrs = [3,2,5,9,1,6,33,4,65,22]
+        function swap(arr,l,r){
+        	let v = arr[r]
+        	arr[r] = arr[l]
+        	arr[l] = v
+        }
+        for(let i = 0; i < arrs.length; i++){
+        	for(let j = i + 1; j < arrs.length; j++){
+        		if(arrs[i] > arrs[j]){
+        			swap(arrs,i,j)
+        		}
+        	}
+        }
+	</script>
+</body>
+</html>
