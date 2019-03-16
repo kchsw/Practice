@@ -95,6 +95,24 @@
 
         //[].concat(...arr)
 
+        var arrarr = [1, [2, 3, 4 ,[0, 2, 3]], [7, 9, [[0, 1], [1, 2]]]]
+        function flatten(arr){
+
+                while(arr.some(item => Array.isArray(item))){
+                        arr = [].concat(...arr)
+                }
+                return arr
+        }
+        flatten(arrarr)
+
+        // function flatten(arr){
+        //         var rearr = [].concat(...arr)
+        //         if(rearr.some(item => Array.isArray(item))){
+        //             rearr = flatten(rearr)
+        //         }
+        //         return rearr
+        // }
+
         //冒泡排序
         var arrs = [3,2,5,9,1,6,33,4,65,22]
         function swap(arr,l,r){

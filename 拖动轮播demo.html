@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+	    .view{
+	    	width: 900px;
+	    	height: 200px;
+	    	overflow: hidden;
+	    	border: 1px solid green;
+	    	position: relative;
+	    }
+		.container{
+			width: 1500px;
+			height: 200px;
+			overflow: hidden;
+			position: absolute;
+			left: 0;
+			cursor: pointer;
+		}
+		.item{
+			width: 300px;
+			height: 100%;
+			float: left;
+		}
+		.a{
+			background: red;
+		}
+		.b{
+			background: black;
+			transition: all .3s;
+		}
+		.b:hover{
+		}
+		.c{
+			background: pink;
+		}
+		.e{
+			background: black;
+		}
+		.f{
+			background: yellow;
+		}
+		.bor{
+			width: 50px;
+			height: 55px;
+			border: 2px solid #fff;
+			margin-top: 20px;
+			border-radius: 50%;
+			transition: all .3s;
+			/*background-image:url('test.jpg');
+			background-position:50% 50%;
+			background-size:50px 50px;
+			background-repeat: no-repeat;*/
+			/*border: 2px solid red;*/
+			font-size: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.bor:hover{
+			height: 50px;
+			border: 2px solid red;
+		}
+		.bor img{
+			width: 80%;
+			vertical-align: middle;
+		}
+		.test{
+			width: 75%;
+
+		}
+		.active{
+			background: blue;
+		}
+	</style>
+</head>
+<body>
+	<div class="view">
+		<div class="container">
+			<div class="item a"></div>
+			<div class="item b"></div>
+			<div class="item c"></div>
+			<div class="item e"></div>
+			<div class="item f"></div>
+	    </div>
+	</div>
+	<button class="btn" data-control='prev'>per</button>
+	<button class="btn" data-control='next'>next</button>
+	<div class="bor">
+		<img src="./test.jpg" alt="">
+	</div>
+	<script>
+		var touchX = 0
+		var left = 0
+		var currentIndex = 0
+		var activeIndex = 1
+		var isAnimate 
+		var itemWidth =$('.item').width();
+		var offsetWidth = currentIndex * itemWidth
+		var touchWidth = 0
+		var _x = 0
+		var isAnimate = false
+		// $('.container').scrollLeft(100)
+		// $('.container').css('left','20px')
+		// $(".item").click(function(){
+		// 	console.log('11')
+		// })
+		$(".view").mousedown(function(event){
+			console.log('11')
+		  	event.preventDefault()
+		  	touchX = event.clientX;
+		  	// $(document).bind("mousemove",move)
+		  	// $(document).bind("mouseup",stop); 
+		  	$(".view").bind("mousemove",move)
+		  	$(".view").bind("mouseup",stop); 
+		  	left = 0    
+		});
+
+		$(".view").on('touchstart',function(e) {
+		    var _touch = e.originalEvent.targetTouches[0];
+		    // console.log(_touch)
+		    _x= _touch.clientX;
+		    // e.preventDefault()
+		    
+		});
+
+
+
+		$(".view").on('touchmove',function(e) {
+
+		    var _touch = e.originalEvent.targetTouches[0];
+		    // var _x= _touch.clientX;
+		    var left = _touch.clientX - _x
+		 //    console.log(left)
+			// if(left){
+			// 	e.preventDefault()
+			// }
+		    touchWidth = Math.min(0, Math.max(-600, -offsetWidth + left))
+			$('.container').css('left', touchWidth + 'px')
+		});
+		$(".view").on('touchend',function(e) {
+			// console.log(left)
+			// if(left){
+			// 	e.preventDefault()
+			// }
+			offsetWidth  = Math.abs(touchWidth)
+			currentIndex = Math.round(offsetWidth/itemWidth)
+			play(currentIndex)
+		})
+
+        
+
+		function move(event){
+			left = event.clientX - touchX
+			console.log(left)
+			touchWidth = Math.min(0, Math.max(-600, -offsetWidth + left))
+			$('.container').css('left', touchWidth + 'px')
+			// console.log(touchWidth)
+		}
+		function stop(event){
+			if(left == 0){
+				// $(document).unbind("mousemove",move);  
+                // $(document).unbind("mouseup",stop); 
+            	$(".view").unbind("mousemove",move);  
+            	$(".view").unbind("mouseup",stop); 
+				return 
+			}
+			console.log('33')
+			console.log(left)
+			// if(left == 0){
+			// 	event.preventDefault()
+			// 	$(".item").click(function(e){
+			//     	e.preventDefault()
+			//     	console.log("11")
+			//     })
+			// }
+			offsetWidth  = Math.abs(touchWidth)
+			currentIndex = Math.round(offsetWidth/itemWidth)
+			play(currentIndex)
+			// console.log(Math.round(offsetWidth/itemWidth))
+			// console.log(offsetWidth)
+			// $(document).unbind("mousemove",move);  
+               // $(document).unbind("mouseup",stop);
+            $(".view").unbind("mousemove",move);  
+            $(".view").unbind("mouseup",stop); 
+			
+		}
+
+		
+		$('.btn').on('click',function(){
+			($(this).data('control')==='prev')? currentIndex = Math.max(0, --currentIndex): currentIndex = Math.min(2, ++currentIndex);
+			($(this).data('control')==='prev')? activeIndex = Math.max(0, --activeIndex): activeIndex = Math.min(4, ++activeIndex)
+			console.log(currentIndex)
+			// console.log(currentIndex)
+			// offsetWidth = currentIndex * itemWidth
+			// console.log(offsetWidth)
+			play(currentIndex)
+			setActive()
+		})
+
+		function play(currentIndex){
+			if(isAnimate){
+				return
+			}
+			isAnimate = true
+			offsetWidth = currentIndex * itemWidth
+			$('.container').animate({
+        		left: '-'+ offsetWidth
+        	},500,function(){
+        		isAnimate = false
+        	})
+		}
+
+		$(".item").click(function(e){
+			console.log('22')
+			if(left !== 0){
+				return
+			}
+	    	var index = $(this).index();
+	    	console.log(index)
+	    	activeIndex = index
+	    	setActive()
+	    })
+
+	    function setActive(){
+	    	$('.item').removeClass('active')
+        	          .eq(activeIndex).addClass('active')
+	    }
+
+	</script>
+</body>
+</html>
