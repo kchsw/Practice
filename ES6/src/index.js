@@ -91,8 +91,8 @@ document.write(msg);
     	return value > 30;
     }))
 
-    //for…of循环
-
+    //for…of循环 与 for…in循环的 差别
+ 
     let arr4 = [1,2,3,4]
     for (let i of arr4){
     	console.log(i);

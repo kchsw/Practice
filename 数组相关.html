@@ -69,6 +69,7 @@
        
         var arr1 = arr.concat()
         var arr2 = arr.slice()
+        var arr3 = [...arr]
 
         //深拷贝
         function deepClone(arr){
@@ -113,6 +114,35 @@
         //         return rearr
         // }
 
+        扩展运算符（...）也可以将某些数据结构转为数组。
+        [...document.querySelectorAll('div')]
+
+
+        // Array.from方法用于将两类对象转为真正的数组：
+        // 类似数组的对象（array-like object）和可遍历（iterable）的对象
+        let arrayLike = {
+            '0': 'a',
+            '1': 'b',
+            '2': 'c',
+            length: 3
+        };
+
+        // ES5的写法
+        var arr1 = [].slice.call(arrayLike); // ['a', 'b', 'c']
+
+        // ES6的写法
+        let arr2 = Array.from(arrayLike); // ['a', 'b', 'c']
+
+        let ps = document.querySelectorAll('p');
+        Array.from(ps).filter(p => {
+          return p.textContent.length > 100;
+        });
+
+        // arguments对象
+        function foo() {
+          var args = Array.from(arguments);
+          // ...
+        }
         //冒泡排序
         var arrs = [3,2,5,9,1,6,33,4,65,22]
         function swap(arr,l,r){
@@ -127,6 +157,15 @@
         		}
         	}
         }
+
+        通过 reduce 来实现 map 函数
+        const arr = [1, 2, 3]
+        const mapArray = arr.map(value => value * 2)
+        const reduceArray = arr.reduce((acc, current) => {
+          acc.push(current * 2) // acc初始值 acc = []
+          return acc
+        }, [])
+        console.log(mapArray, reduceArray) // [2, 4, 6]
 	</script>
 </body>
 </html>
